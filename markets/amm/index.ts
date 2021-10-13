@@ -10,7 +10,7 @@ import {
   strategyWBTC,
   strategyWBTCWETH,
   strategyDAIWETH,
-  strategyAAVEWETH,
+  strategyBANDZWETH,
   strategyBATWETH,
   strategyDAIUSDC,
   strategyCRVWETH,

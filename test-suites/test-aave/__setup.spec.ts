@@ -158,7 +158,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       USDC: mockTokens.USDC.address,
       USDT: mockTokens.USDT.address,
       SUSD: mockTokens.SUSD.address,
-      AAVE: mockTokens.AAVE.address,
+      BANDZ: mockTokens.BANDZ.address,
       BAT: mockTokens.BAT.address,
       MKR: mockTokens.MKR.address,
       LINK: mockTokens.LINK.address,
@@ -231,7 +231,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     aaveAdmin
   );
 
-  // Reserve params from AAVE pool + mocked tokens
+  // Reserve params from BANDZ pool + mocked tokens
   const reservesParams = {
     ...config.ReservesConfig,
   };

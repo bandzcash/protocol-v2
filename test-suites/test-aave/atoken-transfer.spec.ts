@@ -1,4 +1,8 @@
-import { APPROVAL_AMOUNT_LENDING_POOL, MAX_UINT_AMOUNT, ZERO_ADDRESS } from '../../helpers/constants';
+import {
+  APPROVAL_AMOUNT_LENDING_POOL,
+  MAX_UINT_AMOUNT,
+  ZERO_ADDRESS,
+} from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { expect } from 'chai';
 import { ethers } from 'ethers';
@@ -6,7 +10,7 @@ import { RateMode, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { CommonsConfig } from '../../markets/aave/commons';
 
-const AAVE_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const BANDZ_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {
@@ -62,7 +66,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
         weth.address,
         ethers.utils.parseEther('0.1'),
         RateMode.Stable,
-        AAVE_REFERRAL,
+        BANDZ_REFERRAL,
         users[1].address
       );
 

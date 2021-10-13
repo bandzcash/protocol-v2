@@ -194,7 +194,7 @@ export interface iAssetBase<T> {
   USDC: T;
   USDT: T;
   SUSD: T;
-  AAVE: T;
+  BANDZ: T;
   BAT: T;
   MKR: T;
   LINK: T;
@@ -226,7 +226,7 @@ export type iAavePoolAssets<T> = Pick<
   | 'USDC'
   | 'USDT'
   | 'SUSD'
-  | 'AAVE'
+  | 'BANDZ'
   | 'BAT'
   | 'MKR'
   | 'LINK'
@@ -246,16 +246,12 @@ export type iAavePoolAssets<T> = Pick<
 
 export type iLpPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  | 'DAI'
-  | 'USDC'
-  | 'USDT'
-  | 'WBTC'
-  | 'WETH'
+  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH'
 >;
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'AAVE'
+  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'BANDZ'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
@@ -266,7 +262,7 @@ export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
   DAI = 'DAI',
-  AAVE = 'AAVE',
+  BANDZ = 'BANDZ',
   TUSD = 'TUSD',
   BAT = 'BAT',
   WETH = 'WETH',
@@ -329,11 +325,9 @@ export interface IMarketRates {
   borrowRate: string;
 }
 
-export type iParamsPerNetwork<T> =
-  | iSmartBCHParamsPerNetwork<T>;
+export type iParamsPerNetwork<T> = iSmartBCHParamsPerNetwork<T>;
 
-export interface iParamsPerNetworkAll<T>
-  extends iSmartBCHParamsPerNetwork<T> {}
+export interface iParamsPerNetworkAll<T> extends iSmartBCHParamsPerNetwork<T> {}
 
 export interface iSmartBCHParamsPerNetwork<T> {
   [eSmartBCHNetwork.coverage]: T;

@@ -9,7 +9,7 @@ import {
   strategyTUSD,
   strategyUSDC,
   strategyUSDT,
-  strategyAAVE,
+  strategyBANDZ,
   strategyBAT,
   strategyZRX,
   strategyKNC,
@@ -35,7 +35,7 @@ export const AaveConfig: IAaveConfiguration = {
   MarketId: 'Aave genesis market',
   ProviderId: 1,
   ReservesConfig: {
-    AAVE: strategyAAVE,
+    BANDZ: strategyBANDZ,
     BAT: strategyBAT,
     BUSD: strategyBUSD,
     DAI: strategyDAI,
@@ -62,7 +62,7 @@ export const AaveConfig: IAaveConfiguration = {
     [eSmartBCHNetwork.hardhat]: {},
     [eSmartBCHNetwork.coverage]: {},
     [eSmartBCHNetwork.amber]: {
-      AAVE: '',
+      BANDZ: '',
       BAT: '0x85B24b3517E3aC7bf72a14516160541A60cFF19d',
       BUSD: '0xFA6adcFf6A90c11f31Bc9bb59eC0a6efB38381C6',
       DAI: '0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108',
@@ -84,7 +84,7 @@ export const AaveConfig: IAaveConfiguration = {
       ZRX: '0x02d7055704EfF050323A2E5ee4ba05DB2A588959',
     },
     [eSmartBCHNetwork.main]: {
-      AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
+      BANDZ: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       BAT: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
       BUSD: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',

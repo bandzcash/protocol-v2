@@ -6,7 +6,7 @@ import { RateMode, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { CommonsConfig } from '../../markets/amm/commons';
 
-const AAVE_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const BANDZ_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {
@@ -62,7 +62,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
         weth.address,
         ethers.utils.parseEther('0.1'),
         RateMode.Variable,
-        AAVE_REFERRAL,
+        BANDZ_REFERRAL,
         users[1].address
       );
 

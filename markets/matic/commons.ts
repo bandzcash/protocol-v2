@@ -59,7 +59,7 @@ export const CommonsConfig: ICommonConfiguration = {
     WMATIC: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
-    AAVE: {
+    BANDZ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
   },

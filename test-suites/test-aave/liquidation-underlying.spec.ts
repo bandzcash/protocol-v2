@@ -378,20 +378,20 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
   });
 
-  it('User 4 deposits 10 AAVE - drops HF, liquidates the AAVE, which results on a lower amount being liquidated', async () => {
+  it('User 4 deposits 10 BANDZ - drops HF, liquidates the BANDZ, which results on a lower amount being liquidated', async () => {
     const { aave, usdc, users, pool, oracle, helpersContract } = testEnv;
 
     const depositor = users[3];
     const borrower = users[4];
     const liquidator = users[5];
 
-    //mints AAVE to borrower
+    //mints BANDZ to borrower
     await aave.connect(borrower.signer).mint(await convertToCurrencyDecimals(aave.address, '10'));
 
     //approve protocol to access the borrower wallet
     await aave.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //borrower deposits 10 AAVE
+    //borrower deposits 10 BANDZ
     const amountToDeposit = await convertToCurrencyDecimals(aave.address, '10');
 
     await pool

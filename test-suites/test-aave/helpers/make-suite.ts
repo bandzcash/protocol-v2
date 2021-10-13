@@ -139,7 +139,7 @@ export async function initializeMakeSuite() {
 
   const daiAddress = reservesTokens.find((token) => token.symbol === 'DAI')?.tokenAddress;
   const usdcAddress = reservesTokens.find((token) => token.symbol === 'USDC')?.tokenAddress;
-  const aaveAddress = reservesTokens.find((token) => token.symbol === 'AAVE')?.tokenAddress;
+  const aaveAddress = reservesTokens.find((token) => token.symbol === 'BANDZ')?.tokenAddress;
   const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
 
   if (!aDaiAddress || !aWEthAddress) {
