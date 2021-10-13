@@ -1,7 +1,7 @@
 {
-  "name": "@aave/protocol-v2",
+  "name": "@bandz/protocol-v2",
   "version": "1.0.1",
-  "description": "Aave Protocol V2 smart contracts",
+  "description": "Bandz Protocol V2 smart contracts",
   "files": [
     "contracts",
     "artifacts"
@@ -112,14 +112,9 @@
       "pre-commit": "pretty-quick --staged --pattern 'contracts/**/*.sol' --pattern 'helpers/**/*.ts'  --pattern 'test-suites/test-aave/**/*.ts' --pattern 'tasks/**/*.ts'"
     }
   },
-  "author": "Aave",
+  "author": "Bandz",
   "contributors": [
-    "Ernesto Boado <ernesto@aave.com>",
-    "Emilio Frangella <emilio@aave.com>",
-    "Andrey Kozlov <andrey@aave.com>",
-    "David Racero <david.k@aave.com>",
-    "Pol Sendra <pol@aave.com>",
-    "David Truong <david@aave.com>"
+    "RoninTheDev <ronin@bandz.cash>"
   ],
   "license": "AGPLv3",
   "dependencies": {
@@ -127,10 +122,15 @@
     "tmp-promise": "^3.0.2"
   },
   "keywords": [
+    "bandz",
     "aave",
     "protocol",
-    "protocol-v2",
-    "ethereum",
+    "protocol-v2",    
+    "smartBCH",
+    "bitcoin",
+    "cash",
+    "bitcoin-cash",
+    "BCH",
     "solidity"
   ]
 }
