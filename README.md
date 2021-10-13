@@ -100,10 +100,6 @@ ALCHEMY_KEY=""
 # Optional SmartScan key, for automatize the verification of the contracts at SmartScan
 SMARTSCAN_KEY=""
 
-# Optional, if you plan to use Tenderly scripts
-TENDERLY_PROJECT=""
-TENDERLY_USERNAME=""
-
 ```
 
 ## Markets configuration

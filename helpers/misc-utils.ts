@@ -140,9 +140,6 @@ export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
   );
 
 export const impersonateAccountsHardhat = async (accounts: string[]) => {
-  if (process.env.TENDERLY === 'true') {
-    return;
-  }
   // eslint-disable-next-line no-restricted-syntax
   for (const account of accounts) {
     // eslint-disable-next-line no-await-in-loop

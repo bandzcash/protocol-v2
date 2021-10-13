@@ -7,7 +7,6 @@ import {
 
 require('dotenv').config();
 
-const TENDERLY_FORK_ID = process.env.TENDERLY_FORK_ID || '';
 const FORK = process.env.FORK || '';
 const FORK_BLOCK_NUMBER = process.env.FORK_BLOCK_NUMBER
   ? parseInt(process.env.FORK_BLOCK_NUMBER)
