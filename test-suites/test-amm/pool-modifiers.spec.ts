@@ -152,7 +152,7 @@
 //   });
 
 //   it('unfreezes the reserve, user deposits 1 ETH, freezes the reserve, check that the user can redeem', async () => {
-//     const {aWETH} = _aTokenInstances;
+//     const {aWBCH} = _aTokenInstances;
 
 //     //unfreezes the reserve
 //     await _lendingPoolConfiguratorInstance.unfreezeReserve(ETHEREUM_ADDRESS);
@@ -165,13 +165,13 @@
 //     //freezes the reserve
 //     await _lendingPoolConfiguratorInstance.freezeReserve(ETHEREUM_ADDRESS);
 
-//     const balance = await aWETH.balanceOf(deployer);
+//     const balance = await aWBCH.balanceOf(deployer);
 
-//     await aWETH.redeem(balance);
+//     await aWBCH.redeem(balance);
 //   });
 
 //   it('unfreezes the reserve, user 0 deposits 100 DAI, user 1 deposits 1 ETH and borrows 50 DAI, freezes the reserve, checks that the user 1 can repay', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
+//     const {aWBCH, aDAI} = _aTokenInstances;
 //     const {DAI} = _tokenInstances;
 
 //     //unfreezes the reserve
@@ -209,7 +209,7 @@
 //   });
 
 //   it('Check that liquidationCall can be executed on a freezed reserve', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
+//     const {aWBCH, aDAI} = _aTokenInstances;
 //     const {DAI} = _tokenInstances;
 
 //     //user 2 tries to liquidate
@@ -228,7 +228,7 @@
 //   });
 
 //   it('Check that rebalanceStableBorrowRate can be executed on a freezed reserve', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
+//     const {aWBCH, aDAI} = _aTokenInstances;
 //     const {DAI} = _tokenInstances;
 
 //     //user 2 tries to liquidate

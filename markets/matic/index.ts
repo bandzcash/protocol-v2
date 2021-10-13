@@ -6,7 +6,7 @@ import {
   strategyUSDC,
   strategyUSDT,
   strategyWBTC,
-  strategyWETH,
+  strategyWBCH,
   strategyMATIC,
   strategyAAVE,
 } from './reservesConfigs';
@@ -24,7 +24,7 @@ export const MaticConfig: IMaticConfiguration = {
     USDC: strategyUSDC,
     USDT: strategyUSDT,
     WBTC: strategyWBTC,
-    WETH: strategyWETH,
+    WBCH: strategyWBCH,
     WMATIC: strategyMATIC,
     AAVE: strategyAAVE,
   },

@@ -46,7 +46,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     await configurator.activateReserve(dai.address);
   });
 
-  it('Deposits WETH, borrows DAI', async () => {
+  it('Deposits WBCH, borrows DAI', async () => {
     const { dai, weth, users, pool, oracle } = testEnv;
     const depositor = users[0];
     const borrower = users[1];
@@ -66,7 +66,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     //user 2 deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-    //mints WETH to borrower
+    //mints WBCH to borrower
     await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
 
     //approve protocol to access the borrower wallet
@@ -225,7 +225,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
   });
 
-  it('User 3 deposits 1000 USDC, user 4 1 WETH, user 4 borrows - drops HF, liquidates the borrow', async () => {
+  it('User 3 deposits 1000 USDC, user 4 1 WBCH, user 4 borrows - drops HF, liquidates the borrow', async () => {
     const { usdc, users, pool, oracle, weth, helpersContract } = testEnv;
 
     const depositor = users[3];
@@ -250,7 +250,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     //borrower deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-    //mints WETH to borrower
+    //mints WBCH to borrower
     await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
 
     //approve protocol to access the borrower wallet

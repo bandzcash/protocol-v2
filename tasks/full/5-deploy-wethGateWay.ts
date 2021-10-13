@@ -4,9 +4,9 @@ import {
   ConfigNames,
   getWrappedNativeTokenAddress,
 } from '../../helpers/configuration';
-import { deployWETHGateway } from '../../helpers/contracts-deployments';
+import { deployWBCHGateway } from '../../helpers/contracts-deployments';
 
-const CONTRACT_NAME = 'WETHGateway';
+const CONTRACT_NAME = 'WBCHGateway';
 
 task(`full-deploy-weth-gateway`, `Deploys the ${CONTRACT_NAME} contract`)
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
@@ -19,7 +19,7 @@ task(`full-deploy-weth-gateway`, `Deploys the ${CONTRACT_NAME} contract`)
     if (!localBRE.network.config.chainId) {
       throw new Error('INVALID_CHAIN_ID');
     }
-    const wethGateWay = await deployWETHGateway([Weth], verify);
+    const wethGateWay = await deployWBCHGateway([Weth], verify);
     console.log(`${CONTRACT_NAME}.address`, wethGateWay.address);
     console.log(`\tFinished ${CONTRACT_NAME} deployment`);
   });

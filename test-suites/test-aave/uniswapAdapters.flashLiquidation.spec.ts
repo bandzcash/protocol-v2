@@ -44,7 +44,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
     //user 2 deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-    //mints WETH to borrower
+    //mints WBCH to borrower
     await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
 
     //approve protocol to access the borrower wallet
@@ -111,7 +111,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
     //user 2 deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-    //mints WETH to borrower
+    //mints WBCH to borrower
     await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
 
     //approve protocol to access the borrower wallet
@@ -141,13 +141,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
     const userGlobalDataBefore2 = await pool.getUserAccountData(borrower.address);
 
-    const amountWETHToBorrow = new BigNumber(userGlobalDataBefore2.availableBorrowsETH.toString())
+    const amountWBCHToBorrow = new BigNumber(userGlobalDataBefore2.availableBorrowsETH.toString())
       .multipliedBy(0.8)
       .toFixed(0);
 
     await pool
       .connect(borrower.signer)
-      .borrow(weth.address, amountWETHToBorrow, RateMode.Variable, '0', borrower.address);
+      .borrow(weth.address, amountWBCHToBorrow, RateMode.Variable, '0', borrower.address);
 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
@@ -369,7 +369,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         // Profit after flash loan liquidation
         expect(liquidatorWethBalanceAfter).to.be.equal(
           liquidatorWethBalanceBefore.add(expectedProfit),
-          'Invalid expected WETH profit'
+          'Invalid expected WBCH profit'
         );
       });
     });
@@ -605,7 +605,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         // Net Profit == 0 after flash loan liquidation
         expect(liquidatorWethBalanceAfter).to.be.equal(
           liquidatorWethBalanceBefore,
-          'Invalid expected WETH profit'
+          'Invalid expected WBCH profit'
         );
       });
     });

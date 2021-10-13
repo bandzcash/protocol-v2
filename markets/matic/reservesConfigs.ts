@@ -4,7 +4,7 @@ import { eContractid, IReserveParams } from '../../helpers/types';
 import {
   rateStrategyStableTwo,
   rateStrategyStableThree,
-  rateStrategyWETH,
+  rateStrategyWBCH,
   rateStrategyAAVE,
   rateStrategyVolatileOne,
   rateStrategyVolatileTwo,
@@ -46,8 +46,8 @@ export const strategyUSDT: IReserveParams = {
   reserveFactor: '1000',
 };
 
-export const strategyWETH: IReserveParams = {
-  strategy: rateStrategyWETH,
+export const strategyWBCH: IReserveParams = {
+  strategy: rateStrategyWBCH,
   baseLTVAsCollateral: '8000',
   liquidationThreshold: '8250',
   liquidationBonus: '10500',

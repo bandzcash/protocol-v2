@@ -41,7 +41,7 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   // TODO: reorg alphabetically, checking the reason of tests failing
   LendingRateOracleRatesCommon: {
-    WETH: {
+    WBCH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     DAI: {
@@ -101,7 +101,7 @@ export const CommonsConfig: ICommonConfiguration = {
   ReservesConfig: {},
   ATokenDomainSeparator: {
   },
-  WETH: {
+  WBCH: {
   },
   WrappedNativeToken: {
   },

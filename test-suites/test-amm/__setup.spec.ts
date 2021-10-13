@@ -20,13 +20,13 @@ import {
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployATokensAndRatesHelper,
-  deployWETHGateway,
-  deployWETHMocked,
+  deployWBCHGateway,
+  deployWBCHMocked,
   deployMockUniswapRouter,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployFlashLiquidationAdapter,
-  authorizeWETHGateway,
+  authorizeWBCHGateway,
   deployATokenImplementations,
   deployAaveOracle,
 } from '../../helpers/contracts-deployments';
@@ -55,7 +55,7 @@ import {
   getLendingPoolConfiguratorProxy,
   getPairsTokenAggregator,
 } from '../../helpers/contracts-getters';
-import { WETH9Mocked } from '../../types/WETH9Mocked';
+import { WBCH9Mocked } from '../../types/WBCH9Mocked';
 
 const MOCK_USD_PRICE_IN_WEI = AmmConfig.ProtocolGlobalParams.MockUsdPriceInWei;
 const ALL_ASSETS_INITIAL_PRICES = AmmConfig.Mocks.AllAssetsInitialPrices;
@@ -64,14 +64,14 @@ const MOCK_CHAINLINK_AGGREGATORS_PRICES = AmmConfig.Mocks.AllAssetsInitialPrices
 const LENDING_RATE_ORACLE_RATES_COMMON = AmmConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
-  const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
+  const tokens: { [symbol: string]: MockContract | MintableERC20 | WBCH9Mocked } = {};
 
   const ammConfigData = getReservesConfigByPool(AavePools.amm);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
-    if (tokenSymbol === 'WETH') {
-      tokens[tokenSymbol] = await deployWETHMocked();
-      await registerContractInJsonDb('WETH', tokens[tokenSymbol]);
+    if (tokenSymbol === 'WBCH') {
+      tokens[tokenSymbol] = await deployWBCHMocked();
+      await registerContractInJsonDb('WBCH', tokens[tokenSymbol]);
       continue;
     }
     let decimals = 18;
@@ -154,7 +154,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await setInitialAssetPricesInOracle(
     ALL_ASSETS_INITIAL_PRICES,
     {
-      WETH: mockTokens.WETH.address,
+      WBCH: mockTokens.WBCH.address,
       DAI: mockTokens.DAI.address,
       TUSD: mockTokens.TUSD.address,
       USDC: mockTokens.USDC.address,
@@ -178,7 +178,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       // USDC: mockTokens.LpUSDC.address,
       // USDT: mockTokens.LpUSDT.address,
       // WBTC: mockTokens.LpWBTC.address,
-      // WETH: mockTokens.LpWETH.address,
+      // WBCH: mockTokens.LpWBCH.address,
       WMATIC: mockTokens.WMATIC.address,
       USD: USD_ADDRESS,
       STAKE: mockTokens.STAKE.address,
@@ -214,7 +214,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     tokens,
     aggregators,
     fallbackOracle.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
     oneEther.toString(),
   ]);
   await waitForTx(await addressesProvider.setPriceOracle(fallbackOracle.address));
@@ -269,7 +269,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const adapterParams: [string, string, string] = [
     addressesProvider.address,
     mockUniswapRouter.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
   ];
 
   await deployUniswapLiquiditySwapAdapter(adapterParams);
@@ -278,8 +278,8 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider();
 
-  const gateWay = await deployWETHGateway([mockTokens.WETH.address]);
-  await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
+  const gateWay = await deployWBCHGateway([mockTokens.WBCH.address]);
+  await authorizeWBCHGateway(gateWay.address, lendingPoolAddress);
 
   console.timeEnd('setup');
 };

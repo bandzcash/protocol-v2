@@ -6,7 +6,7 @@ import {
 } from './rateStrategies';
 
 
-export const strategyWETH: IReserveParams = {
+export const strategyWBCH: IReserveParams = {
   strategy: rateStrategyBaseOne,
   baseLTVAsCollateral: '8000',
   liquidationThreshold: '8250',
@@ -66,7 +66,7 @@ export const strategyUSDT: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyDAIWETH: IReserveParams = {
+export const strategyDAIWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -78,7 +78,7 @@ export const strategyDAIWETH: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyWBTCWETH: IReserveParams = {
+export const strategyWBTCWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -90,7 +90,7 @@ export const strategyWBTCWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyAAVEWETH: IReserveParams = {
+export const strategyAAVEWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -102,7 +102,7 @@ export const strategyAAVEWETH: IReserveParams = {
   reserveFactor: '500'
 };
 
-export const strategyBATWETH: IReserveParams = {
+export const strategyBATWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -126,7 +126,7 @@ export const strategyDAIUSDC: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyCRVWETH: IReserveParams = {
+export const strategyCRVWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '5000',
   liquidationThreshold: '6000',
@@ -138,7 +138,7 @@ export const strategyCRVWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyLINKWETH: IReserveParams = {
+export const strategyLINKWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -150,7 +150,7 @@ export const strategyLINKWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyMKRWETH: IReserveParams = {
+export const strategyMKRWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -162,7 +162,7 @@ export const strategyMKRWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyRENWETH: IReserveParams = {
+export const strategyRENWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -174,7 +174,7 @@ export const strategyRENWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategySNXWETH: IReserveParams = {
+export const strategySNXWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '4000',
   liquidationThreshold: '6000',
@@ -186,7 +186,7 @@ export const strategySNXWETH: IReserveParams = {
   reserveFactor: '2000'
 };
 
-export const strategyUNIWETH: IReserveParams = {
+export const strategyUNIWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -198,7 +198,7 @@ export const strategyUNIWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyUSDCWETH: IReserveParams = {
+export const strategyUSDCWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -222,7 +222,7 @@ export const strategyWBTCUSDC: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyYFIWETH: IReserveParams = {
+export const strategyYFIWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '5000',
   liquidationThreshold: '6000',
@@ -234,7 +234,7 @@ export const strategyYFIWETH: IReserveParams = {
   reserveFactor: '1500'
 };
 
-export const strategyBALWETH: IReserveParams = {
+export const strategyBALWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',

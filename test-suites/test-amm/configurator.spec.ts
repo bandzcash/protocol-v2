@@ -2,7 +2,7 @@ import { TestEnv, makeSuite } from './helpers/make-suite';
 import { APPROVAL_AMOUNT_LENDING_POOL, RAY } from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { ProtocolErrors } from '../../helpers/types';
-import { strategyWETH } from '../../markets/amm/reservesConfigs';
+import { strategyWBCH } from '../../markets/amm/reservesConfigs';
 
 const { expect } = require('chai');
 
@@ -77,12 +77,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(true);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(strategyWBCH.stableBorrowRateEnabled);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Unfreezes the ETH reserve', async () => {
@@ -104,12 +104,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(strategyWBCH.stableBorrowRateEnabled);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Check the onlyAaveAdmin on freezeReserve ', async () => {
@@ -146,12 +146,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(false);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(strategyWBCH.stableBorrowRateEnabled);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Activates the ETH reserve for borrowing', async () => {
@@ -174,12 +174,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(true/*strategyWETH.stableBorrowRateEnabled*/);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(true/*strategyWBCH.stableBorrowRateEnabled*/);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
 
     expect(variableBorrowIndex.toString()).to.be.equal(RAY);
   });
@@ -224,7 +224,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(liquidationThreshold).to.be.equal(0);
     expect(liquidationBonus).to.be.equal(0);
     expect(stableBorrowRateEnabled).to.be.equal(true);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Activates the ETH reserve as collateral', async () => {
@@ -246,12 +246,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(true/*strategyWETH.stableBorrowRateEnabled*/);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(true/*strategyWBCH.stableBorrowRateEnabled*/);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Check the onlyAaveAdmin on configureReserveAsCollateral ', async () => {
@@ -282,12 +282,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
     expect(stableBorrowRateEnabled).to.be.equal(false);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Enables stable borrow rate on the ETH reserve', async () => {
@@ -308,12 +308,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
     expect(stableBorrowRateEnabled).to.be.equal(true);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Disable stable borrow rate to return to the original state on the ETH reserve', async () => {
@@ -334,12 +334,12 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
-    expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(strategyWBCH.stableBorrowRateEnabled);
+    expect(reserveFactor).to.be.equal(strategyWBCH.reserveFactor);
   });
 
   it('Check the onlyAaveAdmin on disableReserveStableRate', async () => {
@@ -358,7 +358,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Changes the reserve factor of WETH', async () => {
+  it('Changes the reserve factor of WBCH', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.setReserveFactor(weth.address, '1000');
     const {
@@ -376,11 +376,11 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
     expect(isFrozen).to.be.equal(false);
-    expect(decimals).to.be.equal(strategyWETH.reserveDecimals);
-    expect(ltv).to.be.equal(strategyWETH.baseLTVAsCollateral);
-    expect(liquidationThreshold).to.be.equal(strategyWETH.liquidationThreshold);
-    expect(liquidationBonus).to.be.equal(strategyWETH.liquidationBonus);
-    expect(stableBorrowRateEnabled).to.be.equal(strategyWETH.stableBorrowRateEnabled);
+    expect(decimals).to.be.equal(strategyWBCH.reserveDecimals);
+    expect(ltv).to.be.equal(strategyWBCH.baseLTVAsCollateral);
+    expect(liquidationThreshold).to.be.equal(strategyWBCH.liquidationThreshold);
+    expect(liquidationBonus).to.be.equal(strategyWBCH.liquidationBonus);
+    expect(stableBorrowRateEnabled).to.be.equal(strategyWBCH.stableBorrowRateEnabled);
     expect(reserveFactor).to.be.equal(1000);
   });
 

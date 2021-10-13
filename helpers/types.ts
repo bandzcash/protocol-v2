@@ -237,7 +237,7 @@ export type iAavePoolAssets<T> = Pick<
   | 'ZRX'
   | 'SNX'
   | 'BUSD'
-  | 'WETH'
+  | 'WBCH'
   | 'YFI'
   | 'UNI'
   | 'REN'
@@ -251,12 +251,12 @@ export type iLpPoolAssets<T> = Pick<
   | 'USDC'
   | 'USDT'
   | 'WBTC'
-  | 'WETH'
+  | 'WBCH'
 >;
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'AAVE'
+  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WBCH' | 'WMATIC' | 'AAVE'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
@@ -270,7 +270,7 @@ export enum TokenContractId {
   AAVE = 'AAVE',
   TUSD = 'TUSD',
   BAT = 'BAT',
-  WETH = 'WETH',
+  WBCH = 'WBCH',
   USDC = 'USDC',
   USDT = 'USDT',
   SUSD = 'SUSD',

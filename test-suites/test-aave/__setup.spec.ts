@@ -20,8 +20,8 @@ import {
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployATokensAndRatesHelper,
-  deployWETHGateway,
-  deployWETHMocked,
+  deployWBCHGateway,
+  deployWBCHMocked,
   deployMockUniswapRouter,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
@@ -29,7 +29,7 @@ import {
   deployMockParaSwapAugustus,
   deployMockParaSwapAugustusRegistry,
   deployParaSwapLiquiditySwapAdapter,
-  authorizeWETHGateway,
+  authorizeWBCHGateway,
   deployATokenImplementations,
   deployAaveOracle,
 } from '../../helpers/contracts-deployments';
@@ -58,7 +58,7 @@ import {
   getLendingPoolConfiguratorProxy,
   getPairsTokenAggregator,
 } from '../../helpers/contracts-getters';
-import { WETH9Mocked } from '../../types/WETH9Mocked';
+import { WBCH9Mocked } from '../../types/WBCH9Mocked';
 
 const MOCK_USD_PRICE_IN_WEI = AaveConfig.ProtocolGlobalParams.MockUsdPriceInWei;
 const ALL_ASSETS_INITIAL_PRICES = AaveConfig.Mocks.AllAssetsInitialPrices;
@@ -66,13 +66,13 @@ const USD_ADDRESS = AaveConfig.ProtocolGlobalParams.UsdAddress;
 const LENDING_RATE_ORACLE_RATES_COMMON = AaveConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
-  const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
+  const tokens: { [symbol: string]: MockContract | MintableERC20 | WBCH9Mocked } = {};
 
   const protoConfigData = getReservesConfigByPool(AavePools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
-    if (tokenSymbol === 'WETH') {
-      tokens[tokenSymbol] = await deployWETHMocked();
+    if (tokenSymbol === 'WBCH') {
+      tokens[tokenSymbol] = await deployWBCHMocked();
       await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
       continue;
     }
@@ -101,7 +101,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const config = loadPoolConfig(ConfigNames.Aave);
 
   const mockTokens: {
-    [symbol: string]: MockContract | MintableERC20 | WETH9Mocked;
+    [symbol: string]: MockContract | MintableERC20 | WBCH9Mocked;
   } = {
     ...(await deployAllMockTokens(deployer)),
   };
@@ -152,7 +152,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await setInitialAssetPricesInOracle(
     ALL_ASSETS_INITIAL_PRICES,
     {
-      WETH: mockTokens.WETH.address,
+      WBCH: mockTokens.WBCH.address,
       DAI: mockTokens.DAI.address,
       TUSD: mockTokens.TUSD.address,
       USDC: mockTokens.USDC.address,
@@ -176,7 +176,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       // USDC: mockTokens.LpUSDC.address,
       // USDT: mockTokens.LpUSDT.address,
       // WBTC: mockTokens.LpWBTC.address,
-      // WETH: mockTokens.LpWETH.address,
+      // WBCH: mockTokens.LpWBCH.address,
       WMATIC: mockTokens.WMATIC.address,
       USD: USD_ADDRESS,
       STAKE: mockTokens.STAKE.address,
@@ -212,7 +212,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     tokens,
     aggregators,
     fallbackOracle.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
     oneEther.toString(),
   ]);
   await waitForTx(await addressesProvider.setPriceOracle(fallbackOracle.address));
@@ -273,7 +273,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const adapterParams: [string, string, string] = [
     addressesProvider.address,
     mockUniswapRouter.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
   ];
 
   await deployUniswapLiquiditySwapAdapter(adapterParams);
@@ -288,8 +288,8 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider();
 
-  const gateWay = await deployWETHGateway([mockTokens.WETH.address]);
-  await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
+  const gateWay = await deployWBCHGateway([mockTokens.WBCH.address]);
+  await authorizeWBCHGateway(gateWay.address, lendingPoolAddress);
 
   console.timeEnd('setup');
 };
