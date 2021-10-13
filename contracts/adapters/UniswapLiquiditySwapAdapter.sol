@@ -125,7 +125,7 @@ contract UniswapLiquiditySwapAdapter is BaseUniswapAdapter {
    *   uint8 v param for the permit signature
    *   bytes32 r param for the permit signature
    *   bytes32 s param for the permit signature
-   * @param useEthPath true if the swap needs to occur using BCH in the routing, false otherwise
+   * @param useEthPath true if the swap needs to occur using ETH in the routing, false otherwise
    */
   function swapAndDeposit(
     address[] calldata assetToSwapFromList,
@@ -185,7 +185,7 @@ contract UniswapLiquiditySwapAdapter is BaseUniswapAdapter {
    * @param minAmountToReceive Min amount to be received from the swap
    * @param swapAllBalance Flag indicating if all the user balance should be swapped
    * @param permitSignature List of struct containing the permit signature
-   * @param useEthPath true if the swap needs to occur using BCH in the routing, false otherwise
+   * @param useEthPath true if the swap needs to occur using ETH in the routing, false otherwise
    */
 
   struct SwapLiquidityLocalVars {
@@ -251,7 +251,7 @@ contract UniswapLiquiditySwapAdapter is BaseUniswapAdapter {
    *   uint8[] v List of v param for the permit signature
    *   bytes32[] r List of r param for the permit signature
    *   bytes32[] s List of s param for the permit signature
-   *   bool[] useEthPath true if the swap needs to occur using BCH in the routing, false otherwise
+   *   bool[] useEthPath true if the swap needs to occur using ETH in the routing, false otherwise
    * @return SwapParams struct containing decoded params
    */
   function _decodeParams(bytes memory params) internal pure returns (SwapParams memory) {

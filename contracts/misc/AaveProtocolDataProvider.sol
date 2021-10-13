@@ -16,7 +16,7 @@ contract AaveProtocolDataProvider {
   using UserConfiguration for DataTypes.UserConfigurationMap;
 
   address constant MKR = 0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2;
-  address constant BCH = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
+  address constant ETH = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
 
   struct TokenData {
     string symbol;
@@ -38,8 +38,8 @@ contract AaveProtocolDataProvider {
         reservesTokens[i] = TokenData({symbol: 'MKR', tokenAddress: reserves[i]});
         continue;
       }
-      if (reserves[i] == BCH) {
-        reservesTokens[i] = TokenData({symbol: 'BCH', tokenAddress: reserves[i]});
+      if (reserves[i] == ETH) {
+        reservesTokens[i] = TokenData({symbol: 'ETH', tokenAddress: reserves[i]});
         continue;
       }
       reservesTokens[i] = TokenData({

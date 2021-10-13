@@ -94,7 +94,7 @@ contract FlashLiquidationAdapter is BaseUniswapAdapter {
    * @param borrowedAsset The asset that must be covered
    * @param user The user address with a Health Factor below 1
    * @param debtToCover The amount of debt to coverage, can be max(-1) to liquidate all possible debt
-   * @param useEthPath true if the swap needs to occur using BCH in the routing, false otherwise
+   * @param useEthPath true if the swap needs to occur using ETH in the routing, false otherwise
    * @param flashBorrowedAmount Amount of asset requested at the flash loan to liquidate the user position
    * @param premium Fee of the requested flash loan
    * @param initiator Address of the caller

@@ -6,7 +6,7 @@ pragma solidity 0.6.12;
 @notice Interface for the Aave price oracle.*/
 interface IPriceOracle {
   /***********
-    @dev returns the asset price in BCH
+    @dev returns the asset price in ETH
      */
   function getAssetPrice(address asset) external view returns (uint256);
 
