@@ -21,7 +21,6 @@ export enum EthereumNetworkNames {
   amber = 'amber',
   main = 'main',
   matic = 'matic',
-  mumbai = 'mumbai',
   xdai = 'xdai',
   avalanche = 'avalanche',
   fuji = 'fuji',
