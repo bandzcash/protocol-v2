@@ -4,7 +4,7 @@ import { HardhatUserConfig } from 'hardhat/types';
 // @ts-ignore
 import { accounts } from './test-wallets.js';
 import {
-  eEthereumNetwork,
+  eSmartBCHNetwork,
   eNetwork,
 } from './helpers/types';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
@@ -96,9 +96,9 @@ const buidlerConfig: HardhatUserConfig = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
-    amber: getCommonNetworkConfig(eEthereumNetwork.amber, 10001),
-    main: getCommonNetworkConfig(eEthereumNetwork.main, 10000),
-    tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
+    amber: getCommonNetworkConfig(eSmartBCHNetwork.amber, 10001),
+    main: getCommonNetworkConfig(eSmartBCHNetwork.main, 10000),
+    tenderly: getCommonNetworkConfig(eSmartBCHNetwork.tenderly, 3030),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,

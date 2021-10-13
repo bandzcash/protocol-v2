@@ -4,7 +4,7 @@ import {
   IReserveParams,
   iLpPoolAssets,
   RateMode,
-  tEthereumAddress,
+  tSmartBCHAddress,
 } from '../../../../helpers/types';
 import './math';
 import { ReserveData, UserReserveData } from './interfaces';

@@ -1,5 +1,5 @@
 import {
-  tEthereumAddress,
+  tSmartBCHAddress,
   iMultiPoolsAssets,
   IMarketRates,
   iAssetBase,
@@ -16,9 +16,9 @@ import { getStableAndVariableTokensHelper } from './contracts-getters';
 
 export const setInitialMarketRatesInRatesOracleByHelper = async (
   marketRates: iMultiPoolsAssets<IMarketRates>,
-  assetsAddresses: { [x: string]: tEthereumAddress },
+  assetsAddresses: { [x: string]: tSmartBCHAddress },
   lendingRateOracleInstance: LendingRateOracle,
-  admin: tEthereumAddress
+  admin: tSmartBCHAddress
 ) => {
   const stableAndVariableTokenHelper = await getStableAndVariableTokensHelper();
   const assetAddresses: string[] = [];
@@ -67,8 +67,8 @@ export const setInitialMarketRatesInRatesOracleByHelper = async (
 };
 
 export const setInitialAssetPricesInOracle = async (
-  prices: iAssetBase<tEthereumAddress>,
-  assetsAddresses: iAssetBase<tEthereumAddress>,
+  prices: iAssetBase<tSmartBCHAddress>,
+  assetsAddresses: iAssetBase<tSmartBCHAddress>,
   priceOracleInstance: PriceOracle
 ) => {
   for (const [assetSymbol, price] of Object.entries(prices) as [string, string][]) {
@@ -84,7 +84,7 @@ export const setInitialAssetPricesInOracle = async (
 
 export const setAssetPricesInOracle = async (
   prices: SymbolMap<string>,
-  assetsAddresses: SymbolMap<tEthereumAddress>,
+  assetsAddresses: SymbolMap<tSmartBCHAddress>,
   priceOracleInstance: PriceOracle
 ) => {
   for (const [assetSymbol, price] of Object.entries(prices) as [string, string][]) {

@@ -8,14 +8,14 @@ import {
   getStableDebtToken,
   getVariableDebtToken,
 } from '../../../../helpers/contracts-getters';
-import { tEthereumAddress } from '../../../../helpers/types';
+import { tSmartBCHAddress } from '../../../../helpers/types';
 import BigNumber from 'bignumber.js';
 import { getDb, DRE } from '../../../../helpers/misc-utils';
 import { AaveProtocolDataProvider } from '../../../../types/AaveProtocolDataProvider';
 
 export const getReserveData = async (
   helper: AaveProtocolDataProvider,
-  reserve: tEthereumAddress
+  reserve: tSmartBCHAddress
 ): Promise<ReserveData> => {
   const [reserveData, tokenAddresses, rateOracle, token] = await Promise.all([
     helper.getReserveData(reserve),
@@ -76,8 +76,8 @@ export const getUserData = async (
   pool: LendingPool,
   helper: AaveProtocolDataProvider,
   reserve: string,
-  user: tEthereumAddress,
-  sender?: tEthereumAddress
+  user: tSmartBCHAddress,
+  sender?: tSmartBCHAddress
 ): Promise<UserReserveData> => {
   const [userData, scaledATokenBalance] = await Promise.all([
     helper.getUserReserveData(reserve, user),

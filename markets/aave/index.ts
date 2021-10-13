@@ -1,5 +1,5 @@
 import { oneRay, ZERO_ADDRESS } from '../../helpers/constants';
-import { IAaveConfiguration, eEthereumNetwork } from '../../helpers/types';
+import { IAaveConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 
 import { CommonsConfig } from './commons';
 import {
@@ -58,10 +58,10 @@ export const AaveConfig: IAaveConfiguration = {
     xSUSHI: strategyXSUSHI,
   },
   ReserveAssets: {
-    [eEthereumNetwork.buidlerevm]: {},
-    [eEthereumNetwork.hardhat]: {},
-    [eEthereumNetwork.coverage]: {},
-    [eEthereumNetwork.amber]: {
+    [eSmartBCHNetwork.buidlerevm]: {},
+    [eSmartBCHNetwork.hardhat]: {},
+    [eSmartBCHNetwork.coverage]: {},
+    [eSmartBCHNetwork.amber]: {
       AAVE: '',
       BAT: '0x85B24b3517E3aC7bf72a14516160541A60cFF19d',
       BUSD: '0xFA6adcFf6A90c11f31Bc9bb59eC0a6efB38381C6',
@@ -83,7 +83,7 @@ export const AaveConfig: IAaveConfiguration = {
       YFI: ZERO_ADDRESS,
       ZRX: '0x02d7055704EfF050323A2E5ee4ba05DB2A588959',
     },
-    [eEthereumNetwork.main]: {
+    [eSmartBCHNetwork.main]: {
       AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       BAT: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
       BUSD: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',
@@ -106,7 +106,7 @@ export const AaveConfig: IAaveConfiguration = {
       ZRX: '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
       xSUSHI: '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272',
     },
-    [eEthereumNetwork.tenderly]: {
+    [eSmartBCHNetwork.tenderly]: {
       AAVE: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       BAT: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
       BUSD: '0x4Fabb145d64652a948d72533023f6E7A623C7C53',

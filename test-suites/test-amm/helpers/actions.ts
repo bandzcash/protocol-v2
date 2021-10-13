@@ -32,7 +32,7 @@ import chai from 'chai';
 import { ReserveData, UserReserveData } from './utils/interfaces';
 import { ContractReceipt } from 'ethers';
 import { AToken } from '../../../types/AToken';
-import { RateMode, tEthereumAddress } from '../../../helpers/types';
+import { RateMode, tSmartBCHAddress } from '../../../helpers/types';
 
 const { expect } = chai;
 
@@ -137,7 +137,7 @@ export const deposit = async (
   reserveSymbol: string,
   amount: string,
   sender: SignerWithAddress,
-  onBehalfOf: tEthereumAddress,
+  onBehalfOf: tSmartBCHAddress,
   sendValue: string,
   expectedResult: string,
   testEnv: TestEnv,
@@ -289,14 +289,14 @@ export const delegateBorrowAllowance = async (
   amount: string,
   interestRateMode: string,
   user: SignerWithAddress,
-  receiver: tEthereumAddress,
+  receiver: tSmartBCHAddress,
   expectedResult: string,
   testEnv: TestEnv,
   revertMessage?: string
 ) => {
   const { pool } = testEnv;
 
-  const reserveAddress: tEthereumAddress = await getReserveAddressFromSymbol(reserve);
+  const reserveAddress: tSmartBCHAddress = await getReserveAddressFromSymbol(reserve);
 
   const amountToDelegate: string = await (
     await convertToCurrencyDecimals(reserveAddress, amount)
@@ -331,7 +331,7 @@ export const borrow = async (
   amount: string,
   interestRateMode: string,
   user: SignerWithAddress,
-  onBehalfOf: tEthereumAddress,
+  onBehalfOf: tSmartBCHAddress,
   timeTravel: string,
   expectedResult: string,
   testEnv: TestEnv,
@@ -719,7 +719,7 @@ interface ActionData {
 
 const getDataBeforeAction = async (
   reserveSymbol: string,
-  user: tEthereumAddress,
+  user: tSmartBCHAddress,
   testEnv: TestEnv
 ): Promise<ActionData> => {
   const reserve = await getReserveAddressFromSymbol(reserveSymbol);

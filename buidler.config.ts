@@ -3,7 +3,7 @@ import fs from 'fs';
 import {usePlugin, task} from '@nomiclabs/buidler/config';
 // @ts-ignore
 import {accounts} from './test-wallets.js';
-import {eEthereumNetwork} from './helpers/types';
+import {eSmartBCHNetwork} from './helpers/types';
 import {BUIDLEREVM_CHAINID, COVERAGE_CHAINID} from './helpers/buidler-constants';
 import {setDRE} from './helpers/misc-utils';
 
@@ -31,7 +31,7 @@ task(`set-DRE`, `Inits the DRE, to have access to all the plugins' objects`).set
   }
 );
 
-const getCommonNetworkConfig = (networkName: eEthereumNetwork, networkId: number) => {
+const getCommonNetworkConfig = (networkName: eSmartBCHNetwork, networkId: number) => {
   return {
     url: `https://${networkName}.infura.io/v3/${INFURA_KEY}`,
     hardfork: HARDFORK,
@@ -69,8 +69,8 @@ const buidlerConfig: any = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
-    amber: getCommonNetworkConfig(eEthereumNetwork.amber, 10001),
-    main: getCommonNetworkConfig(eEthereumNetwork.main, 10000),
+    amber: getCommonNetworkConfig(eSmartBCHNetwork.amber, 10001),
+    main: getCommonNetworkConfig(eSmartBCHNetwork.main, 10000),
     buidlerevm: {
       hardfork: 'istanbul',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,

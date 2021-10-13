@@ -33,7 +33,7 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
   // USD oracle asset address
   address public constant override USD_ADDRESS = 0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96;
 
-  address public immutable override WETH_ADDRESS;
+  address public immutable override WBCH_ADDRESS;
   IPriceOracleGetter public immutable override ORACLE;
   IUniswapV2Router02 public immutable override UNISWAP_ROUTER;
 
@@ -44,7 +44,7 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
   ) public FlashLoanReceiverBase(addressesProvider) {
     ORACLE = IPriceOracleGetter(addressesProvider.getPriceOracle());
     UNISWAP_ROUTER = uniswapRouter;
-    WETH_ADDRESS = wethAddress;
+    WBCH_ADDRESS = wethAddress;
   }
 
   /**
@@ -158,7 +158,7 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
     if (useEthPath) {
       path = new address[](3);
       path[0] = assetToSwapFrom;
-      path[1] = WETH_ADDRESS;
+      path[1] = WBCH_ADDRESS;
       path[2] = assetToSwapTo;
     } else {
       path = new address[](2);
@@ -217,7 +217,7 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
     if (useEthPath) {
       path = new address[](3);
       path[0] = assetToSwapFrom;
-      path[1] = WETH_ADDRESS;
+      path[1] = WBCH_ADDRESS;
       path[2] = assetToSwapTo;
     } else {
       path = new address[](2);
@@ -369,9 +369,9 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
     uint256[] memory amountsWithWeth;
 
     address[] memory pathWithWeth = new address[](3);
-    if (reserveIn != WETH_ADDRESS && reserveOut != WETH_ADDRESS) {
+    if (reserveIn != WBCH_ADDRESS && reserveOut != WBCH_ADDRESS) {
       pathWithWeth[0] = reserveIn;
-      pathWithWeth[1] = WETH_ADDRESS;
+      pathWithWeth[1] = WBCH_ADDRESS;
       pathWithWeth[2] = reserveOut;
 
       try UNISWAP_ROUTER.getAmountsOut(finalAmountIn, pathWithWeth) returns (
@@ -496,9 +496,9 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
     uint256[] memory amountsWithWeth;
     address[] memory pathWithWeth = new address[](3);
 
-    if (reserveIn != WETH_ADDRESS && reserveOut != WETH_ADDRESS) {
+    if (reserveIn != WBCH_ADDRESS && reserveOut != WBCH_ADDRESS) {
       pathWithWeth[0] = reserveIn;
-      pathWithWeth[1] = WETH_ADDRESS;
+      pathWithWeth[1] = WBCH_ADDRESS;
       pathWithWeth[2] = reserveOut;
 
       try UNISWAP_ROUTER.getAmountsIn(amountOut, pathWithWeth) returns (
@@ -544,7 +544,7 @@ abstract contract BaseUniswapAdapter is FlashLoanReceiverBase, IBaseUniswapAdapt
     if (useEthPath) {
       path = new address[](3);
       path[0] = reserveIn;
-      path[1] = WETH_ADDRESS;
+      path[1] = WBCH_ADDRESS;
       path[2] = reserveOut;
     } else {
       path = new address[](2);

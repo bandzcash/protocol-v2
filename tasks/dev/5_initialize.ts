@@ -15,7 +15,7 @@ import {
   loadPoolConfig,
 } from '../../helpers/configuration';
 
-import { tEthereumAddress, AavePools, eContractid } from '../../helpers/types';
+import { tSmartBCHAddress, AavePools, eContractid } from '../../helpers/types';
 import { waitForTx, filterMapBy, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { getAllTokenAddresses } from '../../helpers/mock-helpers';
@@ -47,7 +47,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     const addressesProvider = await getLendingPoolAddressesProvider();
 
-    const protoPoolReservesAddresses = <{ [symbol: string]: tEthereumAddress }>(
+    const protoPoolReservesAddresses = <{ [symbol: string]: tSmartBCHAddress }>(
       filterMapBy(allTokenAddresses, (key: string) => !key.includes('UNI_'))
     );
 

@@ -1,7 +1,7 @@
 import { Contract } from 'ethers';
 import { DRE, notFalsyOrZeroAddress } from './misc-utils';
 import {
-  tEthereumAddress,
+  tSmartBCHAddress,
   eContractid,
   tStringTokenSmallUnits,
   AavePools,
@@ -9,7 +9,7 @@ import {
   iMultiPoolsAssets,
   IReserveParams,
   PoolConfiguration,
-  eEthereumNetwork,
+  eSmartBCHNetwork,
 } from './types';
 import { MintableERC20 } from '../types/MintableERC20';
 import { MockContract } from 'ethereum-waffle';
@@ -48,8 +48,8 @@ import {
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
-  WETH9MockedFactory,
-  WETHGatewayFactory,
+  WBCH9MockedFactory,
+  WBCHGatewayFactory,
   FlashLiquidationAdapterFactory,
 } from '../types';
 import {
@@ -70,7 +70,7 @@ import { UiPoolDataProvider } from '../types';
 import { eNetwork } from './types';
 
 export const deployUiPoolDataProvider = async (
-  [incentivesController, aaveOracle]: [tEthereumAddress, tEthereumAddress],
+  [incentivesController, aaveOracle]: [tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) => {
   const id = eContractid.UiPoolDataProvider;
@@ -83,7 +83,7 @@ export const deployUiPoolDataProvider = async (
 };
 
 const readArtifact = async (id: string) => {
-  if (DRE.network.name === eEthereumNetwork.buidlerevm) {
+  if (DRE.network.name === eSmartBCHNetwork.buidlerevm) {
     return buidlerReadArtifact(DRE.config.paths.artifacts, id);
   }
   return (DRE as HardhatRuntimeEnvironment).artifacts.readArtifact(id);
@@ -227,7 +227,7 @@ export const deployMockAggregator = async (price: tStringTokenSmallUnits, verify
   );
 
 export const deployAaveOracle = async (
-  args: [tEthereumAddress[], tEthereumAddress[], tEthereumAddress, tEthereumAddress, string],
+  args: [tSmartBCHAddress[], tSmartBCHAddress[], tSmartBCHAddress, tSmartBCHAddress, string],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -262,7 +262,7 @@ export const deployInitializableAdminUpgradeabilityProxy = async (verify?: boole
   );
 
 export const deployMockFlashLoanReceiver = async (
-  addressesProvider: tEthereumAddress,
+  addressesProvider: tSmartBCHAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -281,7 +281,7 @@ export const deployWalletBalancerProvider = async (verify?: boolean) =>
   );
 
 export const deployAaveProtocolDataProvider = async (
-  addressesProvider: tEthereumAddress,
+  addressesProvider: tSmartBCHAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -313,7 +313,7 @@ export const deployMintableDelegationERC20 = async (
     verify
   );
 export const deployDefaultReserveInterestRateStrategy = async (
-  args: [tEthereumAddress, string, string, string, string, string, string],
+  args: [tSmartBCHAddress, string, string, string, string, string, string],
   verify: boolean
 ) =>
   withSaveAndVerify(
@@ -324,7 +324,7 @@ export const deployDefaultReserveInterestRateStrategy = async (
   );
 
 export const deployStableDebtToken = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress, string, string],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress, string, string],
   verify: boolean
 ) => {
   const instance = await withSaveAndVerify(
@@ -340,7 +340,7 @@ export const deployStableDebtToken = async (
 };
 
 export const deployVariableDebtToken = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress, string, string],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress, string, string],
   verify: boolean
 ) => {
   const instance = await withSaveAndVerify(
@@ -373,10 +373,10 @@ export const deployGenericVariableDebtToken = async (verify?: boolean) =>
 
 export const deployGenericAToken = async (
   [poolAddress, underlyingAssetAddress, treasuryAddress, incentivesController, name, symbol]: [
-    tEthereumAddress,
-    tEthereumAddress,
-    tEthereumAddress,
-    tEthereumAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
     string,
     string
   ],
@@ -413,10 +413,10 @@ export const deployGenericATokenImpl = async (verify: boolean) =>
 
 export const deployDelegationAwareAToken = async (
   [pool, underlyingAssetAddress, treasuryAddress, incentivesController, name, symbol]: [
-    tEthereumAddress,
-    tEthereumAddress,
-    tEthereumAddress,
-    tEthereumAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
     string,
     string
   ],
@@ -492,7 +492,7 @@ export const deployMockTokens = async (config: PoolConfiguration, verify?: boole
 };
 
 export const deployStableAndVariableTokensHelper = async (
-  args: [tEthereumAddress, tEthereumAddress],
+  args: [tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -503,7 +503,7 @@ export const deployStableAndVariableTokensHelper = async (
   );
 
 export const deployATokensAndRatesHelper = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -513,24 +513,24 @@ export const deployATokensAndRatesHelper = async (
     verify
   );
 
-export const deployWETHGateway = async (args: [tEthereumAddress], verify?: boolean) =>
+export const deployWBCHGateway = async (args: [tSmartBCHAddress], verify?: boolean) =>
   withSaveAndVerify(
-    await new WETHGatewayFactory(await getFirstSigner()).deploy(...args),
-    eContractid.WETHGateway,
+    await new WBCHGatewayFactory(await getFirstSigner()).deploy(...args),
+    eContractid.WBCHGateway,
     args,
     verify
   );
 
-export const authorizeWETHGateway = async (
-  wethGateWay: tEthereumAddress,
-  lendingPool: tEthereumAddress
+export const authorizeWBCHGateway = async (
+  wethGateWay: tSmartBCHAddress,
+  lendingPool: tSmartBCHAddress
 ) =>
-  await new WETHGatewayFactory(await getFirstSigner())
+  await new WBCHGatewayFactory(await getFirstSigner())
     .attach(wethGateWay)
     .authorizeLendingPool(lendingPool);
 
 export const deployMockStableDebtToken = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress, string, string, string],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress, string, string, string],
   verify?: boolean
 ) => {
   const instance = await withSaveAndVerify(
@@ -545,16 +545,16 @@ export const deployMockStableDebtToken = async (
   return instance;
 };
 
-export const deployWETHMocked = async (verify?: boolean) =>
+export const deployWBCHMocked = async (verify?: boolean) =>
   withSaveAndVerify(
-    await new WETH9MockedFactory(await getFirstSigner()).deploy(),
-    eContractid.WETHMocked,
+    await new WBCH9MockedFactory(await getFirstSigner()).deploy(),
+    eContractid.WBCHMocked,
     [],
     verify
   );
 
 export const deployMockVariableDebtToken = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress, string, string, string],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress, string, string, string],
   verify?: boolean
 ) => {
   const instance = await withSaveAndVerify(
@@ -571,10 +571,10 @@ export const deployMockVariableDebtToken = async (
 
 export const deployMockAToken = async (
   args: [
-    tEthereumAddress,
-    tEthereumAddress,
-    tEthereumAddress,
-    tEthereumAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
+    tSmartBCHAddress,
     string,
     string,
     string
@@ -610,7 +610,7 @@ export const deployMockUniswapRouter = async (verify?: boolean) =>
   );
 
 export const deployUniswapLiquiditySwapAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -621,7 +621,7 @@ export const deployUniswapLiquiditySwapAdapter = async (
   );
 
 export const deployUniswapRepayAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -632,7 +632,7 @@ export const deployUniswapRepayAdapter = async (
   );
 
 export const deployFlashLiquidationAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress, tEthereumAddress],
+  args: [tSmartBCHAddress, tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -701,9 +701,9 @@ export const deployATokenImplementations = async (
 
 export const deployRateStrategy = async (
   strategyName: string,
-  args: [tEthereumAddress, string, string, string, string, string, string],
+  args: [tSmartBCHAddress, string, string, string, string, string, string],
   verify: boolean
-): Promise<tEthereumAddress> => {
+): Promise<tSmartBCHAddress> => {
   switch (strategyName) {
     default:
       return await (
@@ -720,7 +720,7 @@ export const deployMockParaSwapAugustus = async (verify?: boolean) =>
   );
 
 export const deployMockParaSwapAugustusRegistry = async (
-  args: [tEthereumAddress],
+  args: [tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(
@@ -731,7 +731,7 @@ export const deployMockParaSwapAugustusRegistry = async (
   );
 
 export const deployParaSwapLiquiditySwapAdapter = async (
-  args: [tEthereumAddress, tEthereumAddress],
+  args: [tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) =>
   withSaveAndVerify(

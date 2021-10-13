@@ -4,15 +4,15 @@ import { fromRpcSig, ECDSASignature } from 'ethereumjs-util';
 import BigNumber from 'bignumber.js';
 import { getDb, DRE, waitForTx, notFalsyOrZeroAddress } from './misc-utils';
 import {
-  tEthereumAddress,
+  tSmartBCHAddress,
   eContractid,
   tStringTokenSmallUnits,
-  eEthereumNetwork,
+  eSmartBCHNetwork,
   AavePools,
   iParamsPerNetwork,
   iParamsPerPool,
   eNetwork,
-  iEthereumParamsPerNetwork,
+  iSmartBCHParamsPerNetwork,
 } from './types';
 import { MintableERC20 } from '../types/MintableERC20';
 import { Artifact } from 'hardhat/types';
@@ -50,14 +50,14 @@ export const registerContractInJsonDb = async (contractId: string, contractInsta
     .write();
 };
 
-export const insertContractAddressInDb = async (id: eContractid, address: tEthereumAddress) =>
+export const insertContractAddressInDb = async (id: eContractid, address: tSmartBCHAddress) =>
   await getDb()
     .set(`${id}.${DRE.network.name}`, {
       address,
     })
     .write();
 
-export const rawInsertContractAddressInDb = async (id: string, address: tEthereumAddress) =>
+export const rawInsertContractAddressInDb = async (id: string, address: tSmartBCHAddress) =>
   await getDb()
     .set(`${id}.${DRE.network.name}`, {
       address,
@@ -74,7 +74,7 @@ export const getEthersSigners = async (): Promise<Signer[]> => {
   return ethersSigners;
 };
 
-export const getEthersSignersAddresses = async (): Promise<tEthereumAddress[]> =>
+export const getEthersSignersAddresses = async (): Promise<tSmartBCHAddress[]> =>
   await Promise.all((await getEthersSigners()).map((signer) => signer.getAddress()));
 
 export const getCurrentBlock = async () => {
@@ -140,29 +140,29 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
   const { main, amber, coverage, buidlerevm, tenderly } =
-    param as iEthereumParamsPerNetwork<T>;
+    param as iSmartBCHParamsPerNetwork<T>;
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
   }
 
   switch (network) {
-    case eEthereumNetwork.coverage:
+    case eSmartBCHNetwork.coverage:
       return coverage;
-    case eEthereumNetwork.buidlerevm:
+    case eSmartBCHNetwork.buidlerevm:
       return buidlerevm;
-    case eEthereumNetwork.hardhat:
+    case eSmartBCHNetwork.hardhat:
       return buidlerevm;
-    case eEthereumNetwork.amber:
+    case eSmartBCHNetwork.amber:
       return amber;
-    case eEthereumNetwork.main:
+    case eSmartBCHNetwork.main:
       return main;
-    case eEthereumNetwork.tenderly:
+    case eSmartBCHNetwork.tenderly:
       return tenderly;
   }
 };
 
 export const getOptionalParamAddressPerNetwork = (
-  param: iParamsPerNetwork<tEthereumAddress> | undefined | null,
+  param: iParamsPerNetwork<tSmartBCHAddress> | undefined | null,
   network: eNetwork
 ) => {
   if (!param) {
@@ -184,7 +184,7 @@ export const getParamPerPool = <T>({ proto, amm, matic }: iParamsPerPool<T>, poo
   }
 };
 
-export const convertToCurrencyDecimals = async (tokenAddress: tEthereumAddress, amount: string) => {
+export const convertToCurrencyDecimals = async (tokenAddress: tSmartBCHAddress, amount: string) => {
   const token = await getIErc20Detailed(tokenAddress);
   let decimals = (await token.decimals()).toString();
 
@@ -201,11 +201,11 @@ export const convertToCurrencyUnits = async (tokenAddress: string, amount: strin
 
 export const buildPermitParams = (
   chainId: number,
-  token: tEthereumAddress,
+  token: tSmartBCHAddress,
   revision: string,
   tokenName: string,
-  owner: tEthereumAddress,
-  spender: tEthereumAddress,
+  owner: tSmartBCHAddress,
+  spender: tSmartBCHAddress,
   nonce: number,
   deadline: string,
   value: tStringTokenSmallUnits
@@ -252,7 +252,7 @@ export const getSignatureFromTypedData = (
 };
 
 export const buildLiquiditySwapParams = (
-  assetToSwapToList: tEthereumAddress[],
+  assetToSwapToList: tSmartBCHAddress[],
   minAmountsToReceive: BigNumberish[],
   swapAllBalances: BigNumberish[],
   permitAmounts: BigNumberish[],
@@ -289,7 +289,7 @@ export const buildLiquiditySwapParams = (
 };
 
 export const buildRepayAdapterParams = (
-  collateralAsset: tEthereumAddress,
+  collateralAsset: tSmartBCHAddress,
   collateralAmount: BigNumberish,
   rateMode: BigNumberish,
   permitAmount: BigNumberish,
@@ -306,9 +306,9 @@ export const buildRepayAdapterParams = (
 };
 
 export const buildFlashLiquidationAdapterParams = (
-  collateralAsset: tEthereumAddress,
-  debtAsset: tEthereumAddress,
-  user: tEthereumAddress,
+  collateralAsset: tSmartBCHAddress,
+  debtAsset: tSmartBCHAddress,
+  user: tSmartBCHAddress,
   debtToCover: BigNumberish,
   useEthPath: boolean
 ) => {
@@ -319,11 +319,11 @@ export const buildFlashLiquidationAdapterParams = (
 };
 
 export const buildParaSwapLiquiditySwapParams = (
-  assetToSwapTo: tEthereumAddress,
+  assetToSwapTo: tSmartBCHAddress,
   minAmountToReceive: BigNumberish,
   swapAllBalanceOffset: BigNumberish,
   swapCalldata: string | Buffer,
-  augustus: tEthereumAddress,
+  augustus: tSmartBCHAddress,
   permitAmount: BigNumberish,
   deadline: BigNumberish,
   v: BigNumberish,
@@ -369,7 +369,7 @@ export const verifyContract = async (
 export const getContractAddressWithJsonFallback = async (
   id: string,
   pool: ConfigNames
-): Promise<tEthereumAddress> => {
+): Promise<tSmartBCHAddress> => {
   const poolConfig = loadPoolConfig(pool);
   const network = <eNetwork>DRE.network.name;
   const db = getDb();
@@ -381,7 +381,7 @@ export const getContractAddressWithJsonFallback = async (
 
   const contractAtDb = await getDb().get(`${id}.${DRE.network.name}`).value();
   if (contractAtDb?.address) {
-    return contractAtDb.address as tEthereumAddress;
+    return contractAtDb.address as tSmartBCHAddress;
   }
   throw Error(`Missing contract address ${id} at Market config and JSON local db`);
 };

@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
 import {
   eContractid,
-  eEthereumNetwork,
+  eSmartBCHNetwork,
   eNetwork,
 } from '../../helpers/types';
 import { deployUiPoolDataProvider } from '../../helpers/contracts-deployments';
@@ -19,7 +19,7 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
     const addressesByNetwork: {
       [key: string]: { incentivesController: string; aaveOracle: string };
     } = {
-      [eEthereumNetwork.main]: {
+      [eSmartBCHNetwork.main]: {
         incentivesController: '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
         aaveOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',
       },

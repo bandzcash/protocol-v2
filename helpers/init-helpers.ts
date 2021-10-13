@@ -3,7 +3,7 @@ import {
   eNetwork,
   iMultiPoolsAssets,
   IReserveParams,
-  tEthereumAddress,
+  tSmartBCHAddress,
 } from './types';
 import { AaveProtocolDataProvider } from '../types/AaveProtocolDataProvider';
 import { chunk, getDb, waitForTx } from './misc-utils';
@@ -21,7 +21,7 @@ import { BigNumberish } from 'ethers';
 import { ConfigNames } from './configuration';
 import { deployRateStrategy } from './contracts-deployments';
 
-export const getATokenExtraParams = async (aTokenName: string, tokenAddress: tEthereumAddress) => {
+export const getATokenExtraParams = async (aTokenName: string, tokenAddress: tSmartBCHAddress) => {
   console.log(aTokenName);
   switch (aTokenName) {
     default:
@@ -31,14 +31,14 @@ export const getATokenExtraParams = async (aTokenName: string, tokenAddress: tEt
 
 export const initReservesByHelper = async (
   reservesParams: iMultiPoolsAssets<IReserveParams>,
-  tokenAddresses: { [symbol: string]: tEthereumAddress },
+  tokenAddresses: { [symbol: string]: tSmartBCHAddress },
   aTokenNamePrefix: string,
   stableDebtTokenNamePrefix: string,
   variableDebtTokenNamePrefix: string,
   symbolPrefix: string,
-  admin: tEthereumAddress,
-  treasuryAddress: tEthereumAddress,
-  incentivesController: tEthereumAddress,
+  admin: tSmartBCHAddress,
+  treasuryAddress: tSmartBCHAddress,
+  incentivesController: tSmartBCHAddress,
   poolName: ConfigNames,
   verify: boolean
 ) => {
@@ -79,7 +79,7 @@ export const initReservesByHelper = async (
     string
   ];
   let rateStrategies: Record<string, typeof strategyRates> = {};
-  let strategyAddresses: Record<string, tEthereumAddress> = {};
+  let strategyAddresses: Record<string, tSmartBCHAddress> = {};
 
   const reserves = Object.entries(reservesParams);
 
@@ -165,9 +165,9 @@ export const initReservesByHelper = async (
 
 export const getPairsTokenAggregator = (
   allAssetsAddresses: {
-    [tokenSymbol: string]: tEthereumAddress;
+    [tokenSymbol: string]: tSmartBCHAddress;
   },
-  aggregatorsAddresses: { [tokenSymbol: string]: tEthereumAddress }
+  aggregatorsAddresses: { [tokenSymbol: string]: tSmartBCHAddress }
 ): [string[], string[]] => {
   const { ETH, USD, WETH, ...assetsAddressesWithoutEth } = allAssetsAddresses;
 
@@ -177,7 +177,7 @@ export const getPairsTokenAggregator = (
         (value) => value === tokenSymbol
       );
       const [, aggregatorAddress] = (
-        Object.entries(aggregatorsAddresses) as [string, tEthereumAddress][]
+        Object.entries(aggregatorsAddresses) as [string, tSmartBCHAddress][]
       )[aggregatorAddressIndex];
       return [tokenAddress, aggregatorAddress];
     }
@@ -191,9 +191,9 @@ export const getPairsTokenAggregator = (
 
 export const configureReservesByHelper = async (
   reservesParams: iMultiPoolsAssets<IReserveParams>,
-  tokenAddresses: { [symbol: string]: tEthereumAddress },
+  tokenAddresses: { [symbol: string]: tSmartBCHAddress },
   helpers: AaveProtocolDataProvider,
-  admin: tEthereumAddress
+  admin: tSmartBCHAddress
 ) => {
   const addressProvider = await getLendingPoolAddressesProvider();
   const atokenAndRatesDeployer = await getATokensAndRatesHelper();
@@ -282,11 +282,11 @@ export const configureReservesByHelper = async (
 const getAddressById = async (
   id: string,
   network: eNetwork
-): Promise<tEthereumAddress | undefined> =>
+): Promise<tSmartBCHAddress | undefined> =>
   (await getDb().get(`${id}.${network}`).value())?.address || undefined;
 
 // Function deprecated
-const isErc20SymbolCorrect = async (token: tEthereumAddress, symbol: string) => {
+const isErc20SymbolCorrect = async (token: tSmartBCHAddress, symbol: string) => {
   const erc20 = await getAToken(token); // using aToken for ERC20 interface
   const erc20Symbol = await erc20.symbol();
   return symbol === erc20Symbol;

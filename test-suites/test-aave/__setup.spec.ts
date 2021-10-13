@@ -34,7 +34,7 @@ import {
   deployAaveOracle,
 } from '../../helpers/contracts-deployments';
 import { Signer } from 'ethers';
-import { TokenContractId, eContractid, tEthereumAddress, AavePools } from '../../helpers/types';
+import { TokenContractId, eContractid, tSmartBCHAddress, AavePools } from '../../helpers/types';
 import { MintableERC20 } from '../../types/MintableERC20';
 import {
   ConfigNames,
@@ -177,22 +177,6 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       // USDT: mockTokens.LpUSDT.address,
       // WBTC: mockTokens.LpWBTC.address,
       // WETH: mockTokens.LpWETH.address,
-      UniDAIWETH: mockTokens.UniDAIWETH.address,
-      UniWBTCWETH: mockTokens.UniWBTCWETH.address,
-      UniAAVEWETH: mockTokens.UniAAVEWETH.address,
-      UniBATWETH: mockTokens.UniBATWETH.address,
-      UniDAIUSDC: mockTokens.UniDAIUSDC.address,
-      UniCRVWETH: mockTokens.UniCRVWETH.address,
-      UniLINKWETH: mockTokens.UniLINKWETH.address,
-      UniMKRWETH: mockTokens.UniMKRWETH.address,
-      UniRENWETH: mockTokens.UniRENWETH.address,
-      UniSNXWETH: mockTokens.UniSNXWETH.address,
-      UniUNIWETH: mockTokens.UniUNIWETH.address,
-      UniUSDCWETH: mockTokens.UniUSDCWETH.address,
-      UniWBTCUSDC: mockTokens.UniWBTCUSDC.address,
-      UniYFIWETH: mockTokens.UniYFIWETH.address,
-      BptWBTCWETH: mockTokens.BptWBTCWETH.address,
-      BptBALWETH: mockTokens.BptBALWETH.address,
       WMATIC: mockTokens.WMATIC.address,
       USD: USD_ADDRESS,
       STAKE: mockTokens.STAKE.address,
@@ -204,14 +188,14 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const mockAggregators = await deployAllMockAggregators(ALL_ASSETS_INITIAL_PRICES);
   const allTokenAddresses = Object.entries(mockTokens).reduce(
-    (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, tokenContract]) => ({
+    (accum: { [tokenSymbol: string]: tSmartBCHAddress }, [tokenSymbol, tokenContract]) => ({
       ...accum,
       [tokenSymbol]: tokenContract.address,
     }),
     {}
   );
   const allAggregatorsAddresses = Object.entries(mockAggregators).reduce(
-    (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, aggregator]) => ({
+    (accum: { [tokenSymbol: string]: tSmartBCHAddress }, [tokenSymbol, aggregator]) => ({
       ...accum,
       [tokenSymbol]: aggregator.address,
     }),

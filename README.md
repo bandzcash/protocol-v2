@@ -181,7 +181,7 @@ const contractGetters = require('./helpers/contracts-getters'); // Import a TS/J
 // Lending pool instance
 const lendingPool = await contractGetters.getLendingPool("LendingPool address from 'bandz:mainnet' task");
 
-// You can impersonate any Ethereum address
+// You can impersonate any smartBCH address
 await network.provider.request({ method: "hardhat_impersonateAccount",  params: ["0xb1adceddb2941033a090dd166a462fe1c2029484"]});
 
 const signer = await ethers.provider.getSigner("0xb1adceddb2941033a090dd166a462fe1c2029484")

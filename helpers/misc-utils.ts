@@ -6,7 +6,7 @@ import { WAD } from './constants';
 import { Wallet, ContractTransaction } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { BuidlerRuntimeEnvironment } from '@nomiclabs/buidler/types';
-import { tEthereumAddress } from './types';
+import { tSmartBCHAddress } from './types';
 import { isAddress } from 'ethers/lib/utils';
 import { isZeroAddress } from 'ethereumjs-util';
 import { SignerWithAddress } from '../test-suites/test-aave/helpers/make-suite';
@@ -111,14 +111,14 @@ export const printContracts = () => {
   console.log(contractsPrint.join('\n'), '\n');
 };
 
-export const notFalsyOrZeroAddress = (address: tEthereumAddress | null | undefined): boolean => {
+export const notFalsyOrZeroAddress = (address: tSmartBCHAddress | null | undefined): boolean => {
   if (!address) {
     return false;
   }
   return isAddress(address) && !isZeroAddress(address);
 };
 
-export const impersonateAddress = async (address: tEthereumAddress): Promise<SignerWithAddress> => {
+export const impersonateAddress = async (address: tSmartBCHAddress): Promise<SignerWithAddress> => {
   if (!usingTenderly()) {
     await (DRE as HardhatRuntimeEnvironment).network.provider.request({
       method: 'hardhat_impersonateAccount',

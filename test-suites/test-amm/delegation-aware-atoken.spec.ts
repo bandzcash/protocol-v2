@@ -3,7 +3,7 @@ import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
 import { buildPermitParams, getSignatureFromTypedData } from '../../helpers/contracts-helpers';
 import { expect } from 'chai';
 import { ethers } from 'ethers';
-import { eEthereumNetwork, ProtocolErrors } from '../../helpers/types';
+import { eSmartBCHNetwork, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { DRE } from '../../helpers/misc-utils';
 import {

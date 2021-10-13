@@ -1,7 +1,7 @@
 // @ts-ignore
 import { HardhatNetworkForkingUserConfig, HardhatUserConfig } from 'hardhat/types';
 import {
-  eEthereumNetwork,
+  eSmartBCHNetwork,
   iParamsPerNetwork,
 } from './helpers/types';
 
@@ -31,32 +31,32 @@ export const buildForkConfig = (): HardhatNetworkForkingUserConfig | undefined =
 };
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
-  [eEthereumNetwork.amber]: ALCHEMY_KEY
+  [eSmartBCHNetwork.amber]: ALCHEMY_KEY
     ? `https://eth-amber.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://amber.infura.io/v3/${INFURA_KEY}`,
-  [eEthereumNetwork.main]: ALCHEMY_KEY
+  [eSmartBCHNetwork.main]: ALCHEMY_KEY
     ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://mainnet.infura.io/v3/${INFURA_KEY}`,
-  [eEthereumNetwork.coverage]: 'http://localhost:8555',
-  [eEthereumNetwork.hardhat]: 'http://localhost:8545',
-  [eEthereumNetwork.buidlerevm]: 'http://localhost:8545',
-  [eEthereumNetwork.tenderly]: `https://rpc.tenderly.co/fork/`,
+  [eSmartBCHNetwork.coverage]: 'http://localhost:8555',
+  [eSmartBCHNetwork.hardhat]: 'http://localhost:8545',
+  [eSmartBCHNetwork.buidlerevm]: 'http://localhost:8545',
+  [eSmartBCHNetwork.tenderly]: `https://rpc.tenderly.co/fork/`,
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
-  [eEthereumNetwork.amber]: 65 * GWEI,
-  [eEthereumNetwork.main]: 65 * GWEI,
-  [eEthereumNetwork.coverage]: 65 * GWEI,
-  [eEthereumNetwork.hardhat]: 65 * GWEI,
-  [eEthereumNetwork.buidlerevm]: 65 * GWEI,
-  [eEthereumNetwork.tenderly]: 1 * GWEI,
+  [eSmartBCHNetwork.amber]: 65 * GWEI,
+  [eSmartBCHNetwork.main]: 65 * GWEI,
+  [eSmartBCHNetwork.coverage]: 65 * GWEI,
+  [eSmartBCHNetwork.hardhat]: 65 * GWEI,
+  [eSmartBCHNetwork.buidlerevm]: 65 * GWEI,
+  [eSmartBCHNetwork.tenderly]: 1 * GWEI,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
-  [eEthereumNetwork.main]: 12406069,
-  [eEthereumNetwork.amber]: undefined,
-  [eEthereumNetwork.coverage]: undefined,
-  [eEthereumNetwork.hardhat]: undefined,
-  [eEthereumNetwork.buidlerevm]: undefined,
-  [eEthereumNetwork.tenderly]: undefined,
+  [eSmartBCHNetwork.main]: 12406069,
+  [eSmartBCHNetwork.amber]: undefined,
+  [eSmartBCHNetwork.coverage]: undefined,
+  [eSmartBCHNetwork.hardhat]: undefined,
+  [eSmartBCHNetwork.buidlerevm]: undefined,
+  [eSmartBCHNetwork.tenderly]: undefined,
 };

@@ -1,5 +1,5 @@
 import { task } from 'hardhat/config';
-import { eEthereumNetwork } from '../../helpers/types';
+import { eSmartBCHNetwork } from '../../helpers/types';
 import { getTreasuryAddress } from '../../helpers/configuration';
 import * as marketConfigs from '../../markets/aave';
 import * as reserveConfigs from '../../markets/aave/reservesConfigs';
@@ -18,7 +18,7 @@ const LENDING_POOL_ADDRESS_PROVIDER = {
   // kovan: '0x652B2937Efd0B5beA1c8d54293FC1289672AFC6b',
 };
 
-const isSymbolValid = (symbol: string, network: eEthereumNetwork) =>
+const isSymbolValid = (symbol: string, network: eSmartBCHNetwork) =>
   Object.keys(reserveConfigs).includes('strategy' + symbol) &&
   marketConfigs.AaveConfig.ReserveAssets[network][symbol] &&
   marketConfigs.AaveConfig.ReservesConfig[symbol] === reserveConfigs['strategy' + symbol];
@@ -28,7 +28,7 @@ task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters'
   .addFlag('verify', 'Verify contracts at Etherscan')
   .setAction(async ({ verify, symbol }, localBRE) => {
     const network = localBRE.network.name;
-    if (!isSymbolValid(symbol, network as eEthereumNetwork)) {
+    if (!isSymbolValid(symbol, network as eSmartBCHNetwork)) {
       throw new Error(
         `
 WRONG RESERVE ASSET SETUP:

@@ -15,7 +15,7 @@ import {
   getUniswapRepayAdapter,
   getFlashLiquidationAdapter,
 } from '../../../helpers/contracts-getters';
-import { eEthereumNetwork, eNetwork, tEthereumAddress } from '../../../helpers/types';
+import { eSmartBCHNetwork, eNetwork, tSmartBCHAddress } from '../../../helpers/types';
 import { LendingPool } from '../../../types/LendingPool';
 import { AaveProtocolDataProvider } from '../../../types/AaveProtocolDataProvider';
 import { MintableERC20 } from '../../../types/MintableERC20';
@@ -47,7 +47,7 @@ chai.use(solidity);
 
 export interface SignerWithAddress {
   signer: Signer;
-  address: tEthereumAddress;
+  address: tSmartBCHAddress;
 }
 export interface TestEnv {
   deployer: SignerWithAddress;
