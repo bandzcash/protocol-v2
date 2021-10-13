@@ -83,7 +83,7 @@ export const AaveConfig: IAaveConfiguration = {
       YFI: '0xb7c325266ec274fEb1354021D27FA3E3379D840d',
       ZRX: '0xD0d76886cF8D952ca26177EB7CfDf83bad08C00C',
     },
-    [eEthereumNetwork.ropsten]: {
+    [eEthereumNetwork.amber]: {
       AAVE: '',
       BAT: '0x85B24b3517E3aC7bf72a14516160541A60cFF19d',
       BUSD: '0xFA6adcFf6A90c11f31Bc9bb59eC0a6efB38381C6',

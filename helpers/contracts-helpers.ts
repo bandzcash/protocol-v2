@@ -11,7 +11,6 @@ import {
   AavePools,
   iParamsPerNetwork,
   iParamsPerPool,
-  ePolygonNetwork,
   eXDaiNetwork,
   eNetwork,
   iEthereumParamsPerNetwork,
@@ -145,7 +144,7 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 };
 
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
-  const { main, ropsten, kovan, coverage, buidlerevm, tenderly } =
+  const { main, amber, kovan, coverage, buidlerevm, tenderly } =
     param as iEthereumParamsPerNetwork<T>;
   const { matic, mumbai } = param as iPolygonParamsPerNetwork<T>;
   const { xdai } = param as iXDaiParamsPerNetwork<T>;
@@ -163,16 +162,12 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return buidlerevm;
     case eEthereumNetwork.kovan:
       return kovan;
-    case eEthereumNetwork.ropsten:
-      return ropsten;
+    case eEthereumNetwork.amber:
+      return amber;
     case eEthereumNetwork.main:
       return main;
     case eEthereumNetwork.tenderly:
       return tenderly;
-    case ePolygonNetwork.matic:
-      return matic;
-    case ePolygonNetwork.mumbai:
-      return mumbai;
     case eXDaiNetwork.xdai:
       return xdai;
     case eAvalancheNetwork.avalanche:

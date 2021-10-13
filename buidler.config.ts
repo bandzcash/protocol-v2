@@ -70,7 +70,7 @@ const buidlerConfig: any = {
       chainId: COVERAGE_CHAINID,
     },
     kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
-    ropsten: getCommonNetworkConfig(eEthereumNetwork.ropsten, 3),
+    amber: getCommonNetworkConfig(eEthereumNetwork.amber, 10001),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     buidlerevm: {
       hardfork: 'istanbul',
