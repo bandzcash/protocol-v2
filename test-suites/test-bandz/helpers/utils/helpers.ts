@@ -11,10 +11,10 @@ import {
 import { tSmartBCHAddress } from '../../../../helpers/types';
 import BigNumber from 'bignumber.js';
 import { getDb, DRE } from '../../../../helpers/misc-utils';
-import { AaveProtocolDataProvider } from '../../../../types/AaveProtocolDataProvider';
+import { BandzProtocolDataProvider } from '../../../../types/BandzProtocolDataProvider';
 
 export const getReserveData = async (
-  helper: AaveProtocolDataProvider,
+  helper: BandzProtocolDataProvider,
   reserve: tSmartBCHAddress
 ): Promise<ReserveData> => {
   const [reserveData, tokenAddresses, rateOracle, token] = await Promise.all([
@@ -74,7 +74,7 @@ export const getReserveData = async (
 
 export const getUserData = async (
   pool: LendingPool,
-  helper: AaveProtocolDataProvider,
+  helper: BandzProtocolDataProvider,
   reserve: string,
   user: tSmartBCHAddress,
   sender?: tSmartBCHAddress
@@ -116,7 +116,7 @@ export const getReserveAddressFromSymbol = async (symbol: string) => {
 const getATokenUserData = async (
   reserve: string,
   user: string,
-  helpersContract: AaveProtocolDataProvider
+  helpersContract: BandzProtocolDataProvider
 ) => {
   const aTokenAddress: string = (await helpersContract.getReserveTokensAddresses(reserve))
     .aTokenAddress;

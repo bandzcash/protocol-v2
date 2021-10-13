@@ -44,7 +44,7 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
     console.log((await delegationAToken.decimals()).toString());
   });
 
-  it('Tries to delegate with the caller not being the Aave admin', async () => {
+  it('Tries to delegate with the caller not being the Bandz admin', async () => {
     const { users } = testEnv;
 
     await expect(

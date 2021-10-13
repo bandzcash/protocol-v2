@@ -1,8 +1,8 @@
 import {
-  AaveProtocolDataProviderFactory,
+  BandzProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
-  AaveOracleFactory,
+  BandzOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
   GenericLogicFactory,
   InitializableAdminUpgradeabilityProxyFactory,
@@ -120,11 +120,11 @@ export const getIErc20Detailed = async (address: tSmartBCHAddress) =>
     await getFirstSigner()
   );
 
-export const getAaveProtocolDataProvider = async (address?: tSmartBCHAddress) =>
-  await AaveProtocolDataProviderFactory.connect(
+export const getBandzProtocolDataProvider = async (address?: tSmartBCHAddress) =>
+  await BandzProtocolDataProviderFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.AaveProtocolDataProvider}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.BandzProtocolDataProvider}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
@@ -379,9 +379,9 @@ export const getLendingPoolCollateralManager = async (address?: tSmartBCHAddress
 export const getAddressById = async (id: string): Promise<tSmartBCHAddress | undefined> =>
   (await getDb().get(`${id}.${DRE.network.name}`).value())?.address || undefined;
 
-export const getAaveOracle = async (address?: tSmartBCHAddress) =>
-  await AaveOracleFactory.connect(
-    address || (await getDb().get(`${eContractid.AaveOracle}.${DRE.network.name}`).value()).address,
+export const getBandzOracle = async (address?: tSmartBCHAddress) =>
+  await BandzOracleFactory.connect(
+    address || (await getDb().get(`${eContractid.BandzOracle}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );
 

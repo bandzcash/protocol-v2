@@ -10,7 +10,7 @@ import {
   strategyWBTC,
   strategyWBTCWETH,
   strategyDAIWETH,
-  strategyAAVEWETH,
+  strategyBANDZWETH,
   strategyBATWETH,
   strategyDAIUSDC,
   strategyCRVWETH,
@@ -31,7 +31,7 @@ import {
 
 export const AmmConfig: IAmmConfiguration = {
   ...CommonsConfig,
-  MarketId: 'Aave AMM market',
+  MarketId: 'Bandz AMM market',
   ProviderId: 2,
   ReservesConfig: {
     WETH: strategyWETH,

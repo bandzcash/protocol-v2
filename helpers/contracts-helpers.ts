@@ -8,7 +8,7 @@ import {
   eContractid,
   tStringTokenSmallUnits,
   eSmartBCHNetwork,
-  AavePools,
+  BandzPools,
   iParamsPerNetwork,
   iParamsPerPool,
   eNetwork,
@@ -167,13 +167,13 @@ export const getOptionalParamAddressPerNetwork = (
   return getParamPerNetwork(param, network);
 };
 
-export const getParamPerPool = <T>({ proto, amm, matic }: iParamsPerPool<T>, pool: AavePools) => {
+export const getParamPerPool = <T>({ proto, amm, matic }: iParamsPerPool<T>, pool: BandzPools) => {
   switch (pool) {
-    case AavePools.proto:
+    case BandzPools.proto:
       return proto;
-    case AavePools.amm:
+    case BandzPools.amm:
       return amm;
-    case AavePools.matic:
+    case BandzPools.matic:
       return matic;
     default:
       return proto;

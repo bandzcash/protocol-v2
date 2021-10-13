@@ -16,7 +16,7 @@ import {
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
-  deployAaveProtocolDataProvider,
+  deployBandzProtocolDataProvider,
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployATokensAndRatesHelper,
@@ -28,10 +28,10 @@ import {
   deployFlashLiquidationAdapter,
   authorizeWETHGateway,
   deployATokenImplementations,
-  deployAaveOracle,
+  deployBandzOracle,
 } from '../../helpers/contracts-deployments';
 import { Signer } from 'ethers';
-import { TokenContractId, eContractid, tSmartBCHAddress, AavePools } from '../../helpers/types';
+import { TokenContractId, eContractid, tSmartBCHAddress, BandzPools } from '../../helpers/types';
 import { MintableERC20 } from '../../types/MintableERC20';
 import {
   ConfigNames,
@@ -66,7 +66,7 @@ const LENDING_RATE_ORACLE_RATES_COMMON = AmmConfig.LendingRateOracleRatesCommon;
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const ammConfigData = getReservesConfigByPool(AavePools.amm);
+  const ammConfigData = getReservesConfigByPool(BandzPools.amm);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {
@@ -95,7 +95,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const aaveAdmin = await deployer.getAddress();
+  const bandzAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Amm);
   const {
     ATokenNamePrefix,
@@ -108,7 +108,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const mockTokens = await deployAllMockTokens(deployer);
 
   const addressesProvider = await deployLendingPoolAddressesProvider(AmmConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
+  await waitForTx(await addressesProvider.setPoolAdmin(bandzAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -160,7 +160,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       USDC: mockTokens.USDC.address,
       USDT: mockTokens.USDT.address,
       SUSD: mockTokens.SUSD.address,
-      AAVE: mockTokens.AAVE.address,
+      BANDZ: mockTokens.BANDZ.address,
       BAT: mockTokens.BAT.address,
       MKR: mockTokens.MKR.address,
       LINK: mockTokens.LINK.address,
@@ -210,7 +210,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     config.OracleQuoteCurrency
   );
 
-  await deployAaveOracle([
+  await deployBandzOracle([
     tokens,
     aggregators,
     fallbackOracle.address,
@@ -230,13 +230,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    aaveAdmin
+    bandzAdmin
   );
   await deployATokenImplementations(ConfigNames.Amm, ReservesConfig);
 
-  const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address);
+  const testHelpers = await deployBandzProtocolDataProvider(addressesProvider.address);
 
-  await insertContractAddressInDb(eContractid.AaveProtocolDataProvider, testHelpers.address);
+  await insertContractAddressInDb(eContractid.BandzProtocolDataProvider, testHelpers.address);
   const admin = await deployer.getAddress();
 
   console.log('Initialize configuration');

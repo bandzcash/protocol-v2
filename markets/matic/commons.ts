@@ -14,9 +14,9 @@ import { ICommonConfiguration } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  ATokenNamePrefix: 'Aave Matic Market',
-  StableDebtTokenNamePrefix: 'Aave Matic Market stable debt',
-  VariableDebtTokenNamePrefix: 'Aave Matic Market variable debt',
+  ATokenNamePrefix: 'Bandz Matic Market',
+  StableDebtTokenNamePrefix: 'Bandz Matic Market stable debt',
+  VariableDebtTokenNamePrefix: 'Bandz Matic Market variable debt',
   SymbolPrefix: 'm',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
@@ -27,7 +27,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
-    AaveReferral: '0',
+    BandzReferral: '0',
   },
 
   // ----------------
@@ -59,7 +59,7 @@ export const CommonsConfig: ICommonConfiguration = {
     WMATIC: {
       borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
-    AAVE: {
+    BANDZ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
   },
@@ -90,7 +90,7 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   WethGateway: {
   },
-  AaveOracle: {
+  BandzOracle: {
   },
   FallbackOracle: {
   },

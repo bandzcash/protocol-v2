@@ -6,7 +6,7 @@ import { RateMode, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { CommonsConfig } from '../../markets/amm/commons';
 
-const AAVE_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const BANDZ_REFERRAL = CommonsConfig.ProtocolGlobalParams.BandzReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {
@@ -33,7 +33,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Aave AMM Market DAI');
+    expect(name).to.be.equal('Bandz AMM Market DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[1].address);
@@ -62,7 +62,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
         weth.address,
         ethers.utils.parseEther('0.1'),
         RateMode.Variable,
-        AAVE_REFERRAL,
+        BANDZ_REFERRAL,
         users[1].address
       );
 

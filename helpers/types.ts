@@ -20,7 +20,7 @@ export enum SmartBCHNetworkNames {
   matic = 'matic',
 }
 
-export enum AavePools {
+export enum BandzPools {
   proto = 'proto',
   matic = 'matic',
   amm = 'amm',
@@ -42,7 +42,7 @@ export enum eContractid {
   Proxy = 'Proxy',
   MockAggregator = 'MockAggregator',
   LendingRateOracle = 'LendingRateOracle',
-  AaveOracle = 'AaveOracle',
+  BandzOracle = 'BandzOracle',
   DefaultReserveInterestRateStrategy = 'DefaultReserveInterestRateStrategy',
   LendingPoolCollateralManager = 'LendingPoolCollateralManager',
   InitializableAdminUpgradeabilityProxy = 'InitializableAdminUpgradeabilityProxy',
@@ -53,7 +53,7 @@ export enum eContractid {
   DelegationAwareAToken = 'DelegationAwareAToken',
   MockStableDebtToken = 'MockStableDebtToken',
   MockVariableDebtToken = 'MockVariableDebtToken',
-  AaveProtocolDataProvider = 'AaveProtocolDataProvider',
+  BandzProtocolDataProvider = 'BandzProtocolDataProvider',
   IERC20Detailed = 'IERC20Detailed',
   StableDebtToken = 'StableDebtToken',
   VariableDebtToken = 'VariableDebtToken',
@@ -194,7 +194,7 @@ export interface iAssetBase<T> {
   USDC: T;
   USDT: T;
   SUSD: T;
-  AAVE: T;
+  BANDZ: T;
   BAT: T;
   MKR: T;
   LINK: T;
@@ -219,14 +219,14 @@ export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iAavePoolAssets<T> = Pick<
+export type iBandzPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
   | 'DAI'
   | 'TUSD'
   | 'USDC'
   | 'USDT'
   | 'SUSD'
-  | 'AAVE'
+  | 'BANDZ'
   | 'BAT'
   | 'MKR'
   | 'LINK'
@@ -255,18 +255,18 @@ export type iLpPoolAssets<T> = Pick<
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'AAVE'
+  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'BANDZ'
 >;
 
-export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
+export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
 
-export type iAavePoolTokens<T> = Omit<iAavePoolAssets<T>, 'ETH'>;
+export type iBandzPoolTokens<T> = Omit<iBandzPoolAssets<T>, 'ETH'>;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
   DAI = 'DAI',
-  AAVE = 'AAVE',
+  BANDZ = 'BANDZ',
   TUSD = 'TUSD',
   BAT = 'BAT',
   WETH = 'WETH',
@@ -344,9 +344,9 @@ export interface iSmartBCHParamsPerNetwork<T> {
 }
 
 export interface iParamsPerPool<T> {
-  [AavePools.proto]: T;
-  [AavePools.matic]: T;
-  [AavePools.amm]: T;
+  [BandzPools.proto]: T;
+  [BandzPools.matic]: T;
+  [BandzPools.amm]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -370,7 +370,7 @@ export interface IProtocolGlobalConfig {
   UsdAddress: tSmartBCHAddress;
   NilAddress: tSmartBCHAddress;
   OneAddress: tSmartBCHAddress;
-  AaveReferral: string;
+  BandzReferral: string;
 }
 
 export interface IMocksConfig {
@@ -401,7 +401,7 @@ export interface IBaseConfiguration {
   LendingRateOracleRatesCommon: iMultiPoolsAssets<IMarketRates>;
   LendingRateOracle: iParamsPerNetwork<tSmartBCHAddress>;
   TokenDistributor: iParamsPerNetwork<tSmartBCHAddress>;
-  AaveOracle: iParamsPerNetwork<tSmartBCHAddress>;
+  BandzOracle: iParamsPerNetwork<tSmartBCHAddress>;
   FallbackOracle: iParamsPerNetwork<tSmartBCHAddress>;
   ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
   PoolAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;
@@ -426,8 +426,8 @@ export interface ICommonConfiguration extends IBaseConfiguration {
   Mocks: IMocksConfig;
 }
 
-export interface IAaveConfiguration extends ICommonConfiguration {
-  ReservesConfig: iAavePoolAssets<IReserveParams>;
+export interface IBandzConfiguration extends ICommonConfiguration {
+  ReservesConfig: iBandzPoolAssets<IReserveParams>;
 }
 
 export interface IAmmConfiguration extends ICommonConfiguration {
@@ -442,4 +442,4 @@ export interface ITokenAddress {
   [token: string]: tSmartBCHAddress;
 }
 
-export type PoolConfiguration = ICommonConfiguration | IAaveConfiguration;
+export type PoolConfiguration = ICommonConfiguration | IBandzConfiguration;

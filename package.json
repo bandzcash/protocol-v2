@@ -1,7 +1,7 @@
 {
-  "name": "@aave/protocol-v2",
+  "name": "@bandz/protocol-v2",
   "version": "1.0.1",
-  "description": "Aave Protocol V2 smart contracts",
+  "description": "Bandz Protocol V2 smart contracts",
   "files": [
     "contracts",
     "artifacts"
@@ -15,32 +15,32 @@
     "hardhat:matic": "hardhat --network matic",
     "compile": "SKIP_LOAD=true hardhat compile",
     "console:fork": "FORK=main hardhat console",
-    "test": "npm run compile && TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test-suites/test-aave/*.spec.ts",
+    "test": "npm run compile && TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test-suites/test-bandz/*.spec.ts",
     "test-amm": "npm run compile && TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test-suites/test-amm/*.spec.ts",
     "test-amm-scenarios": "npm run compile && TS_NODE_TRANSPILE_ONLY=1 hardhat test ./test-suites/test-amm/__setup.spec.ts test-suites/test-amm/scenario.spec.ts",
-    "test-scenarios": "npm run compile && npx hardhat test test-suites/test-aave/__setup.spec.ts test-suites/test-aave/scenario.spec.ts",
-    "test-subgraph:scenarios": "npm run compile && hardhat --network hardhatevm_docker test test-suites/test-aave/__setup.spec.ts test-suites/test-aave/subgraph-scenarios.spec.ts",
-    "test:main:check-list": "npm run compile && FORK=main TS_NODE_TRANSPILE_ONLY=1 hardhat test  test-suites/test-aave/__setup.spec.ts test-suites/test-aave/mainnet/check-list.spec.ts",
+    "test-scenarios": "npm run compile && npx hardhat test test-suites/test-bandz/__setup.spec.ts test-suites/test-bandz/scenario.spec.ts",
+    "test-subgraph:scenarios": "npm run compile && hardhat --network hardhatevm_docker test test-suites/test-bandz/__setup.spec.ts test-suites/test-bandz/subgraph-scenarios.spec.ts",
+    "test:main:check-list": "npm run compile && FORK=main TS_NODE_TRANSPILE_ONLY=1 hardhat test  test-suites/test-bandz/__setup.spec.ts test-suites/test-bandz/mainnet/check-list.spec.ts",
     "dev:coverage": "buidler compile --force && buidler coverage --network coverage",
-    "aave:evm:dev:migration": "npm run compile && hardhat aave:dev",
-    "aave:docker:full:migration": "npm run compile && npm run hardhat:docker -- aave:mainnet --skip-registry",
+    "bandz:evm:dev:migration": "npm run compile && hardhat bandz:dev",
+    "bandz:docker:full:migration": "npm run compile && npm run hardhat:docker -- bandz:mainnet --skip-registry",
     "matic:matic:full:migration": "npm run compile && npm run hardhat:matic sidechain:mainnet -- --pool Matic --skip-registry",
-    "aave:docker:full:migration:add-registry": "npm run compile && npm run hardhat:docker -- aave:mainnet",
+    "bandz:docker:full:migration:add-registry": "npm run compile && npm run hardhat:docker -- bandz:mainnet",
     "matic:matic:full:migration:add-registry": "npm run compile && npm run hardhat:matic sidechain:mainnet -- --pool Matic",
-    "aave:docker:add-market-to-registry-from-config": "npm run compile && npm run hardhat:docker -- add-market-to-registry --pool Aave",
+    "bandz:docker:add-market-to-registry-from-config": "npm run compile && npm run hardhat:docker -- add-market-to-registry --pool Bandz",
     "matic:matic:add-market-to-registry-from-config": "npm run compile && npm run hardhat:matic add-market-to-registry --pool Matic",
-    "aave:main:add-market-to-registry-from-config": "npm run compile && npm run hardhat:main -- add-market-to-registry --pool Aave",
-    "aave:docker:add-market-to-new-registry": "npm run compile && npm run hardhat:docker -- add-market-to-registry --pool Aave --deploy-registry",
+    "bandz:main:add-market-to-registry-from-config": "npm run compile && npm run hardhat:main -- add-market-to-registry --pool Bandz",
+    "bandz:docker:add-market-to-new-registry": "npm run compile && npm run hardhat:docker -- add-market-to-registry --pool Bandz --deploy-registry",
     "matic:matic:add-market-to-new-registry": "npm run compile && npm run hardhat:matic -- add-market-to-registry --pool Matic --verify --deploy-registry",
-    "aave:main:add-market-to-new-registry": "npm run compile && npm run hardhat:matic -- add-market-to-registry --pool Matic --verify --deploy-registry",
-    "aave:amber:full:migration": "npm run compile && npm run hardhat:amber -- aave:mainnet --verify",
-    "aave:fork:main": "npm run compile && FORK=main hardhat aave:mainnet",
+    "bandz:main:add-market-to-new-registry": "npm run compile && npm run hardhat:matic -- add-market-to-registry --pool Matic --verify --deploy-registry",
+    "bandz:amber:full:migration": "npm run compile && npm run hardhat:amber -- bandz:mainnet --verify",
+    "bandz:fork:main": "npm run compile && FORK=main hardhat bandz:mainnet",
     "amm:fork:main": "npm run compile && FORK=main hardhat amm:mainnet",
-    "aave:main:full:migration": "npm run compile && npm run hardhat:main -- aave:mainnet --verify",
-    "aave:main:full:initialize": "npm run compile && FORK=main full:initialize-tokens --pool Aave",
+    "bandz:main:full:migration": "npm run compile && npm run hardhat:main -- bandz:mainnet --verify",
+    "bandz:main:full:initialize": "npm run compile && FORK=main full:initialize-tokens --pool Bandz",
     "amm:main:full:migration": "npm run compile && npm run hardhat:main -- amm:mainnet --verify",
-    "prettier:check": "npx prettier -c 'tasks/**/*.ts' 'contracts/**/*.sol' 'helpers/**/*.ts'  'test-suites/test-aave/**/*.ts'",
-    "prettier:write": "prettier --write 'tasks/**/*.ts' 'contracts/**/*.sol' 'helpers/**/*.ts'  'test-suites/test-aave/**/*.ts'",
+    "prettier:check": "npx prettier -c 'tasks/**/*.ts' 'contracts/**/*.sol' 'helpers/**/*.ts'  'test-suites/test-bandz/**/*.ts'",
+    "prettier:write": "prettier --write 'tasks/**/*.ts' 'contracts/**/*.sol' 'helpers/**/*.ts'  'test-suites/test-bandz/**/*.ts'",
     "ci:test": "npm run compile && npm run test",
     "ci:clean": "rm -rf ./artifacts ./cache ./types",
     "print-contracts:main": "npm run hardhat:main -- print-contracts",
@@ -50,12 +50,12 @@
     "main:deployUniswapRepayAdapter": "hardhat --network main deploy-UniswapRepayAdapter --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --router 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D --weth 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "main:UniswapLiquiditySwapAdapter": "hardhat --network main deploy-UniswapLiquiditySwapAdapter  --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --router 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D --weth 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     "main:ParaSwapLiquiditySwapAdapter": "hardhat --network main deploy-ParaSwapLiquiditySwapAdapter --provider 0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5 --augustusRegistry 0xa68bEA62Dc4034A689AA0F58A76681433caCa663",
-    "amber:verify": "npm run hardhat:amber verify:general -- --all --pool Aave",
-    "mainnet:verify": "npm run hardhat:main verify:general -- --all --pool Aave",
+    "amber:verify": "npm run hardhat:amber verify:general -- --all --pool Bandz",
+    "mainnet:verify": "npm run hardhat:main verify:general -- --all --pool Bandz",
     "matic:mainnet:verify": "npm run hardhat:matic verify:general -- --all --pool Matic",
     "matic:mainnet:verify:tokens": "npm run hardhat:matic verify:tokens -- --pool Matic",
-    "amber:verify:tokens": "npm run hardhat:amber verify:tokens -- --pool Aave",
-    "mainnet:verify:tokens": "npm run hardhat:main verify:tokens -- --pool Aave",
+    "amber:verify:tokens": "npm run hardhat:amber verify:tokens -- --pool Bandz",
+    "mainnet:verify:tokens": "npm run hardhat:main verify:tokens -- --pool Bandz",
     "print-config:fork:mainnet": "FORK=main hardhat print-config:fork",
     "external:deploy-assets-main": "npm run compile && hardhat --network main external:deploy-new-asset --symbol ${SYMBOL} --verify",
     "prepublishOnly": "npm run compile"
@@ -109,17 +109,12 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged --pattern 'contracts/**/*.sol' --pattern 'helpers/**/*.ts'  --pattern 'test-suites/test-aave/**/*.ts' --pattern 'tasks/**/*.ts'"
+      "pre-commit": "pretty-quick --staged --pattern 'contracts/**/*.sol' --pattern 'helpers/**/*.ts'  --pattern 'test-suites/test-bandz/**/*.ts' --pattern 'tasks/**/*.ts'"
     }
   },
-  "author": "Aave",
+  "author": "Bandz",
   "contributors": [
-    "Ernesto Boado <ernesto@aave.com>",
-    "Emilio Frangella <emilio@aave.com>",
-    "Andrey Kozlov <andrey@aave.com>",
-    "David Racero <david.k@aave.com>",
-    "Pol Sendra <pol@aave.com>",
-    "David Truong <david@aave.com>"
+    "RoninTheDev <ronin@bandz.cash>"
   ],
   "license": "AGPLv3",
   "dependencies": {
@@ -127,10 +122,15 @@
     "tmp-promise": "^3.0.2"
   },
   "keywords": [
+    "bandz",
     "aave",
     "protocol",
     "protocol-v2",
-    "ethereum",
+    "smartBCH",
+    "bitcoin",
+    "cash",
+    "bitcoin-cash",
+    "BCH",
     "solidity"
   ]
 }

@@ -1,5 +1,5 @@
 import {
-  AavePools,
+  BandzPools,
   iMultiPoolsAssets,
   IReserveParams,
   PoolConfiguration,
@@ -7,11 +7,11 @@ import {
   IBaseConfiguration,
 } from './types';
 import { getEthersSignersAddresses, getParamPerPool } from './contracts-helpers';
-import AaveConfig from '../markets/aave';
+import BandzConfig from '../markets/bandz';
 import MaticConfig from '../markets/matic';
 import AmmConfig from '../markets/amm';
 
-import { CommonsConfig } from '../markets/aave/commons';
+import { CommonsConfig } from '../markets/bandz/commons';
 import { DRE, filterMapBy } from './misc-utils';
 import { tSmartBCHAddress } from './types';
 import { getParamPerNetwork } from './contracts-helpers';
@@ -19,15 +19,15 @@ import { deployWETHMocked } from './contracts-deployments';
 
 export enum ConfigNames {
   Commons = 'Commons',
-  Aave = 'Aave',
+  Bandz = 'Bandz',
   Matic = 'Matic',
   Amm = 'Amm',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
-    case ConfigNames.Aave:
-      return AaveConfig;
+    case ConfigNames.Bandz:
+      return BandzConfig;
     case ConfigNames.Matic:
       return MaticConfig;
     case ConfigNames.Amm:
@@ -47,16 +47,16 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
 // PROTOCOL PARAMS PER POOL
 // ----------------
 
-export const getReservesConfigByPool = (pool: AavePools): iMultiPoolsAssets<IReserveParams> =>
+export const getReservesConfigByPool = (pool: BandzPools): iMultiPoolsAssets<IReserveParams> =>
   getParamPerPool<iMultiPoolsAssets<IReserveParams>>(
     {
-      [AavePools.proto]: {
-        ...AaveConfig.ReservesConfig,
+      [BandzPools.proto]: {
+        ...BandzConfig.ReservesConfig,
       },
-      [AavePools.amm]: {
+      [BandzPools.amm]: {
         ...AmmConfig.ReservesConfig,
       },
-      [AavePools.matic]: {
+      [BandzPools.matic]: {
         ...MaticConfig.ReservesConfig,
       },
     },

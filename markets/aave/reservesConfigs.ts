@@ -5,7 +5,7 @@ import {
   rateStrategyStableTwo,
   rateStrategyStableThree,
   rateStrategyWETH,
-  rateStrategyAAVE,
+  rateStrategyBANDZ,
   rateStrategyVolatileOne,
   rateStrategyVolatileTwo,
   rateStrategyVolatileThree,
@@ -84,8 +84,8 @@ export const strategyUSDT: IReserveParams = {
   reserveFactor: '1000',
 };
 
-export const strategyAAVE: IReserveParams = {
-  strategy: rateStrategyAAVE,
+export const strategyBANDZ: IReserveParams = {
+  strategy: rateStrategyBANDZ,
   baseLTVAsCollateral: '5000',
   liquidationThreshold: '6500',
   liquidationBonus: '11000',
