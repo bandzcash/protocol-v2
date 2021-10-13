@@ -7,8 +7,6 @@ import {
 
 require('dotenv').config();
 
-const INFURA_KEY = process.env.INFURA_KEY || '';
-const ALCHEMY_KEY = process.env.ALCHEMY_KEY || '';
 const TENDERLY_FORK_ID = process.env.TENDERLY_FORK_ID || '';
 const FORK = process.env.FORK || '';
 const FORK_BLOCK_NUMBER = process.env.FORK_BLOCK_NUMBER
@@ -31,12 +29,8 @@ export const buildForkConfig = (): HardhatNetworkForkingUserConfig | undefined =
 };
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
-  [eSmartBCHNetwork.amber]: ALCHEMY_KEY
-    ? `https://eth-amber.alchemyapi.io/v2/${ALCHEMY_KEY}`
-    : `https://amber.infura.io/v3/${INFURA_KEY}`,
-  [eSmartBCHNetwork.main]: ALCHEMY_KEY
-    ? `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`
-    : `https://mainnet.infura.io/v3/${INFURA_KEY}`,
+  [eSmartBCHNetwork.amber]: 'https://smartbch.fountainhead.cash/testnet',
+  [eSmartBCHNetwork.main]: 'https://smartbch.fountainhead.cash/mainnet',
   [eSmartBCHNetwork.coverage]: 'http://localhost:8555',
   [eSmartBCHNetwork.hardhat]: 'http://localhost:8545',
   [eSmartBCHNetwork.buidlerevm]: 'http://localhost:8545',

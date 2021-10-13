@@ -95,7 +95,6 @@ MNEMONIC=""
 
 # Add Alchemy or Infura provider keys, alchemy takes preference at the config level
 ALCHEMY_KEY=""
-INFURA_KEY=""
 
 
 # Optional SmartScan key, for automatize the verification of the contracts at SmartScan

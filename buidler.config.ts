@@ -19,7 +19,6 @@ const SKIP_LOAD = process.env.SKIP_LOAD === 'true';
 const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const DEFAULT_GAS_PRICE = 10;
 const HARDFORK = 'istanbul';
-const INFURA_KEY = process.env.INFURA_KEY || '';
 const SMARTSCAN_KEY = process.env.SMARTSCAN_KEY || '';
 const MNEMONIC_PATH = "m/44'/60'/0'/0";
 const MNEMONIC = process.env.MNEMONIC || '';
@@ -31,9 +30,16 @@ task(`set-DRE`, `Inits the DRE, to have access to all the plugins' objects`).set
   }
 );
 
+const getNetworkUri = (networkName: eSmartBCHNetwork) => {
+  if (networkName === eSmartBCHNetwork.amber) {
+    return 'https://smartbch.fountainhead.cash/testnet';
+  }
+  return 'https://smartbch.fountainhead.cash/mainnet';
+};
+
 const getCommonNetworkConfig = (networkName: eSmartBCHNetwork, networkId: number) => {
   return {
-    url: `https://${networkName}.infura.io/v3/${INFURA_KEY}`,
+    url: getNetworkUri(networkName),
     hardfork: HARDFORK,
     blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
     gasMultiplier: DEFAULT_GAS_PRICE,
