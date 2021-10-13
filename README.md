@@ -132,7 +132,7 @@ npm run test
 
 For deploying Bandz Protocol V2, you can use the available scripts located at `package.json`. For a complete list, run `npm run` to see all the tasks.
 
-### Kovan deployment
+### Amber deployment
 
 ```
 # In one terminal
@@ -142,7 +142,7 @@ docker-compose up
 docker-compose exec contracts-env bash
 
 # A new Bash terminal is prompted, connected to the container
-npm run bandz:kovan:full:migration
+npm run bandz:amber:full:migration
 ```
 
 ### Mainnet fork deployment

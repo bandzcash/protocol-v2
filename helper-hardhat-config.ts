@@ -31,9 +31,6 @@ export const buildForkConfig = (): HardhatNetworkForkingUserConfig | undefined =
 };
 
 export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
-  [eEthereumNetwork.kovan]: ALCHEMY_KEY
-    ? `https://eth-kovan.alchemyapi.io/v2/${ALCHEMY_KEY}`
-    : `https://kovan.infura.io/v3/${INFURA_KEY}`,
   [eEthereumNetwork.amber]: ALCHEMY_KEY
     ? `https://eth-amber.alchemyapi.io/v2/${ALCHEMY_KEY}`
     : `https://amber.infura.io/v3/${INFURA_KEY}`,
@@ -47,7 +44,6 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
-  [eEthereumNetwork.kovan]: 1 * GWEI,
   [eEthereumNetwork.amber]: 65 * GWEI,
   [eEthereumNetwork.main]: 65 * GWEI,
   [eEthereumNetwork.coverage]: 65 * GWEI,
@@ -58,7 +54,6 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
   [eEthereumNetwork.main]: 12406069,
-  [eEthereumNetwork.kovan]: undefined,
   [eEthereumNetwork.amber]: undefined,
   [eEthereumNetwork.coverage]: undefined,
   [eEthereumNetwork.hardhat]: undefined,

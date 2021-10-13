@@ -96,9 +96,8 @@ const buidlerConfig: HardhatUserConfig = {
       url: 'http://localhost:8555',
       chainId: COVERAGE_CHAINID,
     },
-    kovan: getCommonNetworkConfig(eEthereumNetwork.kovan, 42),
     amber: getCommonNetworkConfig(eEthereumNetwork.amber, 10001),
-    main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
+    main: getCommonNetworkConfig(eEthereumNetwork.main, 10000),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
     hardhat: {
       hardfork: 'berlin',
