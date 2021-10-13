@@ -7,7 +7,6 @@ import {
   eAvalancheNetwork,
   eEthereumNetwork,
   eNetwork,
-  eXDaiNetwork,
 } from './helpers/types';
 import { BUIDLEREVM_CHAINID, COVERAGE_CHAINID } from './helpers/buidler-constants';
 import {
@@ -102,7 +101,6 @@ const buidlerConfig: HardhatUserConfig = {
     amber: getCommonNetworkConfig(eEthereumNetwork.amber, 10001),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
-    xdai: getCommonNetworkConfig(eXDaiNetwork.xdai, 100),
     avalanche: getCommonNetworkConfig(eAvalancheNetwork.avalanche, 43114),
     fuji: getCommonNetworkConfig(eAvalancheNetwork.fuji, 43113),
     hardhat: {

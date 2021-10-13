@@ -11,7 +11,6 @@ import {
   AavePools,
   iParamsPerNetwork,
   iParamsPerPool,
-  eXDaiNetwork,
   eNetwork,
   iEthereumParamsPerNetwork,
   iPolygonParamsPerNetwork,
@@ -168,8 +167,6 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return main;
     case eEthereumNetwork.tenderly:
       return tenderly;
-    case eXDaiNetwork.xdai:
-      return xdai;
     case eAvalancheNetwork.avalanche:
       return avalanche;
     case eAvalancheNetwork.fuji:
