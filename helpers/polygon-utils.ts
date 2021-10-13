@@ -60,7 +60,7 @@ export const verifyAtPolygon = async (
   args: (string | string[])[]
 ) => {
   /*
-    ${net == mumbai or mainnet}
+    ${net == mainnet}
     https://explorer-${net}.maticvigil.com/api
     ?module=contract
     &action=verify

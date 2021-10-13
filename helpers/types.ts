@@ -396,15 +396,10 @@ export interface IMarketRates {
 }
 
 export type iParamsPerNetwork<T> =
-  | iEthereumParamsPerNetwork<T>
-  | iPolygonParamsPerNetwork<T>
-  | iXDaiParamsPerNetwork<T>
-  | iAvalancheParamsPerNetwork<T>;
+  | iEthereumParamsPerNetwork<T>;
 
 export interface iParamsPerNetworkAll<T>
-  extends iEthereumParamsPerNetwork<T>,
-    iPolygonParamsPerNetwork<T>,
-    iXDaiParamsPerNetwork<T> {}
+  extends iEthereumParamsPerNetwork<T> {}
 
 export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.coverage]: T;

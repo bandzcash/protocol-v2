@@ -141,9 +141,6 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
   const { main, amber, kovan, coverage, buidlerevm, tenderly } =
     param as iEthereumParamsPerNetwork<T>;
-  const { matic, mumbai } = param as iPolygonParamsPerNetwork<T>;
-  const { xdai } = param as iXDaiParamsPerNetwork<T>;
-  const { avalanche, fuji } = param as iAvalancheParamsPerNetwork<T>;
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
   }
