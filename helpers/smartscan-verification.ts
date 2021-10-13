@@ -14,31 +14,31 @@ const okErrors = [`Contract source code already verified`];
 
 const unableVerifyError = 'Fail - Unable to verify';
 
-export const SUPPORTED_ETHERSCAN_NETWORKS = ['main', 'amber'];
+export const SUPPORTED_SMARTSCAN_NETWORKS = ['main', 'amber'];
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export const verifyEtherscanContract = async (
+export const verifySmartScanContract = async (
   address: string,
   constructorArguments: (string | string[])[],
   libraries?: string
 ) => {
   const currentNetwork = DRE.network.name;
 
-  if (!process.env.ETHERSCAN_KEY) {
-    throw Error('Missing process.env.ETHERSCAN_KEY.');
+  if (!process.env.SMARTSCAN_KEY) {
+    throw Error('Missing process.env.SMARTSCAN_KEY.');
   }
-  if (!SUPPORTED_ETHERSCAN_NETWORKS.includes(currentNetwork)) {
+  if (!SUPPORTED_SMARTSCAN_NETWORKS.includes(currentNetwork)) {
     throw Error(
-      `Current network ${currentNetwork} not supported. Please change to one of the next networks: ${SUPPORTED_ETHERSCAN_NETWORKS.toString()}`
+      `Current network ${currentNetwork} not supported. Please change to one of the next networks: ${SUPPORTED_SMARTSCAN_NETWORKS.toString()}`
     );
   }
 
   try {
     console.log(
-      '[ETHERSCAN][WARNING] Delaying Etherscan verification due their API can not find newly deployed contracts'
+      '[SMARTSCAN][WARNING] Delaying SmartScan verification due their API can not find newly deployed contracts'
     );
     const msDelay = 3000;
     const times = 4;
@@ -74,36 +74,36 @@ export const runTaskWithRetry = async (
       await DRE.run(task, params);
       cleanup();
     } else if (times === 1) {
-      console.log('[ETHERSCAN][WARNING] Trying to verify via uploading all sources.');
+      console.log('[SMARTSCAN][WARNING] Trying to verify via uploading all sources.');
       delete params.relatedSources;
       await DRE.run(task, params);
       cleanup();
     } else {
       cleanup();
       console.error(
-        '[ETHERSCAN][ERROR] Errors after all the retries, check the logs for more information.'
+        '[SMARTSCAN][ERROR] Errors after all the retries, check the logs for more information.'
       );
     }
   } catch (error) {
     counter--;
 
     if (okErrors.some((okReason) => error.message.includes(okReason))) {
-      console.info('[ETHERSCAN][INFO] Skipping due OK response: ', error.message);
+      console.info('[SMARTSCAN][INFO] Skipping due OK response: ', error.message);
       return;
     }
 
     if (fatalErrors.some((fatalError) => error.message.includes(fatalError))) {
       console.error(
-        '[ETHERSCAN][ERROR] Fatal error detected, skip retries and resume deployment.',
+        '[SMARTSCAN][ERROR] Fatal error detected, skip retries and resume deployment.',
         error.message
       );
       return;
     }
-    console.error('[ETHERSCAN][ERROR]', error.message);
+    console.error('[SMARTSCAN][ERROR]', error.message);
     console.log();
-    console.info(`[ETHERSCAN][[INFO] Retrying attemps: ${counter}.`);
+    console.info(`[SMARTSCAN][[INFO] Retrying attemps: ${counter}.`);
     if (error.message.includes(unableVerifyError)) {
-      console.log('[ETHERSCAN][WARNING] Trying to verify via uploading all sources.');
+      console.log('[SMARTSCAN][WARNING] Trying to verify via uploading all sources.');
       delete params.relatedSources;
     }
     await runTaskWithRetry(task, params, counter, msDelay, cleanup);
@@ -112,13 +112,13 @@ export const runTaskWithRetry = async (
 
 export const checkVerification = () => {
   const currentNetwork = DRE.network.name;
-  if (!process.env.ETHERSCAN_KEY) {
-    console.error('Missing process.env.ETHERSCAN_KEY.');
+  if (!process.env.SMARTSCAN_KEY) {
+    console.error('Missing process.env.SMARTSCAN_KEY.');
     exit(3);
   }
-  if (!SUPPORTED_ETHERSCAN_NETWORKS.includes(currentNetwork)) {
+  if (!SUPPORTED_SMARTSCAN_NETWORKS.includes(currentNetwork)) {
     console.error(
-      `Current network ${currentNetwork} not supported. Please change to one of the next networks: ${SUPPORTED_ETHERSCAN_NETWORKS.toString()}`
+      `Current network ${currentNetwork} not supported. Please change to one of the next networks: ${SUPPORTED_SMARTSCAN_NETWORKS.toString()}`
     );
     exit(5);
   }

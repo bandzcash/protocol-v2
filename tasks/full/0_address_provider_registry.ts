@@ -8,7 +8,7 @@ import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
 import { eNetwork } from '../../helpers/types';
 
 task('full:deploy-address-provider-registry', 'Deploy address provider registry')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, DRE) => {
     console.log('prior dre');

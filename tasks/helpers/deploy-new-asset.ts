@@ -25,7 +25,7 @@ const isSymbolValid = (symbol: string, network: eSmartBCHNetwork) =>
 
 task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters')
   .addParam('symbol', `Asset symbol, needs to have configuration ready`)
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .setAction(async ({ verify, symbol }, localBRE) => {
     const network = localBRE.network.name;
     if (!isSymbolValid(symbol, network as eSmartBCHNetwork)) {

@@ -28,7 +28,7 @@ import {
 import { insertContractAddressInDb } from '../../helpers/contracts-helpers';
 
 task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
     await localBRE.run('set-DRE');

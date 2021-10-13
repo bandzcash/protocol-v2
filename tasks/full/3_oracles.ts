@@ -20,7 +20,7 @@ import {
 import { AaveOracle, LendingRateOracle } from '../../types';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, DRE) => {
     try {

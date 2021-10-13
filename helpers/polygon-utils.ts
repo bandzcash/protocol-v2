@@ -76,7 +76,7 @@ export const verifyAtPolygon = async (
   const encodedConstructorParams = encodeDeployParams(instance, args);
   const flattenSourceCode = await hardhatFlattener(filePath);
 
-  // Remove pragmas and license identifier after first match, required by block explorers like explorer-mainnet.maticgivil.com or Etherscan
+  // Remove pragmas and license identifier after first match, required by block explorers like explorer-mainnet.maticgivil.com or SmartScan
   const cleanedSourceCode = removeLines(
     removeLines(removeLines(flattenSourceCode, LICENSE_IDENTIFIER, 1), SOLIDITY_PRAGMA, 1),
     EXPERIMENTAL_ABIENCODER,

@@ -19,7 +19,7 @@ import {
 import { ZERO_ADDRESS } from '../../helpers/constants';
 
 task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
     try {

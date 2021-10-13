@@ -17,7 +17,7 @@ import {
 import { MintableERC20 } from '../types/MintableERC20';
 import { Artifact } from 'hardhat/types';
 import { Artifact as BuidlerArtifact } from '@nomiclabs/buidler/types';
-import { verifyEtherscanContract } from './etherscan-verification';
+import { verifySmartScanContract } from './smartscan-verification';
 import { getFirstSigner, getIErc20Detailed } from './contracts-getters';
 import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
 import { usingPolygon, verifyAtPolygon } from './polygon-utils';
@@ -361,7 +361,7 @@ export const verifyContract = async (
     if (usingTenderly()) {
       await verifyAtTenderly(id, instance);
     }
-    await verifyEtherscanContract(instance.address, args);
+    await verifySmartScanContract(instance.address, args);
   }
   return instance;
 };

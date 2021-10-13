@@ -20,7 +20,7 @@ const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const DEFAULT_GAS_PRICE = 10;
 const HARDFORK = 'istanbul';
 const INFURA_KEY = process.env.INFURA_KEY || '';
-const ETHERSCAN_KEY = process.env.ETHERSCAN_KEY || '';
+const SMARTSCAN_KEY = process.env.SMARTSCAN_KEY || '';
 const MNEMONIC_PATH = "m/44'/60'/0'/0";
 const MNEMONIC = process.env.MNEMONIC || '';
 
@@ -58,7 +58,7 @@ const buidlerConfig: any = {
     target: 'ethers-v4',
   },
   etherscan: {
-    apiKey: ETHERSCAN_KEY,
+    apiKey: SMARTSCAN_KEY,
   },
   defaultNetwork: 'buidlerevm',
   mocha: {

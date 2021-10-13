@@ -10,7 +10,7 @@ const CONTRACT_NAME = 'ParaSwapLiquiditySwapAdapter';
 task(`deploy-${CONTRACT_NAME}`, `Deploys the ${CONTRACT_NAME} contract`)
   .addParam('provider', 'Address of the LendingPoolAddressesProvider')
   .addParam('augustusRegistry', 'Address of ParaSwap AugustusRegistry')
-  .addFlag('verify', `Verify ${CONTRACT_NAME} contract via Etherscan API.`)
+  .addFlag('verify', `Verify ${CONTRACT_NAME} contract via SmartScan API.`)
   .setAction(async ({ provider, augustusRegistry, verify }, localBRE) => {
     await localBRE.run('set-DRE');
 

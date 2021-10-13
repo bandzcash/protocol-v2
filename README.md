@@ -98,8 +98,8 @@ ALCHEMY_KEY=""
 INFURA_KEY=""
 
 
-# Optional Etherscan key, for automatize the verification of the contracts at Etherscan
-ETHERSCAN_KEY=""
+# Optional SmartScan key, for automatize the verification of the contracts at SmartScan
+SMARTSCAN_KEY=""
 
 # Optional, if you plan to use Tenderly scripts
 TENDERLY_PROJECT=""

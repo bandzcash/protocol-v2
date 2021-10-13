@@ -25,8 +25,8 @@ import { verifyContract, getParamPerNetwork } from '../../helpers/contracts-help
 import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
 import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
 
-task('verify:general', 'Verify contracts at Etherscan')
-  .addFlag('all', 'Verify all contracts at Etherscan')
+task('verify:general', 'Verify contracts at SmartScan')
+  .addFlag('all', 'Verify all contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ all, pool }, localDRE) => {
     await localDRE.run('set-DRE');

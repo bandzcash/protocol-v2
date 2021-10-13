@@ -8,7 +8,7 @@ import { deployUiPoolDataProvider } from '../../helpers/contracts-deployments';
 import { exit } from 'process';
 
 task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider contract`)
-  .addFlag('verify', 'Verify UiPoolDataProvider contract via Etherscan API.')
+  .addFlag('verify', 'Verify UiPoolDataProvider contract via SmartScan API.')
   .setAction(async ({ verify }, localBRE) => {
     await localBRE.run('set-DRE');
     if (!localBRE.network.config.chainId) {

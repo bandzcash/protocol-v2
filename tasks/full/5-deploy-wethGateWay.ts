@@ -10,7 +10,7 @@ const CONTRACT_NAME = 'WBCHGateway';
 
 task(`full-deploy-weth-gateway`, `Deploys the ${CONTRACT_NAME} contract`)
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
-  .addFlag('verify', `Verify ${CONTRACT_NAME} contract via Etherscan API.`)
+  .addFlag('verify', `Verify ${CONTRACT_NAME} contract via SmartScan API.`)
   .setAction(async ({ verify, pool }, localBRE) => {
     await localBRE.run('set-DRE');
     const poolConfig = loadPoolConfig(pool);
