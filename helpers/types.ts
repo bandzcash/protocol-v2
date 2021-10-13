@@ -21,7 +21,6 @@ export enum EthereumNetworkNames {
   amber = 'amber',
   main = 'main',
   matic = 'matic',
-  xdai = 'xdai',
   fuji = 'fuji',
 }
 
@@ -295,11 +294,6 @@ export type iMaticPoolAssets<T> = Pick<
   'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'AAVE'
 >;
 
-export type iXDAIPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'STAKE'
->;
-
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
 
 export type iAavePoolTokens<T> = Omit<iAavePoolAssets<T>, 'ETH'>;
@@ -496,10 +490,6 @@ export interface IAmmConfiguration extends ICommonConfiguration {
 
 export interface IMaticConfiguration extends ICommonConfiguration {
   ReservesConfig: iMaticPoolAssets<IReserveParams>;
-}
-
-export interface IXDAIConfiguration extends ICommonConfiguration {
-  ReservesConfig: iXDAIPoolAssets<IReserveParams>;
 }
 
 export interface ITokenAddress {
