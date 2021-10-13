@@ -24,7 +24,7 @@ interface IBaseUniswapAdapter {
     address[] path;
   }
 
-  function WBCH_ADDRESS() external returns (address);
+  function WETH_ADDRESS() external returns (address);
 
   function MAX_SLIPPAGE_PERCENT() external returns (uint256);
 

@@ -207,7 +207,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     //user 4 deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-    //mints WBCH to borrower
+    //mints WETH to borrower
     await weth.connect(borrower.signer).mint(amountETHtoDeposit);
 
     //approve protocol to access borrower wallet
@@ -268,13 +268,13 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   it('SwapBorrowRateMode', async () => {
     const { pool, weth, dai, usdc, users, configurator } = testEnv;
     const user = users[1];
-    const amountWBCHToDeposit = parseEther('10');
+    const amountWETHToDeposit = parseEther('10');
     const amountDAIToDeposit = parseEther('120');
     const amountToBorrow = parseUnits('65', 6);
 
-    await weth.connect(user.signer).mint(amountWBCHToDeposit);
+    await weth.connect(user.signer).mint(amountWETHToDeposit);
     await weth.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    await pool.connect(user.signer).deposit(weth.address, amountWBCHToDeposit, user.address, '0');
+    await pool.connect(user.signer).deposit(weth.address, amountWETHToDeposit, user.address, '0');
 
     await dai.connect(user.signer).mint(amountDAIToDeposit);
     await dai.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
@@ -312,10 +312,10 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     const { pool, weth, users, configurator } = testEnv;
     const user = users[1];
 
-    const amountWBCHToDeposit = parseEther('1');
-    await weth.connect(user.signer).mint(amountWBCHToDeposit);
+    const amountWETHToDeposit = parseEther('1');
+    await weth.connect(user.signer).mint(amountWETHToDeposit);
     await weth.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    await pool.connect(user.signer).deposit(weth.address, amountWBCHToDeposit, user.address, '0');
+    await pool.connect(user.signer).deposit(weth.address, amountWETHToDeposit, user.address, '0');
 
     // Pause pool
     await configurator.connect(users[1].signer).setPoolPause(true);

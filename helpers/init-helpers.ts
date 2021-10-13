@@ -169,10 +169,10 @@ export const getPairsTokenAggregator = (
   },
   aggregatorsAddresses: { [tokenSymbol: string]: tSmartBCHAddress }
 ): [string[], string[]] => {
-  const { ETH, USD, WBCH, ...assetsAddressesWithoutEth } = allAssetsAddresses;
+  const { ETH, USD, WETH, ...assetsAddressesWithoutEth } = allAssetsAddresses;
 
   const pairs = Object.entries(assetsAddressesWithoutEth).map(([tokenSymbol, tokenAddress]) => {
-    if (tokenSymbol !== 'WBCH' && tokenSymbol !== 'ETH') {
+    if (tokenSymbol !== 'WETH' && tokenSymbol !== 'ETH') {
       const aggregatorAddressIndex = Object.keys(aggregatorsAddresses).findIndex(
         (value) => value === tokenSymbol
       );

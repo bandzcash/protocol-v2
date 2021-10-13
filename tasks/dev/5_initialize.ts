@@ -4,7 +4,7 @@ import {
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
   deployAaveProtocolDataProvider,
-  authorizeWBCHGateway,
+  authorizeWETHGateway,
 } from '../../helpers/contracts-deployments';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { eNetwork } from '../../helpers/types';
@@ -23,7 +23,7 @@ import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getAllMockedTokens,
   getLendingPoolAddressesProvider,
-  getWBCHGateway,
+  getWETHGateway,
 } from '../../helpers/contracts-getters';
 import { insertContractAddressInDb } from '../../helpers/contracts-helpers';
 
@@ -94,7 +94,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     let gateway = getParamPerNetwork(WethGateway, network);
     if (!notFalsyOrZeroAddress(gateway)) {
-      gateway = (await getWBCHGateway()).address;
+      gateway = (await getWETHGateway()).address;
     }
-    await authorizeWBCHGateway(gateway, lendingPoolAddress);
+    await authorizeWETHGateway(gateway, lendingPoolAddress);
   });

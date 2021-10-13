@@ -63,9 +63,9 @@ export enum eContractid {
   StableAndVariableTokensHelper = 'StableAndVariableTokensHelper',
   ATokensAndRatesHelper = 'ATokensAndRatesHelper',
   UiPoolDataProvider = 'UiPoolDataProvider',
-  WBCHGateway = 'WBCHGateway',
-  WBCH = 'WBCH',
-  WBCHMocked = 'WBCHMocked',
+  WETHGateway = 'WETHGateway',
+  WETH = 'WETH',
+  WETHMocked = 'WETHMocked',
   SelfdestructTransferMock = 'SelfdestructTransferMock',
   LendingPoolImpl = 'LendingPoolImpl',
   LendingPoolConfiguratorImpl = 'LendingPoolConfiguratorImpl',
@@ -189,7 +189,7 @@ export interface iAssetCommon<T> {
   [key: string]: T;
 }
 export interface iAssetBase<T> {
-  WBCH: T;
+  WETH: T;
   DAI: T;
   TUSD: T;
   USDC: T;
@@ -237,7 +237,7 @@ export type iAavePoolAssets<T> = Pick<
   | 'ZRX'
   | 'SNX'
   | 'BUSD'
-  | 'WBCH'
+  | 'WETH'
   | 'YFI'
   | 'UNI'
   | 'REN'
@@ -251,12 +251,12 @@ export type iLpPoolAssets<T> = Pick<
   | 'USDC'
   | 'USDT'
   | 'WBTC'
-  | 'WBCH'
+  | 'WETH'
 >;
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WBCH' | 'WMATIC' | 'AAVE'
+  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'AAVE'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
@@ -270,7 +270,7 @@ export enum TokenContractId {
   AAVE = 'AAVE',
   TUSD = 'TUSD',
   BAT = 'BAT',
-  WBCH = 'WBCH',
+  WETH = 'WETH',
   USDC = 'USDC',
   USDT = 'USDT',
   SUSD = 'SUSD',
@@ -411,7 +411,7 @@ export interface IBaseConfiguration {
   EmergencyAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;
   EmergencyAdminIndex: number;
   ATokenDomainSeparator: iParamsPerNetwork<string>;
-  WBCH: iParamsPerNetwork<tSmartBCHAddress>;
+  WETH: iParamsPerNetwork<tSmartBCHAddress>;
   WrappedNativeToken: iParamsPerNetwork<tSmartBCHAddress>;
   WethGateway: iParamsPerNetwork<tSmartBCHAddress>;
   ReserveFactorTreasuryAddress: iParamsPerNetwork<tSmartBCHAddress>;

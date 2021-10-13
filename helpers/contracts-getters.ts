@@ -30,8 +30,8 @@ import {
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
-  WBCH9MockedFactory,
-  WBCHGatewayFactory,
+  WETH9MockedFactory,
+  WETHGatewayFactory,
   FlashLiquidationAdapterFactory,
 } from '../types';
 import { IERC20DetailedFactory } from '../types/IERC20DetailedFactory';
@@ -192,9 +192,9 @@ export const getQuoteCurrencies = (oracleQuoteCurrency: string): string[] => {
     case 'USD':
       return ['USD'];
     case 'ETH':
-    case 'WBCH':
+    case 'WETH':
     default:
-      return ['ETH', 'WBCH'];
+      return ['ETH', 'WETH'];
   }
 };
 
@@ -211,7 +211,7 @@ export const getPairsTokenAggregator = (
   );
 
   const pairs = Object.entries(assetsWithoutQuoteCurrency).map(([tokenSymbol, tokenAddress]) => {
-    //if (true/*tokenSymbol !== 'WBCH' && tokenSymbol !== 'ETH' && tokenSymbol !== 'LpWBCH'*/) {
+    //if (true/*tokenSymbol !== 'WETH' && tokenSymbol !== 'ETH' && tokenSymbol !== 'LpWETH'*/) {
     const aggregatorAddressIndex = Object.keys(aggregatorsAddresses).findIndex(
       (value) => value === tokenSymbol
     );
@@ -278,18 +278,18 @@ export const getATokensAndRatesHelper = async (address?: tSmartBCHAddress) =>
     await getFirstSigner()
   );
 
-export const getWBCHGateway = async (address?: tSmartBCHAddress) =>
-  await WBCHGatewayFactory.connect(
+export const getWETHGateway = async (address?: tSmartBCHAddress) =>
+  await WETHGatewayFactory.connect(
     address ||
       (
-        await getDb().get(`${eContractid.WBCHGateway}.${DRE.network.name}`).value()
+        await getDb().get(`${eContractid.WETHGateway}.${DRE.network.name}`).value()
       ).address,
     await getFirstSigner()
   );
 
-export const getWBCHMocked = async (address?: tSmartBCHAddress) =>
-  await WBCH9MockedFactory.connect(
-    address || (await getDb().get(`${eContractid.WBCHMocked}.${DRE.network.name}`).value()).address,
+export const getWETHMocked = async (address?: tSmartBCHAddress) =>
+  await WETH9MockedFactory.connect(
+    address || (await getDb().get(`${eContractid.WETHMocked}.${DRE.network.name}`).value()).address,
     await getFirstSigner()
   );
 

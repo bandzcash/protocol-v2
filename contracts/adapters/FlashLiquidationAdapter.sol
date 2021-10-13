@@ -59,7 +59,7 @@ contract FlashLiquidationAdapter is BaseUniswapAdapter {
    *   address borrowedAsset The asset that must be covered
    *   address user The user address with a Health Factor below 1
    *   uint256 debtToCover The amount of debt to cover
-   *   bool useEthPath Use WBCH as connector path between the collateralAsset and borrowedAsset at Uniswap
+   *   bool useEthPath Use WETH as connector path between the collateralAsset and borrowedAsset at Uniswap
    */
   function executeOperation(
     address[] calldata assets,
@@ -167,7 +167,7 @@ contract FlashLiquidationAdapter is BaseUniswapAdapter {
    *   address borrowedAsset The asset that must be covered and will be exchanged to pay the flash loan premium
    *   address user The user address with a Health Factor below 1
    *   uint256 debtToCover The amount of debt to cover
-   *   bool useEthPath Use WBCH as connector path between the collateralAsset and borrowedAsset at Uniswap
+   *   bool useEthPath Use WETH as connector path between the collateralAsset and borrowedAsset at Uniswap
    * @return LiquidationParams struct containing decoded params
    */
   function _decodeParams(bytes memory params) internal pure returns (LiquidationParams memory) {

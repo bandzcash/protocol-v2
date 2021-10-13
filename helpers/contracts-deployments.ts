@@ -48,8 +48,8 @@ import {
   UniswapRepayAdapterFactory,
   VariableDebtTokenFactory,
   WalletBalanceProviderFactory,
-  WBCH9MockedFactory,
-  WBCHGatewayFactory,
+  WETH9MockedFactory,
+  WETHGatewayFactory,
   FlashLiquidationAdapterFactory,
 } from '../types';
 import {
@@ -513,19 +513,19 @@ export const deployATokensAndRatesHelper = async (
     verify
   );
 
-export const deployWBCHGateway = async (args: [tSmartBCHAddress], verify?: boolean) =>
+export const deployWETHGateway = async (args: [tSmartBCHAddress], verify?: boolean) =>
   withSaveAndVerify(
-    await new WBCHGatewayFactory(await getFirstSigner()).deploy(...args),
-    eContractid.WBCHGateway,
+    await new WETHGatewayFactory(await getFirstSigner()).deploy(...args),
+    eContractid.WETHGateway,
     args,
     verify
   );
 
-export const authorizeWBCHGateway = async (
+export const authorizeWETHGateway = async (
   wethGateWay: tSmartBCHAddress,
   lendingPool: tSmartBCHAddress
 ) =>
-  await new WBCHGatewayFactory(await getFirstSigner())
+  await new WETHGatewayFactory(await getFirstSigner())
     .attach(wethGateWay)
     .authorizeLendingPool(lendingPool);
 
@@ -545,10 +545,10 @@ export const deployMockStableDebtToken = async (
   return instance;
 };
 
-export const deployWBCHMocked = async (verify?: boolean) =>
+export const deployWETHMocked = async (verify?: boolean) =>
   withSaveAndVerify(
-    await new WBCH9MockedFactory(await getFirstSigner()).deploy(),
-    eContractid.WBCHMocked,
+    await new WETH9MockedFactory(await getFirstSigner()).deploy(),
+    eContractid.WETHMocked,
     [],
     verify
   );

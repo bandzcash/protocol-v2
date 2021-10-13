@@ -42,7 +42,7 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   // TODO: reorg alphabetically, checking the reason of tests failing
   LendingRateOracleRatesCommon: {
-    WBCH: {
+    WETH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     DAI: {
@@ -212,7 +212,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.main]: '',
     [eSmartBCHNetwork.tenderly]: '',
   },
-  WBCH: {
+  WETH: {
     [eSmartBCHNetwork.coverage]: '', // deployed in local evm
     [eSmartBCHNetwork.hardhat]: '', // deployed in local evm
     [eSmartBCHNetwork.buidlerevm]: '', // deployed in local evm

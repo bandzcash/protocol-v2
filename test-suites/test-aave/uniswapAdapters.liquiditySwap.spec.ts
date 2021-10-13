@@ -88,27 +88,27 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           pool,
           uniswapLiquiditySwapAdapter,
         } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
@@ -148,7 +148,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -165,7 +165,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           usdc,
           pool,
           uniswapLiquiditySwapAdapter,
@@ -173,12 +173,12 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
@@ -211,13 +211,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountUSDCtoSwap);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
-        const wethFlashloanAmount = new BigNumber(amountWBCHtoSwap.toString())
+        const wethFlashloanAmount = new BigNumber(amountWETHtoSwap.toString())
           .div(1.0009)
           .toFixed(0);
         const usdcFlashloanAmount = new BigNumber(amountUSDCtoSwap.toString())
@@ -261,7 +261,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
@@ -269,7 +269,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
+        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -281,7 +281,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           usdc,
           pool,
           uniswapLiquiditySwapAdapter,
@@ -296,12 +296,12 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           throw new Error('INVALID_OWNER_PK');
         }
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
@@ -334,10 +334,10 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
-        const wethFlashloanAmount = new BigNumber(amountWBCHtoSwap.toString())
+        const wethFlashloanAmount = new BigNumber(amountWETHtoSwap.toString())
           .div(1.0009)
           .toFixed(0);
 
@@ -345,19 +345,19 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           .div(1.0009)
           .toFixed(0);
 
-        const aWethNonce = (await aWBCH._nonces(userAddress)).toNumber();
+        const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
         const aWethMsgParams = buildPermitParams(
           chainId,
-          aWBCH.address,
+          aWETH.address,
           '1',
-          await aWBCH.name(),
+          await aWETH.name(),
           userAddress,
           uniswapLiquiditySwapAdapter.address,
           aWethNonce,
           deadline,
-          amountWBCHtoSwap.toString()
+          amountWETHtoSwap.toString()
         );
-        const { v: aWBCHv, r: aWBCHr, s: aWBCHs } = getSignatureFromTypedData(
+        const { v: aWETHv, r: aWETHr, s: aWETHs } = getSignatureFromTypedData(
           ownerPrivateKey,
           aWethMsgParams
         );
@@ -382,11 +382,11 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           [dai.address, dai.address],
           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
           [0, 0],
-          [amountWBCHtoSwap, amountUSDCtoSwap],
+          [amountWETHtoSwap, amountUSDCtoSwap],
           [deadline, deadline],
-          [aWBCHv, aUsdcv],
-          [aWBCHr, aUsdcr],
-          [aWBCHs, aUsdcs],
+          [aWETHv, aUsdcv],
+          [aWETHr, aUsdcr],
+          [aWETHs, aUsdcs],
           [false, false]
         );
 
@@ -409,7 +409,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
@@ -417,7 +417,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
+        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -429,38 +429,38 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           pool,
           uniswapLiquiditySwapAdapter,
         } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
-        const nonce = (await aWBCH._nonces(userAddress)).toNumber();
+        const nonce = (await aWETH._nonces(userAddress)).toNumber();
         const msgParams = buildPermitParams(
           chainId,
-          aWBCH.address,
+          aWETH.address,
           '1',
-          await aWBCH.name(),
+          await aWETH.name(),
           userAddress,
           uniswapLiquiditySwapAdapter.address,
           nonce,
@@ -510,7 +510,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -521,23 +521,23 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should revert if inconsistent params', async () => {
-        const { users, weth, oracle, dai, aWBCH, pool, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aWETH, pool, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
@@ -784,23 +784,23 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should revert if caller not lending pool', async () => {
-        const { users, weth, oracle, dai, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
@@ -929,16 +929,16 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should revert when min amount to receive exceeds the max slippage amount', async () => {
-        const { users, weth, oracle, dai, aWBCH, pool, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aWETH, pool, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
@@ -946,7 +946,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         // Subtract the FL fee from the amount to be swapped 0,09%
         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
@@ -985,31 +985,31 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           pool,
           uniswapLiquiditySwapAdapter,
         } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // Remove other balance
-        await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         const params = buildLiquiditySwapParams(
           [dai.address],
@@ -1050,8 +1050,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -1068,38 +1068,38 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           pool,
           uniswapLiquiditySwapAdapter,
         } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // Remove other balance
-        await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const liquidityToSwap = parseEther('10');
         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
-        const nonce = (await aWBCH._nonces(userAddress)).toNumber();
+        const nonce = (await aWETH._nonces(userAddress)).toNumber();
         const msgParams = buildPermitParams(
           chainId,
-          aWBCH.address,
+          aWETH.address,
           '1',
-          await aWBCH.name(),
+          await aWETH.name(),
           userAddress,
           uniswapLiquiditySwapAdapter.address,
           nonce,
@@ -1153,8 +1153,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -1182,30 +1182,30 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens and deposit the out tokens in the pool', async () => {
-        const { users, weth, oracle, dai, aDai, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         await expect(
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address],
             [dai.address],
-            [amountWBCHtoSwap],
+            [amountWETHtoSwap],
             [expectedDaiAmount],
             [
               {
@@ -1220,7 +1220,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           )
         )
           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(weth.address, dai.address, amountWBCHtoSwap.toString(), expectedDaiAmount);
+          .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
 
         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
@@ -1229,7 +1229,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -1240,32 +1240,32 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap tokens using permit', async () => {
-        const { users, weth, oracle, dai, aDai, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
-        const nonce = (await aWBCH._nonces(userAddress)).toNumber();
+        const nonce = (await aWETH._nonces(userAddress)).toNumber();
         const msgParams = buildPermitParams(
           chainId,
-          aWBCH.address,
+          aWETH.address,
           '1',
-          await aWBCH.name(),
+          await aWETH.name(),
           userAddress,
           uniswapLiquiditySwapAdapter.address,
           nonce,
@@ -1284,7 +1284,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address],
             [dai.address],
-            [amountWBCHtoSwap],
+            [amountWETHtoSwap],
             [expectedDaiAmount],
             [
               {
@@ -1299,7 +1299,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           )
         )
           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(weth.address, dai.address, amountWBCHtoSwap.toString(), expectedDaiAmount);
+          .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
 
         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
@@ -1308,7 +1308,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -1322,18 +1322,18 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         const { users, weth, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
         const user = users[0].signer;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await expect(
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address, dai.address],
             [dai.address],
-            [amountWBCHtoSwap],
+            [amountWETHtoSwap],
             [expectedDaiAmount],
             [
               {
@@ -1352,7 +1352,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address],
             [dai.address, weth.address],
-            [amountWBCHtoSwap],
+            [amountWETHtoSwap],
             [expectedDaiAmount],
             [
               {
@@ -1371,7 +1371,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address],
             [dai.address],
-            [amountWBCHtoSwap, amountWBCHtoSwap],
+            [amountWETHtoSwap, amountWETHtoSwap],
             [expectedDaiAmount],
             [
               {
@@ -1392,7 +1392,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               [weth.address],
               [dai.address],
-              [amountWBCHtoSwap],
+              [amountWETHtoSwap],
               [expectedDaiAmount],
               [],
               [false]
@@ -1403,7 +1403,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address],
             [dai.address],
-            [amountWBCHtoSwap],
+            [amountWETHtoSwap],
             [expectedDaiAmount, expectedDaiAmount],
             [
               {
@@ -1420,15 +1420,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should revert when min amount to receive exceeds the max slippage amount', async () => {
-        const { users, weth, oracle, dai, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
@@ -1436,13 +1436,13 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         await expect(
           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             [weth.address],
             [dai.address],
-            [amountWBCHtoSwap],
+            [amountWETHtoSwap],
             [smallExpectedDaiAmount],
             [
               {
@@ -1466,19 +1466,19 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           uniswapLiquiditySwapAdapter,
           pool,
         } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
@@ -1511,15 +1511,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountUSDCtoSwap);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
         await uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
           [weth.address, usdc.address],
           [dai.address, dai.address],
-          [amountWBCHtoSwap, amountUSDCtoSwap],
+          [amountWETHtoSwap, amountUSDCtoSwap],
           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
           [
             {
@@ -1547,7 +1547,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
@@ -1555,7 +1555,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
+        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
@@ -1568,7 +1568,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           oracle,
           dai,
           aDai,
-          aWBCH,
+          aWETH,
           uniswapLiquiditySwapAdapter,
           pool,
         } = testEnv;
@@ -1582,12 +1582,12 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           throw new Error('INVALID_OWNER_PK');
         }
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
@@ -1620,22 +1620,22 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
 
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
-        const aWethNonce = (await aWBCH._nonces(userAddress)).toNumber();
+        const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
         const aWethMsgParams = buildPermitParams(
           chainId,
-          aWBCH.address,
+          aWETH.address,
           '1',
-          await aWBCH.name(),
+          await aWETH.name(),
           userAddress,
           uniswapLiquiditySwapAdapter.address,
           aWethNonce,
           deadline,
-          amountWBCHtoSwap.toString()
+          amountWETHtoSwap.toString()
         );
-        const { v: aWBCHv, r: aWBCHr, s: aWBCHs } = getSignatureFromTypedData(
+        const { v: aWETHv, r: aWETHr, s: aWETHs } = getSignatureFromTypedData(
           ownerPrivateKey,
           aWethMsgParams
         );
@@ -1660,15 +1660,15 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         await uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
           [weth.address, usdc.address],
           [dai.address, dai.address],
-          [amountWBCHtoSwap, amountUSDCtoSwap],
+          [amountWETHtoSwap, amountUSDCtoSwap],
           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
           [
             {
-              amount: amountWBCHtoSwap,
+              amount: amountWETHtoSwap,
               deadline,
-              v: aWBCHv,
-              r: aWBCHr,
-              s: aWBCHs,
+              v: aWETHv,
+              r: aWETHr,
+              s: aWETHs,
             },
             {
               amount: amountUSDCtoSwap,
@@ -1688,7 +1688,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
         expect(adapterWethBalance).to.be.eq(Zero);
@@ -1696,36 +1696,36 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         expect(adapterDaiAllowance).to.be.eq(Zero);
         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
+        expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
       });
 
       it('should correctly swap all the balance when using a bigger amount', async () => {
-        const { users, weth, oracle, dai, aDai, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // Remove other balance
-        await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
 
         // User will swap liquidity 10 aEth to aDai
-        await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+        await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
         // Only has 10 atokens, so all the balance will be swapped
         const bigAmountToSwap = parseEther('100');
@@ -1749,7 +1749,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           )
         )
           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(weth.address, dai.address, amountWBCHtoSwap.toString(), expectedDaiAmount);
+          .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
 
         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
@@ -1758,8 +1758,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);
@@ -1770,23 +1770,23 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
       });
 
       it('should correctly swap all the balance when using permit', async () => {
-        const { users, weth, oracle, dai, aDai, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
+        const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWBCHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+        const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
 
         const daiPrice = await oracle.getAssetPrice(dai.address);
         const expectedDaiAmount = await convertToCurrencyDecimals(
           dai.address,
-          new BigNumber(amountWBCHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+          new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
         );
 
         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
 
         // Remove other balance
-        await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
-        const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
+        await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
+        const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
 
         // User will swap liquidity 10 aEth to aDai
         const liquidityToSwap = parseEther('10');
@@ -1802,12 +1802,12 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
         if (!ownerPrivateKey) {
           throw new Error('INVALID_OWNER_PK');
         }
-        const aWethNonce = (await aWBCH._nonces(userAddress)).toNumber();
+        const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
         const aWethMsgParams = buildPermitParams(
           chainId,
-          aWBCH.address,
+          aWETH.address,
           '1',
-          await aWBCH.name(),
+          await aWETH.name(),
           userAddress,
           uniswapLiquiditySwapAdapter.address,
           aWethNonce,
@@ -1835,7 +1835,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           )
         )
           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(weth.address, dai.address, amountWBCHtoSwap.toString(), expectedDaiAmount);
+          .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
 
         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
@@ -1844,8 +1844,8 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
           userAddress
         );
         const userADaiBalance = await aDai.balanceOf(userAddress);
-        const userAEthBalance = await aWBCH.balanceOf(userAddress);
-        const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
+        const userAEthBalance = await aWETH.balanceOf(userAddress);
+        const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
         expect(adapterWethBalance).to.be.eq(Zero);
         expect(adapterDaiBalance).to.be.eq(Zero);

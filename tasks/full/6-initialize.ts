@@ -3,11 +3,11 @@ import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import {
   deployLendingPoolCollateralManager,
   deployWalletBalancerProvider,
-  authorizeWBCHGateway,
+  authorizeWETHGateway,
   deployUiPoolDataProvider,
 } from '../../helpers/contracts-deployments';
 import { loadPoolConfig, ConfigNames, getTreasuryAddress } from '../../helpers/configuration';
-import { getWBCHGateway } from '../../helpers/contracts-getters';
+import { getWETHGateway } from '../../helpers/contracts-getters';
 import { eNetwork, ICommonConfiguration } from '../../helpers/types';
 import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
@@ -110,10 +110,10 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
 
       let gateWay = getParamPerNetwork(WethGateway, network);
       if (!notFalsyOrZeroAddress(gateWay)) {
-        gateWay = (await getWBCHGateway()).address;
+        gateWay = (await getWETHGateway()).address;
       }
       console.log('GATEWAY', gateWay);
-      await authorizeWBCHGateway(gateWay, lendingPoolAddress);
+      await authorizeWETHGateway(gateWay, lendingPoolAddress);
     } catch (err) {
       console.error(err);
       exit(1);

@@ -15,7 +15,7 @@ import { CommonsConfig } from '../markets/aave/commons';
 import { DRE, filterMapBy } from './misc-utils';
 import { tSmartBCHAddress } from './types';
 import { getParamPerNetwork } from './contracts-helpers';
-import { deployWBCHMocked } from './contracts-deployments';
+import { deployWETHMocked } from './contracts-deployments';
 
 export enum ConfigNames {
   Commons = 'Commons',
@@ -99,14 +99,14 @@ export const getATokenDomainSeparatorPerNetwork = (
 
 export const getWethAddress = async (config: IBaseConfiguration) => {
   const currentNetwork = process.env.FORK ? process.env.FORK : DRE.network.name;
-  const wethAddress = getParamPerNetwork(config.WBCH, <eNetwork>currentNetwork);
+  const wethAddress = getParamPerNetwork(config.WETH, <eNetwork>currentNetwork);
   if (wethAddress) {
     return wethAddress;
   }
   if (currentNetwork.includes('main')) {
-    throw new Error('WBCH not set at mainnet configuration.');
+    throw new Error('WETH not set at mainnet configuration.');
   }
-  const weth = await deployWBCHMocked();
+  const weth = await deployWETHMocked();
   return weth.address;
 };
 
@@ -117,9 +117,9 @@ export const getWrappedNativeTokenAddress = async (config: IBaseConfiguration) =
     return wethAddress;
   }
   if (currentNetwork.includes('main')) {
-    throw new Error('WBCH not set at mainnet configuration.');
+    throw new Error('WETH not set at mainnet configuration.');
   }
-  const weth = await deployWBCHMocked();
+  const weth = await deployWETHMocked();
   return weth.address;
 };
 
@@ -139,7 +139,7 @@ export const getLendingRateOracles = (poolConfig: IBaseConfiguration) => {
 export const getQuoteCurrency = async (config: IBaseConfiguration) => {
   switch (config.OracleQuoteCurrency) {
     case 'ETH':
-    case 'WBCH':
+    case 'WETH':
       return getWethAddress(config);
     case 'USD':
       return config.ProtocolGlobalParams.UsdAddress;
