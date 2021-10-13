@@ -22,7 +22,6 @@ export enum EthereumNetworkNames {
   main = 'main',
   matic = 'matic',
   xdai = 'xdai',
-  avalanche = 'avalanche',
   fuji = 'fuji',
 }
 
@@ -30,7 +29,6 @@ export enum AavePools {
   proto = 'proto',
   matic = 'matic',
   amm = 'amm',
-  avalanche = 'avalanche',
 }
 
 export enum eContractid {
@@ -302,11 +300,6 @@ export type iXDAIPoolAssets<T> = Pick<
   'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'STAKE'
 >;
 
-export type iAvalanchePoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'WETH' | 'DAI' | 'USDT' | 'AAVE' | 'WBTC' | 'WAVAX' | 'USDC'
->;
-
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
 
 export type iAavePoolTokens<T> = Omit<iAavePoolAssets<T>, 'ETH'>;
@@ -414,7 +407,6 @@ export interface iParamsPerPool<T> {
   [AavePools.proto]: T;
   [AavePools.matic]: T;
   [AavePools.amm]: T;
-  [AavePools.avalanche]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -508,10 +500,6 @@ export interface IMaticConfiguration extends ICommonConfiguration {
 
 export interface IXDAIConfiguration extends ICommonConfiguration {
   ReservesConfig: iXDAIPoolAssets<IReserveParams>;
-}
-
-export interface IAvalancheConfiguration extends ICommonConfiguration {
-  ReservesConfig: iAvalanchePoolAssets<IReserveParams>;
 }
 
 export interface ITokenAddress {
