@@ -111,7 +111,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           lendingPoolProxy.address,
           tokenAddress,
           treasuryAddress,
-          `Bandz interest bearing ${token}`,
+          `Aave interest bearing ${token}`,
           `a${token}`,
           ZERO_ADDRESS,
         ]);
@@ -123,7 +123,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
         await verifyContract(eContractid.StableDebtToken, await getStableDebtToken(stableDebt), [
           lendingPoolProxy.address,
           tokenAddress,
-          `Bandz stable debt bearing ${token}`,
+          `Aave stable debt bearing ${token}`,
           `stableDebt${token}`,
           ZERO_ADDRESS,
         ]);
@@ -138,7 +138,7 @@ task('verify:tokens', 'Deploy oracles for dev enviroment')
           [
             lendingPoolProxy.address,
             tokenAddress,
-            `Bandz variable debt bearing ${token}`,
+            `Aave variable debt bearing ${token}`,
             `variableDebt${token}`,
             ZERO_ADDRESS,
           ]

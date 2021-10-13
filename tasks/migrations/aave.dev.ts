@@ -3,10 +3,10 @@ import { checkVerification } from '../../helpers/smartscan-verification';
 import { ConfigNames } from '../../helpers/configuration';
 import { printContracts } from '../../helpers/misc-utils';
 
-task('bandz:dev', 'Deploy development enviroment')
+task('aave:dev', 'Deploy development enviroment')
   .addFlag('verify', 'Verify contracts at SmartScan')
   .setAction(async ({ verify }, localBRE) => {
-    const POOL_NAME = ConfigNames.Bandz;
+    const POOL_NAME = ConfigNames.Aave;
 
     await localBRE.run('set-DRE');
 

@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import { deployBandzOracle, deployLendingRateOracle } from '../../helpers/contracts-deployments';
+import { deployAaveOracle, deployLendingRateOracle } from '../../helpers/contracts-deployments';
 import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
 import { ICommonConfiguration, eNetwork, SymbolMap } from '../../helpers/types';
 import { waitForTx, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
@@ -12,12 +12,12 @@ import {
   getQuoteCurrency,
 } from '../../helpers/configuration';
 import {
-  getBandzOracle,
+  getAaveOracle,
   getLendingPoolAddressesProvider,
   getLendingRateOracle,
   getPairsTokenAggregator,
 } from '../../helpers/contracts-getters';
-import { BandzOracle, LendingRateOracle } from '../../types';
+import { AaveOracle, LendingRateOracle } from '../../types';
 
 task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
   .addFlag('verify', 'Verify contracts at SmartScan')
@@ -36,7 +36,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
       const admin = await getGenesisPoolAdmin(poolConfig);
-      const bandzOracleAddress = getParamPerNetwork(poolConfig.BandzOracle, network);
+      const aaveOracleAddress = getParamPerNetwork(poolConfig.AaveOracle, network);
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
       const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
       const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
@@ -52,14 +52,14 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         poolConfig.OracleQuoteCurrency
       );
 
-      let bandzOracle: BandzOracle;
+      let aaveOracle: AaveOracle;
       let lendingRateOracle: LendingRateOracle;
 
-      if (notFalsyOrZeroAddress(bandzOracleAddress)) {
-        bandzOracle = await await getBandzOracle(bandzOracleAddress);
-        await waitForTx(await bandzOracle.setAssetSources(tokens, aggregators));
+      if (notFalsyOrZeroAddress(aaveOracleAddress)) {
+        aaveOracle = await await getAaveOracle(aaveOracleAddress);
+        await waitForTx(await aaveOracle.setAssetSources(tokens, aggregators));
       } else {
-        bandzOracle = await deployBandzOracle(
+        aaveOracle = await deployAaveOracle(
           [
             tokens,
             aggregators,
@@ -69,7 +69,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
           ],
           verify
         );
-        await waitForTx(await bandzOracle.setAssetSources(tokens, aggregators));
+        await waitForTx(await aaveOracle.setAssetSources(tokens, aggregators));
       }
 
       if (notFalsyOrZeroAddress(lendingRateOracleAddress)) {
@@ -85,11 +85,11 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         );
       }
 
-      console.log('Bandz Oracle: %s', bandzOracle.address);
+      console.log('Aave Oracle: %s', aaveOracle.address);
       console.log('Lending Rate Oracle: %s', lendingRateOracle.address);
 
       // Register the proxy price provider on the addressesProvider
-      await waitForTx(await addressesProvider.setPriceOracle(bandzOracle.address));
+      await waitForTx(await addressesProvider.setPriceOracle(aaveOracle.address));
       await waitForTx(await addressesProvider.setLendingRateOracle(lendingRateOracle.address));
     } catch (error) {
       throw error;

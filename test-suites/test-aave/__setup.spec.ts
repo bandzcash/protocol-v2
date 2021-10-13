@@ -16,7 +16,7 @@ import {
   deployLendingPoolCollateralManager,
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
-  deployBandzProtocolDataProvider,
+  deployAaveProtocolDataProvider,
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployATokensAndRatesHelper,
@@ -31,10 +31,10 @@ import {
   deployParaSwapLiquiditySwapAdapter,
   authorizeWETHGateway,
   deployATokenImplementations,
-  deployBandzOracle,
+  deployAaveOracle,
 } from '../../helpers/contracts-deployments';
 import { Signer } from 'ethers';
-import { TokenContractId, eContractid, tSmartBCHAddress, BandzPools } from '../../helpers/types';
+import { TokenContractId, eContractid, tSmartBCHAddress, AavePools } from '../../helpers/types';
 import { MintableERC20 } from '../../types/MintableERC20';
 import {
   ConfigNames,
@@ -51,7 +51,7 @@ import {
 } from '../../helpers/oracles-helpers';
 import { DRE, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
-import BandzConfig from '../../markets/bandz';
+import AaveConfig from '../../markets/aave';
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getLendingPool,
@@ -60,15 +60,15 @@ import {
 } from '../../helpers/contracts-getters';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 
-const MOCK_USD_PRICE_IN_WEI = BandzConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = BandzConfig.Mocks.AllAssetsInitialPrices;
-const USD_ADDRESS = BandzConfig.ProtocolGlobalParams.UsdAddress;
-const LENDING_RATE_ORACLE_RATES_COMMON = BandzConfig.LendingRateOracleRatesCommon;
+const MOCK_USD_PRICE_IN_WEI = AaveConfig.ProtocolGlobalParams.MockUsdPriceInWei;
+const ALL_ASSETS_INITIAL_PRICES = AaveConfig.Mocks.AllAssetsInitialPrices;
+const USD_ADDRESS = AaveConfig.ProtocolGlobalParams.UsdAddress;
+const LENDING_RATE_ORACLE_RATES_COMMON = AaveConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const protoConfigData = getReservesConfigByPool(BandzPools.proto);
+  const protoConfigData = getReservesConfigByPool(AavePools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WETH') {
@@ -97,16 +97,16 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const bandzAdmin = await deployer.getAddress();
-  const config = loadPoolConfig(ConfigNames.Bandz);
+  const aaveAdmin = await deployer.getAddress();
+  const config = loadPoolConfig(ConfigNames.Aave);
 
   const mockTokens: {
     [symbol: string]: MockContract | MintableERC20 | WETH9Mocked;
   } = {
     ...(await deployAllMockTokens(deployer)),
   };
-  const addressesProvider = await deployLendingPoolAddressesProvider(BandzConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(bandzAdmin));
+  const addressesProvider = await deployLendingPoolAddressesProvider(AaveConfig.MarketId);
+  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -158,7 +158,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       USDC: mockTokens.USDC.address,
       USDT: mockTokens.USDT.address,
       SUSD: mockTokens.SUSD.address,
-      BANDZ: mockTokens.BANDZ.address,
+      AAVE: mockTokens.AAVE.address,
       BAT: mockTokens.BAT.address,
       MKR: mockTokens.MKR.address,
       LINK: mockTokens.LINK.address,
@@ -208,7 +208,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     config.OracleQuoteCurrency
   );
 
-  await deployBandzOracle([
+  await deployAaveOracle([
     tokens,
     aggregators,
     fallbackOracle.address,
@@ -228,17 +228,17 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    bandzAdmin
+    aaveAdmin
   );
 
-  // Reserve params from BANDZ pool + mocked tokens
+  // Reserve params from AAVE pool + mocked tokens
   const reservesParams = {
     ...config.ReservesConfig,
   };
 
-  const testHelpers = await deployBandzProtocolDataProvider(addressesProvider.address);
+  const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address);
 
-  await deployATokenImplementations(ConfigNames.Bandz, reservesParams, false);
+  await deployATokenImplementations(ConfigNames.Aave, reservesParams, false);
 
   const admin = await deployer.getAddress();
 
@@ -256,7 +256,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     admin,
     treasuryAddress,
     ZERO_ADDRESS,
-    ConfigNames.Bandz,
+    ConfigNames.Aave,
     false
   );
 
@@ -300,7 +300,7 @@ before(async () => {
   const FORK = process.env.FORK;
 
   if (FORK) {
-    await rawBRE.run('bandz:mainnet', { skipRegistry: true });
+    await rawBRE.run('aave:mainnet', { skipRegistry: true });
   } else {
     console.log('-> Deploying test environment...');
     await buildTestEnv(deployer, secondaryWallet);

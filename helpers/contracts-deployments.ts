@@ -4,7 +4,7 @@ import {
   tSmartBCHAddress,
   eContractid,
   tStringTokenSmallUnits,
-  BandzPools,
+  AavePools,
   TokenContractId,
   iMultiPoolsAssets,
   IReserveParams,
@@ -16,10 +16,10 @@ import { MockContract } from 'ethereum-waffle';
 import { ConfigNames, getReservesConfigByPool, loadPoolConfig } from './configuration';
 import { getFirstSigner } from './contracts-getters';
 import {
-  BandzProtocolDataProviderFactory,
+  AaveProtocolDataProviderFactory,
   ATokenFactory,
   ATokensAndRatesHelperFactory,
-  BandzOracleFactory,
+  AaveOracleFactory,
   DefaultReserveInterestRateStrategyFactory,
   DelegationAwareATokenFactory,
   InitializableAdminUpgradeabilityProxyFactory,
@@ -70,11 +70,11 @@ import { UiPoolDataProvider } from '../types';
 import { eNetwork } from './types';
 
 export const deployUiPoolDataProvider = async (
-  [incentivesController, bandzOracle]: [tSmartBCHAddress, tSmartBCHAddress],
+  [incentivesController, aaveOracle]: [tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) => {
   const id = eContractid.UiPoolDataProvider;
-  const args: string[] = [incentivesController, bandzOracle];
+  const args: string[] = [incentivesController, aaveOracle];
   const instance = await deployContract<UiPoolDataProvider>(id, args);
   if (verify) {
     await verifyContract(id, instance, args);
@@ -171,7 +171,7 @@ export const deployValidationLogic = async (
   return withSaveAndVerify(validationLogic, eContractid.ValidationLogic, [], verify);
 };
 
-export const deployBandzLibraries = async (
+export const deployAaveLibraries = async (
   verify?: boolean
 ): Promise<LendingPoolLibraryAddresses> => {
   const reserveLogic = await deployReserveLogicLibrary(verify);
@@ -196,7 +196,7 @@ export const deployBandzLibraries = async (
 };
 
 export const deployLendingPool = async (verify?: boolean) => {
-  const libraries = await deployBandzLibraries(verify);
+  const libraries = await deployAaveLibraries(verify);
   const lendingPoolImpl = await new LendingPoolFactory(libraries, await getFirstSigner()).deploy();
   await insertContractAddressInDb(eContractid.LendingPoolImpl, lendingPoolImpl.address);
   return withSaveAndVerify(lendingPoolImpl, eContractid.LendingPool, [], verify);
@@ -226,13 +226,13 @@ export const deployMockAggregator = async (price: tStringTokenSmallUnits, verify
     verify
   );
 
-export const deployBandzOracle = async (
+export const deployAaveOracle = async (
   args: [tSmartBCHAddress[], tSmartBCHAddress[], tSmartBCHAddress, tSmartBCHAddress, string],
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new BandzOracleFactory(await getFirstSigner()).deploy(...args),
-    eContractid.BandzOracle,
+    await new AaveOracleFactory(await getFirstSigner()).deploy(...args),
+    eContractid.AaveOracle,
     args,
     verify
   );
@@ -280,13 +280,13 @@ export const deployWalletBalancerProvider = async (verify?: boolean) =>
     verify
   );
 
-export const deployBandzProtocolDataProvider = async (
+export const deployAaveProtocolDataProvider = async (
   addressesProvider: tSmartBCHAddress,
   verify?: boolean
 ) =>
   withSaveAndVerify(
-    await new BandzProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
-    eContractid.BandzProtocolDataProvider,
+    await new AaveProtocolDataProviderFactory(await getFirstSigner()).deploy(addressesProvider),
+    eContractid.AaveProtocolDataProvider,
     [addressesProvider],
     verify
   );
@@ -454,7 +454,7 @@ export const deployDelegationAwareATokenImpl = async (verify: boolean) =>
 export const deployAllMockTokens = async (verify?: boolean) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 } = {};
 
-  const protoConfigData = getReservesConfigByPool(BandzPools.proto);
+  const protoConfigData = getReservesConfigByPool(AavePools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     let decimals = '18';

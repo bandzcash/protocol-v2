@@ -5,7 +5,7 @@ import {
 } from '../../helpers/contracts-deployments';
 import { getEthersSigners } from '../../helpers/contracts-helpers';
 import { waitForTx } from '../../helpers/misc-utils';
-import { BandzConfig } from '../../markets/bandz';
+import { AaveConfig } from '../../markets/aave';
 
 task(
   'dev:deploy-address-provider',
@@ -17,7 +17,7 @@ task(
 
     const admin = await (await getEthersSigners())[0].getAddress();
 
-    const addressesProvider = await deployLendingPoolAddressesProvider(BandzConfig.MarketId, verify);
+    const addressesProvider = await deployLendingPoolAddressesProvider(AaveConfig.MarketId, verify);
     await waitForTx(await addressesProvider.setPoolAdmin(admin));
     await waitForTx(await addressesProvider.setEmergencyAdmin(admin));
 

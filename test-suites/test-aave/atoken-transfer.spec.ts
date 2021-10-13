@@ -4,9 +4,9 @@ import { expect } from 'chai';
 import { ethers } from 'ethers';
 import { RateMode, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
-import { CommonsConfig } from '../../markets/bandz/commons';
+import { CommonsConfig } from '../../markets/aave/commons';
 
-const BANDZ_REFERRAL = CommonsConfig.ProtocolGlobalParams.BandzReferral;
+const AAVE_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {
@@ -33,7 +33,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Bandz interest bearing DAI');
+    expect(name).to.be.equal('Aave interest bearing DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[1].address);
@@ -62,7 +62,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
         weth.address,
         ethers.utils.parseEther('0.1'),
         RateMode.Stable,
-        BANDZ_REFERRAL,
+        AAVE_REFERRAL,
         users[1].address
       );
 

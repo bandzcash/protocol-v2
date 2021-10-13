@@ -17,11 +17,11 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
     const network = localBRE.network.name;
 
     const addressesByNetwork: {
-      [key: string]: { incentivesController: string; bandzOracle: string };
+      [key: string]: { incentivesController: string; aaveOracle: string };
     } = {
       [eSmartBCHNetwork.main]: {
         incentivesController: '0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5',
-        bandzOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',
+        aaveOracle: '0xa50ba011c48153de246e5192c8f9258a2ba79ca9',
       },
     };
     const supportedNetworks = Object.keys(addressesByNetwork);
@@ -33,7 +33,7 @@ task(`deploy-${eContractid.UiPoolDataProvider}`, `Deploys the UiPoolDataProvider
       exit(2);
     }
 
-    const oracle = addressesByNetwork[network].bandzOracle;
+    const oracle = addressesByNetwork[network].aaveOracle;
     const incentivesController = addressesByNetwork[network].incentivesController;
 
     console.log(`\n- UiPoolDataProvider deployment`);

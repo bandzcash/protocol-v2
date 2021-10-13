@@ -12,9 +12,9 @@ import { ICommonConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  ATokenNamePrefix: 'Bandz interest bearing',
-  StableDebtTokenNamePrefix: 'Bandz stable debt bearing',
-  VariableDebtTokenNamePrefix: 'Bandz variable debt bearing',
+  ATokenNamePrefix: 'Aave interest bearing',
+  StableDebtTokenNamePrefix: 'Aave stable debt bearing',
+  VariableDebtTokenNamePrefix: 'Aave variable debt bearing',
   SymbolPrefix: '',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
@@ -25,7 +25,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
-    BandzReferral: '0',
+    AaveReferral: '0',
   },
 
   // ----------------
@@ -60,7 +60,7 @@ export const CommonsConfig: ICommonConfiguration = {
     BAT: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    BANDZ: {
+    AAVE: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     LINK: {
@@ -181,7 +181,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.amber]: '0xeba2ea67942b8250d870b12750b594696d02fc9c',
     [eSmartBCHNetwork.main]: '0xe3d9988f676457123c5fd01297605efdd0cba1ae',
   },
-  BandzOracle: {
+  AaveOracle: {
     [eSmartBCHNetwork.coverage]: '',
     [eSmartBCHNetwork.hardhat]: '',
     [eSmartBCHNetwork.buidlerevm]: '',
@@ -202,7 +202,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.hardhat]: {},
     [eSmartBCHNetwork.buidlerevm]: {},
     [eSmartBCHNetwork.amber]: {
-      BANDZ: ZERO_ADDRESS,
+      AAVE: ZERO_ADDRESS,
       BAT: '0xafd8186c962daf599f171b8600f3e19af7b52c92',
       BUSD: '0x0A32D96Ff131cd5c3E0E5AAB645BF009Eda61564',
       DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
@@ -224,7 +224,7 @@ export const CommonsConfig: ICommonConfiguration = {
       USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
     },
     [eSmartBCHNetwork.main]: {
-      BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
+      AAVE: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
       BAT: '0x0d16d4528239e9ee52fa531af613AcdB23D88c94',
       BUSD: '0x614715d2Af89E6EC99A233818275142cE88d1Cfd',
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',

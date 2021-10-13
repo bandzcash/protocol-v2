@@ -31,9 +31,9 @@ jobs:
       - name: Test
         run: npm run ci:test
       - name: Dev deployment
-        run: npm run bandz:evm:dev:migration
+        run: npm run aave:evm:dev:migration
       - name: Mainnet deployment at Mainnet fork
-        run: npm run bandz:fork:main
+        run: npm run aave:fork:main
         env:
           ALCHEMY_KEY: ${{ secrets.ALCHEMY_KEY }}
       - name: Amm deployment at Mainnet fork

@@ -20,7 +20,7 @@ import {
 import { DelegationAwareATokenFactory } from '../../types';
 import { DelegationAwareAToken } from '../../types/DelegationAwareAToken';
 import { MintableDelegationERC20 } from '../../types/MintableDelegationERC20';
-import BandzConfig from '../../markets/bandz';
+import AaveConfig from '../../markets/aave';
 
 const { parseEther } = ethers.utils;
 
@@ -38,7 +38,7 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
       [
         pool.address,
         delegationERC20.address,
-        await getTreasuryAddress(BandzConfig),
+        await getTreasuryAddress(AaveConfig),
         ZERO_ADDRESS,
         'aDEL',
         'aDEL',
@@ -51,7 +51,7 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
     console.log((await delegationAToken.decimals()).toString());
   });
 
-  it('Tries to delegate with the caller not being the Bandz admin', async () => {
+  it('Tries to delegate with the caller not being the Aave admin', async () => {
     const { users } = testEnv;
 
     await expect(

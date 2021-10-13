@@ -32,7 +32,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       dai.address,
       ZERO_ADDRESS,
       ZERO_ADDRESS,
-      'Bandz AMM Market DAI updated',
+      'Aave AMM Market DAI updated',
       'aAmmDAI',
       '0x10'
     ]);
@@ -41,7 +41,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       pool.address,
       dai.address,
       ZERO_ADDRESS,
-      'Bandz AMM Market stable debt DAI updated',
+      'Aave AMM Market stable debt DAI updated',
       'stableDebtAmmDAI',
       '0x10'
     ]);
@@ -50,7 +50,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       pool.address,
       dai.address,
       ZERO_ADDRESS,
-      'Bandz AMM Market variable debt DAI updated',
+      'Aave AMM Market variable debt DAI updated',
       'variableDebtAmmDAI',
       '0x10'
     ]);
@@ -113,7 +113,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await aDai.name();
 
-    expect(tokenName).to.be.eq('Bandz AMM Market DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Aave AMM Market DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI Stable debt token implementation with a different address than the lendingPoolManager', async () => {
@@ -173,7 +173,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Bandz AMM Market stable debt DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Aave AMM Market stable debt DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI variable debt token implementation with a different address than the lendingPoolManager', async () => {
@@ -234,6 +234,6 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Bandz AMM Market variable debt DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Aave AMM Market variable debt DAI updated', 'Invalid token name');
   });
 });

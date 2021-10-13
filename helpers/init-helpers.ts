@@ -5,7 +5,7 @@ import {
   IReserveParams,
   tSmartBCHAddress,
 } from './types';
-import { BandzProtocolDataProvider } from '../types/BandzProtocolDataProvider';
+import { AaveProtocolDataProvider } from '../types/AaveProtocolDataProvider';
 import { chunk, getDb, waitForTx } from './misc-utils';
 import {
   getAToken,
@@ -192,7 +192,7 @@ export const getPairsTokenAggregator = (
 export const configureReservesByHelper = async (
   reservesParams: iMultiPoolsAssets<IReserveParams>,
   tokenAddresses: { [symbol: string]: tSmartBCHAddress },
-  helpers: BandzProtocolDataProvider,
+  helpers: AaveProtocolDataProvider,
   admin: tSmartBCHAddress
 ) => {
   const addressProvider = await getLendingPoolAddressesProvider();

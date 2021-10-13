@@ -7,7 +7,7 @@ import {
 } from '../../helpers/configuration';
 import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
-  getBandzProtocolDataProvider,
+  getAaveProtocolDataProvider,
   getAddressById,
   getLendingPool,
   getLendingPoolAddressesProvider,
@@ -82,7 +82,7 @@ task('verify:general', 'Verify contracts at SmartScan')
         ? await getLendingPoolCollateralManagerImpl(lendingPoolCollateralManagerImplAddress)
         : await getLendingPoolCollateralManagerImpl();
 
-      const dataProvider = await getBandzProtocolDataProvider();
+      const dataProvider = await getAaveProtocolDataProvider();
       const walletProvider = await getWalletProvider();
 
       const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
@@ -119,8 +119,8 @@ task('verify:general', 'Verify contracts at SmartScan')
       );
 
       // Test helpers
-      console.log('\n- Verifying  Bandz  Provider Helpers...\n');
-      await verifyContract(eContractid.BandzProtocolDataProvider, dataProvider, [
+      console.log('\n- Verifying  Aave  Provider Helpers...\n');
+      await verifyContract(eContractid.AaveProtocolDataProvider, dataProvider, [
         addressesProvider.address,
       ]);
 

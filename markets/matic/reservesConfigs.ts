@@ -5,7 +5,7 @@ import {
   rateStrategyStableTwo,
   rateStrategyStableThree,
   rateStrategyWETH,
-  rateStrategyBANDZ,
+  rateStrategyAAVE,
   rateStrategyVolatileOne,
   rateStrategyVolatileTwo,
 } from './rateStrategies';
@@ -82,8 +82,8 @@ export const strategyMATIC: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyBANDZ: IReserveParams = {
-  strategy: rateStrategyBANDZ,
+export const strategyAAVE: IReserveParams = {
+  strategy: rateStrategyAAVE,
   baseLTVAsCollateral: '5000',
   liquidationThreshold: '6500',
   liquidationBonus: '11000',
