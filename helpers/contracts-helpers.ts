@@ -19,7 +19,6 @@ import { Artifact } from 'hardhat/types';
 import { Artifact as BuidlerArtifact } from '@nomiclabs/buidler/types';
 import { verifySmartScanContract } from './smartscan-verification';
 import { getFirstSigner, getIErc20Detailed } from './contracts-getters';
-import { usingPolygon, verifyAtPolygon } from './polygon-utils';
 import { ConfigNames, loadPoolConfig } from './configuration';
 import { ZERO_ADDRESS } from './constants';
 import { getDefenderRelaySigner, usingDefender } from './defender-utils';
@@ -352,11 +351,7 @@ export const verifyContract = async (
   instance: Contract,
   args: (string | string[])[]
 ) => {
-  if (usingPolygon()) {
-    await verifyAtPolygon(id, instance, args);
-  } else {
-    await verifySmartScanContract(instance.address, args);
-  }
+  await verifySmartScanContract(instance.address, args);
   return instance;
 };
 
