@@ -28,8 +28,6 @@ export const MaticConfig: IMaticConfiguration = {
     WMATIC: strategyMATIC,
     BANDZ: strategyBANDZ,
   },
-  ReserveAssets: {
-  },
 };
 
 export default MaticConfig;
