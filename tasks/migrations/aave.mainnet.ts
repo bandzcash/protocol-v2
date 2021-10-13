@@ -7,7 +7,7 @@ task('aave:mainnet', 'Deploy development enviroment')
   .addFlag('verify', 'Verify contracts at SmartScan')
   .addFlag('skipRegistry', 'Skip addresses provider registration at Addresses Provider Registry')
   .setAction(async ({ verify, skipRegistry }, DRE) => {
-    const POOL_NAME = ConfigNames.Aave;
+    const POOL_NAME = ConfigNames.Bandz;
     await DRE.run('set-DRE');
 
     // Prevent loss of gas verifying all the needed ENVs for SmartScan verification

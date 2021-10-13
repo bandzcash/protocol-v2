@@ -6,7 +6,7 @@ import { RateMode, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { CommonsConfig } from '../../markets/amm/commons';
 
-const BANDZ_REFERRAL = CommonsConfig.ProtocolGlobalParams.AaveReferral;
+const BANDZ_REFERRAL = CommonsConfig.ProtocolGlobalParams.BandzReferral;
 
 makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   const {

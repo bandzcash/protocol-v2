@@ -98,7 +98,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
   const aaveAdmin = await deployer.getAddress();
-  const config = loadPoolConfig(ConfigNames.Aave);
+  const config = loadPoolConfig(ConfigNames.Bandz);
 
   const mockTokens: {
     [symbol: string]: MockContract | MintableERC20 | WETH9Mocked;
@@ -238,7 +238,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   const testHelpers = await deployAaveProtocolDataProvider(addressesProvider.address);
 
-  await deployATokenImplementations(ConfigNames.Aave, reservesParams, false);
+  await deployATokenImplementations(ConfigNames.Bandz, reservesParams, false);
 
   const admin = await deployer.getAddress();
 
@@ -256,7 +256,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     admin,
     treasuryAddress,
     ZERO_ADDRESS,
-    ConfigNames.Aave,
+    ConfigNames.Bandz,
     false
   );
 

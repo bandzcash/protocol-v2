@@ -32,7 +32,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       dai.address,
       ZERO_ADDRESS,
       ZERO_ADDRESS,
-      'Aave AMM Market DAI updated',
+      'Bandz AMM Market DAI updated',
       'aAmmDAI',
       '0x10'
     ]);
@@ -41,7 +41,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       pool.address,
       dai.address,
       ZERO_ADDRESS,
-      'Aave AMM Market stable debt DAI updated',
+      'Bandz AMM Market stable debt DAI updated',
       'stableDebtAmmDAI',
       '0x10'
     ]);
@@ -50,7 +50,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       pool.address,
       dai.address,
       ZERO_ADDRESS,
-      'Aave AMM Market variable debt DAI updated',
+      'Bandz AMM Market variable debt DAI updated',
       'variableDebtAmmDAI',
       '0x10'
     ]);
@@ -113,7 +113,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await aDai.name();
 
-    expect(tokenName).to.be.eq('Aave AMM Market DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Bandz AMM Market DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI Stable debt token implementation with a different address than the lendingPoolManager', async () => {
@@ -122,7 +122,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const name = await (await getStableDebtToken(newStableTokenAddress)).name();
     const symbol = await (await getStableDebtToken(newStableTokenAddress)).symbol();
 
-    
+
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -150,7 +150,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     const name = await (await getStableDebtToken(newStableTokenAddress)).name();
     const symbol = await (await getStableDebtToken(newStableTokenAddress)).symbol();
 
-    
+
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -173,15 +173,15 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Aave AMM Market stable debt DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Bandz AMM Market stable debt DAI updated', 'Invalid token name');
   });
 
   it('Tries to update the DAI variable debt token implementation with a different address than the lendingPoolManager', async () => {
     const {dai, configurator, users} = testEnv;
-    
+
     const name = await (await getVariableDebtToken(newVariableTokenAddress)).name();
     const symbol = await (await getVariableDebtToken(newVariableTokenAddress)).symbol();
-    
+
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -205,10 +205,10 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
   it('Upgrades the DAI variable debt token implementation ', async () => {
     const {dai, configurator, pool, helpersContract} = testEnv;
-    
+
     const name = await (await getVariableDebtToken(newVariableTokenAddress)).name();
     const symbol = await (await getVariableDebtToken(newVariableTokenAddress)).symbol();
-    
+
     const updateDebtTokenInput: {
       asset: string;
       incentivesController: string;
@@ -234,6 +234,6 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Aave AMM Market variable debt DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Bandz AMM Market variable debt DAI updated', 'Invalid token name');
   });
 });

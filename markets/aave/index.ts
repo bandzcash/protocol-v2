@@ -32,7 +32,7 @@ import {
 
 export const AaveConfig: IAaveConfiguration = {
   ...CommonsConfig,
-  MarketId: 'Aave genesis market',
+  MarketId: 'Bandz genesis market',
   ProviderId: 1,
   ReservesConfig: {
     BANDZ: strategyBANDZ,

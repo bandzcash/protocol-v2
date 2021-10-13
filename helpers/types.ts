@@ -364,7 +364,7 @@ export interface IProtocolGlobalConfig {
   UsdAddress: tSmartBCHAddress;
   NilAddress: tSmartBCHAddress;
   OneAddress: tSmartBCHAddress;
-  AaveReferral: string;
+  BandzReferral: string;
 }
 
 export interface IMocksConfig {

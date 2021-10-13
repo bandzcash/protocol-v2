@@ -15,9 +15,9 @@ import { ICommonConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 
 export const CommonsConfig: ICommonConfiguration = {
   MarketId: 'Commons',
-  ATokenNamePrefix: 'Aave AMM Market',
-  StableDebtTokenNamePrefix: 'Aave AMM Market stable debt',
-  VariableDebtTokenNamePrefix: 'Aave AMM Market variable debt',
+  ATokenNamePrefix: 'Bandz AMM Market',
+  StableDebtTokenNamePrefix: 'Bandz AMM Market stable debt',
+  VariableDebtTokenNamePrefix: 'Bandz AMM Market variable debt',
   SymbolPrefix: 'Amm',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
@@ -28,7 +28,7 @@ export const CommonsConfig: ICommonConfiguration = {
     UsdAddress: '0x10F7Fc1F91Ba351f9C629c5947AD69bD03C05b96',
     NilAddress: '0x0000000000000000000000000000000000000000',
     OneAddress: '0x0000000000000000000000000000000000000001',
-    AaveReferral: '0',
+    BandzReferral: '0',
   },
 
   // ----------------

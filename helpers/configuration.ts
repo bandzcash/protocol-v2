@@ -19,14 +19,14 @@ import { deployWETHMocked } from './contracts-deployments';
 
 export enum ConfigNames {
   Commons = 'Commons',
-  Aave = 'Aave',
+  Bandz = 'Bandz',
   Matic = 'Matic',
   Amm = 'Amm',
 }
 
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
-    case ConfigNames.Aave:
+    case ConfigNames.Bandz:
       return AaveConfig;
     case ConfigNames.Matic:
       return MaticConfig;
