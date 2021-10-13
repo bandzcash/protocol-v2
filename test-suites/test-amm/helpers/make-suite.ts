@@ -39,7 +39,6 @@ import { solidity } from 'ethereum-waffle';
 import { AmmConfig } from '../../../markets/amm';
 import { FlashLiquidationAdapter } from '../../../types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { usingTenderly } from '../../../helpers/tenderly-utils';
 
 chai.use(bignumberChai());
 chai.use(almostEqual());
@@ -162,19 +161,11 @@ export async function initializeMakeSuite() {
 
 const setSnapshot = async () => {
   const hre = DRE as HardhatRuntimeEnvironment;
-  if (usingTenderly()) {
-    setBuidlerevmSnapshotId((await hre.tenderlyNetwork.getHead()) || '0x1');
-    return;
-  }
   setBuidlerevmSnapshotId(await evmSnapshot());
 };
 
 const revertHead = async () => {
   const hre = DRE as HardhatRuntimeEnvironment;
-  if (usingTenderly()) {
-    await hre.tenderlyNetwork.setHead(buidlerevmSnapshotId);
-    return;
-  }
   await evmRevert(buidlerevmSnapshotId);
 };
 

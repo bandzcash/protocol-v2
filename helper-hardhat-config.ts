@@ -33,7 +33,6 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eSmartBCHNetwork.coverage]: 'http://localhost:8555',
   [eSmartBCHNetwork.hardhat]: 'http://localhost:8545',
   [eSmartBCHNetwork.buidlerevm]: 'http://localhost:8545',
-  [eSmartBCHNetwork.tenderly]: `https://rpc.tenderly.co/fork/`,
 };
 
 export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
@@ -42,7 +41,6 @@ export const NETWORKS_DEFAULT_GAS: iParamsPerNetwork<number> = {
   [eSmartBCHNetwork.coverage]: 65 * GWEI,
   [eSmartBCHNetwork.hardhat]: 65 * GWEI,
   [eSmartBCHNetwork.buidlerevm]: 65 * GWEI,
-  [eSmartBCHNetwork.tenderly]: 1 * GWEI,
 };
 
 export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
@@ -51,5 +49,4 @@ export const BLOCK_TO_FORK: iParamsPerNetwork<number | undefined> = {
   [eSmartBCHNetwork.coverage]: undefined,
   [eSmartBCHNetwork.hardhat]: undefined,
   [eSmartBCHNetwork.buidlerevm]: undefined,
-  [eSmartBCHNetwork.tenderly]: undefined,
 };

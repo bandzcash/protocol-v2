@@ -19,7 +19,6 @@ import { Artifact } from 'hardhat/types';
 import { Artifact as BuidlerArtifact } from '@nomiclabs/buidler/types';
 import { verifySmartScanContract } from './smartscan-verification';
 import { getFirstSigner, getIErc20Detailed } from './contracts-getters';
-import { usingTenderly, verifyAtTenderly } from './tenderly-utils';
 import { usingPolygon, verifyAtPolygon } from './polygon-utils';
 import { ConfigNames, loadPoolConfig } from './configuration';
 import { ZERO_ADDRESS } from './constants';
@@ -139,7 +138,7 @@ export const linkBytecode = (artifact: BuidlerArtifact | Artifact, libraries: an
 };
 
 export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNetwork) => {
-  const { main, amber, coverage, buidlerevm, tenderly } =
+  const { main, amber, coverage, buidlerevm } =
     param as iSmartBCHParamsPerNetwork<T>;
   if (process.env.FORK) {
     return param[process.env.FORK as eNetwork] as T;
@@ -156,8 +155,6 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return amber;
     case eSmartBCHNetwork.main:
       return main;
-    case eSmartBCHNetwork.tenderly:
-      return tenderly;
   }
 };
 
@@ -358,9 +355,6 @@ export const verifyContract = async (
   if (usingPolygon()) {
     await verifyAtPolygon(id, instance, args);
   } else {
-    if (usingTenderly()) {
-      await verifyAtTenderly(id, instance);
-    }
     await verifySmartScanContract(instance.address, args);
   }
   return instance;

@@ -12,7 +12,6 @@ export enum eSmartBCHNetwork {
   main = 'main',
   coverage = 'coverage',
   hardhat = 'hardhat',
-  tenderly = 'tenderly',
 }
 
 export enum SmartBCHNetworkNames {
@@ -342,7 +341,6 @@ export interface iSmartBCHParamsPerNetwork<T> {
   [eSmartBCHNetwork.amber]: T;
   [eSmartBCHNetwork.main]: T;
   [eSmartBCHNetwork.hardhat]: T;
-  [eSmartBCHNetwork.tenderly]: T;
 }
 
 export interface iParamsPerPool<T> {

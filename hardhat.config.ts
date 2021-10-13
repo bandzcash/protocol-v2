@@ -22,7 +22,6 @@ import '@nomiclabs/hardhat-waffle';
 import 'temp-hardhat-etherscan';
 import 'hardhat-gas-reporter';
 import 'hardhat-typechain';
-import '@tenderly/hardhat-tenderly';
 import 'solidity-coverage';
 import { fork } from 'child_process';
 
@@ -93,7 +92,6 @@ const buidlerConfig: HardhatUserConfig = {
     },
     amber: getCommonNetworkConfig(eSmartBCHNetwork.amber, 10001),
     main: getCommonNetworkConfig(eSmartBCHNetwork.main, 10000),
-    tenderly: getCommonNetworkConfig(eSmartBCHNetwork.tenderly, 3030),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
