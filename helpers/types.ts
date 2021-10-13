@@ -4,7 +4,7 @@ export interface SymbolMap<T> {
   [symbol: string]: T;
 }
 
-export type eNetwork = eEthereumNetwork | eAvalancheNetwork;
+export type eNetwork = eEthereumNetwork;
 
 export enum eEthereumNetwork {
   buidlerevm = 'buidlerevm',
@@ -14,11 +14,6 @@ export enum eEthereumNetwork {
   coverage = 'coverage',
   hardhat = 'hardhat',
   tenderly = 'tenderly',
-}
-
-export enum eAvalancheNetwork {
-  avalanche = 'avalanche',
-  fuji = 'fuji',
 }
 
 export enum EthereumNetworkNames {
@@ -419,11 +414,6 @@ export interface iEthereumParamsPerNetwork<T> {
   [eEthereumNetwork.main]: T;
   [eEthereumNetwork.hardhat]: T;
   [eEthereumNetwork.tenderly]: T;
-}
-
-export interface iAvalancheParamsPerNetwork<T> {
-  [eAvalancheNetwork.avalanche]: T;
-  [eAvalancheNetwork.fuji]: T;
 }
 
 export interface iParamsPerPool<T> {

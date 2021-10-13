@@ -13,10 +13,6 @@ import {
   iParamsPerPool,
   eNetwork,
   iEthereumParamsPerNetwork,
-  iPolygonParamsPerNetwork,
-  iXDaiParamsPerNetwork,
-  iAvalancheParamsPerNetwork,
-  eAvalancheNetwork,
 } from './types';
 import { MintableERC20 } from '../types/MintableERC20';
 import { Artifact } from 'hardhat/types';
@@ -167,10 +163,6 @@ export const getParamPerNetwork = <T>(param: iParamsPerNetwork<T>, network: eNet
       return main;
     case eEthereumNetwork.tenderly:
       return tenderly;
-    case eAvalancheNetwork.avalanche:
-      return avalanche;
-    case eAvalancheNetwork.fuji:
-      return fuji;
   }
 };
 

@@ -4,7 +4,6 @@ import { HardhatUserConfig } from 'hardhat/types';
 // @ts-ignore
 import { accounts } from './test-wallets.js';
 import {
-  eAvalancheNetwork,
   eEthereumNetwork,
   eNetwork,
 } from './helpers/types';
@@ -101,8 +100,6 @@ const buidlerConfig: HardhatUserConfig = {
     amber: getCommonNetworkConfig(eEthereumNetwork.amber, 10001),
     main: getCommonNetworkConfig(eEthereumNetwork.main, 1),
     tenderly: getCommonNetworkConfig(eEthereumNetwork.tenderly, 3030),
-    avalanche: getCommonNetworkConfig(eAvalancheNetwork.avalanche, 43114),
-    fuji: getCommonNetworkConfig(eAvalancheNetwork.fuji, 43113),
     hardhat: {
       hardfork: 'berlin',
       blockGasLimit: DEFAULT_BLOCK_GAS_LIMIT,
