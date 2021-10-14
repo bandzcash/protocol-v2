@@ -13,7 +13,6 @@ import {
   strategyCRVWETH,
   strategyLINKWETH,
   strategyMKRWETH,
-  strategyUNIWETH,
   strategyUSDCWETH,
   // strategyYFIWETH,
   strategyBALWETH,

@@ -66,9 +66,6 @@ export const CommonsConfig: ICommonConfiguration = {
     MKR: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    UNI: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
   },
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS
@@ -177,7 +174,6 @@ export const CommonsConfig: ICommonConfiguration = {
       MKR: '0x811B1f727F8F4aE899774B568d2e72916D91F392',
       SUSD: '0xe054b4aee7ac7645642dd52f1c892ff0128c98f0',
       TUSD: '0x523ac85618df56e940534443125ef16daf785620',
-      UNI: ZERO_ADDRESS,
       USDC: '0xe1480303dde539e2c241bdc527649f37c9cbef7d',
       USDT: '0xc08fe0c4d97ccda6b40649c6da621761b628c288',
       USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
@@ -188,7 +184,6 @@ export const CommonsConfig: ICommonConfiguration = {
       MKR: '0x24551a8Fb2A7211A25a17B1481f043A8a8adC7f2',
       SUSD: '0x8e0b7e6062272B5eF4524250bFFF8e5Bd3497757',
       TUSD: '0x3886BA987236181D98F2401c507Fb8BeA7871dF2',
-      UNI: '0xD6aA3D25116d8dA79Ea0246c4826EB951872e02e',
       USDC: '0x986b5E1e1755e3C2440e960477f25201B0a8bbD4',
       USDT: '0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46',
       USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',

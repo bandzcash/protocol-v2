@@ -197,12 +197,10 @@ export interface iAssetBase<T> {
   BANDZ: T;
   MKR: T;
   LINK: T;
-  UNI: T;
   USD: T;
   WMATIC: T;
   STAKE: T;
   xSUSHI: T;
-  WAVAX: T;
 }
 
 export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
@@ -211,7 +209,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iBandzPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'TUSD' | 'USDC' | 'USDT' | 'SUSD' | 'BANDZ' | 'MKR' | 'LINK' | 'WETH' | 'UNI' | 'xSUSHI'
+  'DAI' | 'TUSD' | 'USDC' | 'USDT' | 'SUSD' | 'BANDZ' | 'MKR' | 'LINK' | 'WETH' | 'xSUSHI'
 >;
 
 export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'USDC' | 'USDT' | 'WETH'>;
@@ -238,11 +236,9 @@ export enum TokenContractId {
   MKR = 'MKR',
   LINK = 'LINK',
   USD = 'USD',
-  UNI = 'UNI',
   WMATIC = 'WMATIC',
   STAKE = 'STAKE',
   xSUSHI = 'xSUSHI',
-  WAVAX = 'WAVAX',
 }
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {

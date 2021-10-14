@@ -39,13 +39,11 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   MKR: oneBch.multipliedBy('2.508581').toFixed(),
   SUSD: oneBch.multipliedBy('0.00364714136416').toFixed(),
   TUSD: oneBch.multipliedBy('0.00364714136416').toFixed(),
-  UNI: oneBch.multipliedBy('0.00536479').toFixed(),
   USDC: oneBch.multipliedBy('0.00367714136416').toFixed(),
   USDT: oneBch.multipliedBy('0.00369068412860').toFixed(),
   WETH: oneBch.toFixed(),
   WMATIC: oneBch.multipliedBy('0.003620948469').toFixed(),
   STAKE: oneBch.multipliedBy('0.003620948469').toFixed(),
   xSUSHI: oneBch.multipliedBy('0.00913428586').toFixed(),
-  WAVAX: oneBch.multipliedBy('0.006051936629').toFixed(),
   USD: '5848466240000000',
 };
