@@ -23,7 +23,6 @@ export const MaticConfig: IMaticConfiguration = {
     USDC: strategyUSDC,
     USDT: strategyUSDT,
     WETH: strategyWETH,
-    WMATIC: strategyMATIC,
     BANDZ: strategyBANDZ,
   },
   ReserveAssets: {

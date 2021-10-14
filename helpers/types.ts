@@ -198,8 +198,6 @@ export interface iAssetBase<T> {
   MKR: T;
   LINK: T;
   USD: T;
-  WMATIC: T;
-  STAKE: T;
   xSUSHI: T;
 }
 
@@ -216,7 +214,7 @@ export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'USDC' | 'USDT
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WETH' | 'WMATIC' | 'BANDZ'
+  'DAI' | 'USDC' | 'USDT' | 'WETH' | 'BANDZ'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
@@ -236,8 +234,6 @@ export enum TokenContractId {
   MKR = 'MKR',
   LINK = 'LINK',
   USD = 'USD',
-  WMATIC = 'WMATIC',
-  STAKE = 'STAKE',
   xSUSHI = 'xSUSHI',
 }
 
