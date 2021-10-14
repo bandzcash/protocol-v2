@@ -3,7 +3,7 @@ import { checkVerification } from '../../helpers/smartscan-verification';
 import { ConfigNames } from '../../helpers/configuration';
 import { printContracts } from '../../helpers/misc-utils';
 
-task('aave:dev', 'Deploy development enviroment')
+task('bandz:dev', 'Deploy development enviroment')
   .addFlag('verify', 'Verify contracts at SmartScan')
   .setAction(async ({ verify }, localBRE) => {
     const POOL_NAME = ConfigNames.Bandz;

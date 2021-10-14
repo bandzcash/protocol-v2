@@ -53,7 +53,7 @@ WRONG RESERVE ASSET SETUP:
         poolAddress,
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
-        `Aave stable debt bearing ${symbol}`,
+        `Bandz stable debt bearing ${symbol}`,
         `stableDebt${symbol}`,
       ],
       verify
@@ -63,7 +63,7 @@ WRONG RESERVE ASSET SETUP:
         poolAddress,
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
-        `Aave variable debt bearing ${symbol}`,
+        `Bandz variable debt bearing ${symbol}`,
         `variableDebt${symbol}`,
       ],
       verify
