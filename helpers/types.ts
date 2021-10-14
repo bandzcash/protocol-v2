@@ -20,7 +20,7 @@ export enum SmartBCHNetworkNames {
   matic = 'matic',
 }
 
-export enum AavePools {
+export enum BandzPools {
   proto = 'proto',
   matic = 'matic',
   amm = 'amm',
@@ -338,9 +338,9 @@ export interface iSmartBCHParamsPerNetwork<T> {
 }
 
 export interface iParamsPerPool<T> {
-  [AavePools.proto]: T;
-  [AavePools.matic]: T;
-  [AavePools.amm]: T;
+  [BandzPools.proto]: T;
+  [BandzPools.matic]: T;
+  [BandzPools.amm]: T;
 }
 
 export interface iBasicDistributionParams {
