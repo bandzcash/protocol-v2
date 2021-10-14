@@ -90,11 +90,11 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         '\tSetting AaveProtocolDataProvider at AddressesProvider at id: 0x01',
         collateralManagerAddress
       );
-      const aaveProtocolDataProvider = await getAaveProtocolDataProvider();
+      const bandzProtocolDataProvider = await getAaveProtocolDataProvider();
       await waitForTx(
         await addressesProvider.setAddress(
           '0x0100000000000000000000000000000000000000000000000000000000000000',
-          aaveProtocolDataProvider.address
+          bandzProtocolDataProvider.address
         )
       );
 

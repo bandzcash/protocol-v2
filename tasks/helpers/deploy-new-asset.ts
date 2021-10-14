@@ -1,8 +1,8 @@
 import { task } from 'hardhat/config';
 import { eSmartBCHNetwork } from '../../helpers/types';
 import { getTreasuryAddress } from '../../helpers/configuration';
-import * as marketConfigs from '../../markets/aave';
-import * as reserveConfigs from '../../markets/aave/reservesConfigs';
+import * as marketConfigs from '../../markets/bandz';
+import * as reserveConfigs from '../../markets/bandz/reservesConfigs';
 import { getLendingPoolAddressesProvider } from './../../helpers/contracts-getters';
 import {
   chooseATokenDeployment,
@@ -33,8 +33,8 @@ task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters'
         `
 WRONG RESERVE ASSET SETUP:
         The symbol ${symbol} has no reserve Config and/or reserve Asset setup.
-        update /markets/aave/index.ts and add the asset address for ${network} network
-        update /markets/aave/reservesConfigs.ts and add parameters for ${symbol}
+        update /markets/bandz/index.ts and add the asset address for ${network} network
+        update /markets/bandz/reservesConfigs.ts and add parameters for ${symbol}
         `
       );
     }

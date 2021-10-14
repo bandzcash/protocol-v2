@@ -70,11 +70,11 @@ import { UiPoolDataProvider } from '../types';
 import { eNetwork } from './types';
 
 export const deployUiPoolDataProvider = async (
-  [incentivesController, aaveOracle]: [tSmartBCHAddress, tSmartBCHAddress],
+  [incentivesController, bandzOracle]: [tSmartBCHAddress, tSmartBCHAddress],
   verify?: boolean
 ) => {
   const id = eContractid.UiPoolDataProvider;
-  const args: string[] = [incentivesController, aaveOracle];
+  const args: string[] = [incentivesController, bandzOracle];
   const instance = await deployContract<UiPoolDataProvider>(id, args);
   if (verify) {
     await verifyContract(id, instance, args);

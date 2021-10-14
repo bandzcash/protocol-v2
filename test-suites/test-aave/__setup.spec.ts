@@ -51,7 +51,7 @@ import {
 } from '../../helpers/oracles-helpers';
 import { DRE, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
-import AaveConfig from '../../markets/aave';
+import AaveConfig from '../../markets/bandz';
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getLendingPool,
@@ -97,7 +97,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const aaveAdmin = await deployer.getAddress();
+  const bandzAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Bandz);
 
   const mockTokens: {
@@ -106,7 +106,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     ...(await deployAllMockTokens(deployer)),
   };
   const addressesProvider = await deployLendingPoolAddressesProvider(AaveConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
+  await waitForTx(await addressesProvider.setPoolAdmin(bandzAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -228,7 +228,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    aaveAdmin
+    bandzAdmin
   );
 
   // Reserve params from BANDZ pool + mocked tokens
