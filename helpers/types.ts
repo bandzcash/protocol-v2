@@ -199,7 +199,6 @@ export interface iAssetBase<T> {
   MKR: T;
   LINK: T;
   KNC: T;
-  WBTC: T;
   MANA: T;
   ZRX: T;
   SNX: T;
@@ -231,7 +230,6 @@ export type iBandzPoolAssets<T> = Pick<
   | 'MKR'
   | 'LINK'
   | 'KNC'
-  | 'WBTC'
   | 'MANA'
   | 'ZRX'
   | 'SNX'
@@ -244,14 +242,11 @@ export type iBandzPoolAssets<T> = Pick<
   | 'xSUSHI'
 >;
 
-export type iLpPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH'
->;
+export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'USDC' | 'USDT' | 'WETH'>;
 
 export type iMaticPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'BANDZ'
+  'DAI' | 'USDC' | 'USDT' | 'WETH' | 'WMATIC' | 'BANDZ'
 >;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
@@ -271,7 +266,6 @@ export enum TokenContractId {
   SUSD = 'SUSD',
   ZRX = 'ZRX',
   MKR = 'MKR',
-  WBTC = 'WBTC',
   LINK = 'LINK',
   KNC = 'KNC',
   MANA = 'MANA',

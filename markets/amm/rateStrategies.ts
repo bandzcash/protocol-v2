@@ -32,5 +32,5 @@ export const rateStrategyStable: IInterestRateStrategyParams = {
     variableRateSlope1: new BigNumber(0.04).multipliedBy(oneRay).toFixed(),
     variableRateSlope2: new BigNumber(0.75).multipliedBy(oneRay).toFixed(),
     stableRateSlope1: new BigNumber(0.02).multipliedBy(oneRay).toFixed(),
-    stableRateSlope2: new BigNumber(0.60).multipliedBy(oneRay).toFixed(),   
+    stableRateSlope2: new BigNumber(0.60).multipliedBy(oneRay).toFixed(),
 }

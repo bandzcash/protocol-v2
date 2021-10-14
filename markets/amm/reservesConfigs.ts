@@ -18,18 +18,6 @@ export const strategyWETH: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyWBTC: IReserveParams = {
-  strategy: rateStrategyBaseOne,
-  baseLTVAsCollateral: '7000',
-  liquidationThreshold: '7500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '8',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '2000'
-};
-
 export const strategyDAI: IReserveParams = {
   strategy: rateStrategyStable,
   baseLTVAsCollateral: '7500',
@@ -76,18 +64,6 @@ export const strategyDAIWETH: IReserveParams = {
   reserveDecimals: '18',
   aTokenImpl: eContractid.AToken,
   reserveFactor: '1000'
-};
-
-export const strategyWBTCWETH: IReserveParams = {
-  strategy: rateStrategyAmmBase,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '7000',
-  liquidationBonus: '11500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '1500'
 };
 
 export const strategyBANDZWETH: IReserveParams = {
@@ -208,18 +184,6 @@ export const strategyUSDCWETH: IReserveParams = {
   reserveDecimals: '18',
   aTokenImpl: eContractid.AToken,
   reserveFactor: '1000'
-};
-
-export const strategyWBTCUSDC: IReserveParams = {
-  strategy: rateStrategyAmmBase,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '7000',
-  liquidationBonus: '11500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '1500'
 };
 
 export const strategyYFIWETH: IReserveParams = {

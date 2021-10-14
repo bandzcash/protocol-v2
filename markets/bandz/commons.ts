@@ -75,9 +75,6 @@ export const CommonsConfig: ICommonConfiguration = {
     MANA: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    WBTC: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     ZRX: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
@@ -218,7 +215,6 @@ export const CommonsConfig: ICommonConfiguration = {
       UNI: ZERO_ADDRESS,
       USDC: '0xe1480303dde539e2c241bdc527649f37c9cbef7d',
       USDT: '0xc08fe0c4d97ccda6b40649c6da621761b628c288',
-      WBTC: '0x5b8B87A0abA4be247e660B0e0143bB30Cdf566AF',
       YFI: ZERO_ADDRESS,
       ZRX: '0x1d0052e4ae5b4ae4563cbac50edc3627ca0460d7',
       USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
@@ -240,7 +236,6 @@ export const CommonsConfig: ICommonConfiguration = {
       UNI: '0xD6aA3D25116d8dA79Ea0246c4826EB951872e02e',
       USDC: '0x986b5E1e1755e3C2440e960477f25201B0a8bbD4',
       USDT: '0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46',
-      WBTC: '0xdeb288F737066589598e9214E782fa5A8eD689e8',
       YFI: '0x7c5d4F8345e66f68099581Db340cd65B078C41f4',
       ZRX: '0x2Da4983a622a8498bb1a21FaE9D8F6C664939962',
       USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',

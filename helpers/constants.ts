@@ -50,7 +50,6 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   USDC: oneBch.multipliedBy('0.00367714136416').toFixed(),
   USDT: oneBch.multipliedBy('0.00369068412860').toFixed(),
   WETH: oneBch.toFixed(),
-  WBTC: oneBch.multipliedBy('47.332685').toFixed(),
   YFI: oneBch.multipliedBy('22.407436').toFixed(),
   ZRX: oneBch.multipliedBy('0.001151').toFixed(),
   WMATIC: oneBch.multipliedBy('0.003620948469').toFixed(),
