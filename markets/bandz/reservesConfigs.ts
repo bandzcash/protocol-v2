@@ -12,18 +12,6 @@ import {
   rateStrategyVolatileFour,
 } from './rateStrategies';
 
-export const strategyBUSD: IReserveParams = {
-  strategy: rateStrategyStableOne,
-  baseLTVAsCollateral: '0',
-  liquidationThreshold: '0',
-  liquidationBonus: '0',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '1000',
-};
-
 export const strategyDAI: IReserveParams = {
   strategy: rateStrategyStableTwo,
   baseLTVAsCollateral: '7500',
@@ -94,18 +82,6 @@ export const strategyBANDZ: IReserveParams = {
   reserveDecimals: '18',
   aTokenImpl: eContractid.AToken,
   reserveFactor: '0',
-};
-
-export const strategyBAT: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '7000',
-  liquidationThreshold: '7500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '2000',
 };
 
 export const strategyENJ: IReserveParams = {

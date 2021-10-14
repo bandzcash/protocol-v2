@@ -57,9 +57,6 @@ export const CommonsConfig: ICommonConfiguration = {
     USDT: {
       borrowRate: oneRay.multipliedBy(0.035).toFixed(),
     },
-    BAT: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     BANDZ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
@@ -86,9 +83,6 @@ export const CommonsConfig: ICommonConfiguration = {
     },
     ENJ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    BUSD: {
-      borrowRate: oneRay.multipliedBy(0.05).toFixed(),
     },
   },
   // ----------------
@@ -194,8 +188,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.buidlerevm]: {},
     [eSmartBCHNetwork.amber]: {
       BANDZ: ZERO_ADDRESS,
-      BAT: '0xafd8186c962daf599f171b8600f3e19af7b52c92',
-      BUSD: '0x0A32D96Ff131cd5c3E0E5AAB645BF009Eda61564',
       DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
       ENJ: ZERO_ADDRESS,
       KNC: '0x19d97ceb36624a31d827032d8216dd2eb15e9845',
@@ -213,8 +205,6 @@ export const CommonsConfig: ICommonConfiguration = {
     },
     [eSmartBCHNetwork.main]: {
       BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
-      BAT: '0x0d16d4528239e9ee52fa531af613AcdB23D88c94',
-      BUSD: '0x614715d2Af89E6EC99A233818275142cE88d1Cfd',
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
       ENJ: '0x24D9aB51950F3d62E9144fdC2f3135DAA6Ce8D1B',
       KNC: '0x656c0544eF4C98A6a98491833A89204Abb045d6b',

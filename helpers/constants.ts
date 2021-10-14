@@ -34,8 +34,6 @@ export const BANDZ_REFERRAL = '0';
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   BANDZ: oneBch.multipliedBy('0.003620948469').toFixed(),
-  BAT: oneBch.multipliedBy('0.00137893825230').toFixed(),
-  BUSD: oneBch.multipliedBy('0.00736484').toFixed(),
   DAI: oneBch.multipliedBy('0.00369068412860').toFixed(),
   ENJ: oneBch.multipliedBy('0.00029560').toFixed(),
   KNC: oneBch.multipliedBy('0.001072').toFixed(),

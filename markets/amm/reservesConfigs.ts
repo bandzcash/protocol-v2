@@ -78,18 +78,6 @@ export const strategyBANDZWETH: IReserveParams = {
   reserveFactor: '500'
 };
 
-export const strategyBATWETH: IReserveParams = {
-  strategy: rateStrategyAmmBase,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '7000',
-  liquidationBonus: '11500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '1500'
-};
-
 export const strategyDAIUSDC: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',

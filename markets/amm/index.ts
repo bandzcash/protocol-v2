@@ -9,7 +9,6 @@ import {
   strategyWETH,
   strategyDAIWETH,
   strategyBANDZWETH,
-  strategyBATWETH,
   strategyDAIUSDC,
   strategyCRVWETH,
   strategyLINKWETH,
