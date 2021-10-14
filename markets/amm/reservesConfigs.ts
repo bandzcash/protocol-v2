@@ -186,17 +186,17 @@ export const strategyUSDCWETH: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyYFIWETH: IReserveParams = {
-  strategy: rateStrategyAmmBase,
-  baseLTVAsCollateral: '5000',
-  liquidationThreshold: '6000',
-  liquidationBonus: '11500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '1500'
-};
+// export const strategyYFIWETH: IReserveParams = {
+//   strategy: rateStrategyAmmBase,
+//   baseLTVAsCollateral: '5000',
+//   liquidationThreshold: '6000',
+//   liquidationBonus: '11500',
+//   borrowingEnabled: true,
+//   stableBorrowRateEnabled: false,
+//   reserveDecimals: '18',
+//   aTokenImpl: eContractid.AToken,
+//   reserveFactor: '1500'
+// };
 
 export const strategyBALWETH: IReserveParams = {
   strategy: rateStrategyAmmBase,

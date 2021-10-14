@@ -11,7 +11,6 @@ import {
   strategyUSDT,
   strategyBANDZ,
   strategyBAT,
-  strategyZRX,
   strategyKNC,
   strategyLINK,
   strategyMANA,
@@ -20,7 +19,6 @@ import {
   strategySNX,
   strategyUNI,
   strategyWETH,
-  strategyYFI,
   strategyXSUSHI,
   strategyENJ,
 } from './reservesConfigs';
@@ -51,8 +49,6 @@ export const BandzConfig: IBandzConfiguration = {
     USDC: strategyUSDC,
     USDT: strategyUSDT,
     WETH: strategyWETH,
-    YFI: strategyYFI,
-    ZRX: strategyZRX,
     xSUSHI: strategyXSUSHI,
   },
   ReserveAssets: {
@@ -77,8 +73,6 @@ export const BandzConfig: IBandzConfiguration = {
       USDC: '0x851dEf71f0e6A903375C1e536Bd9ff1684BAD802',
       USDT: '0xB404c51BBC10dcBE948077F18a4B8E553D160084',
       WETH: '0xc778417e063141139fce010982780140aa0cd5ab',
-      YFI: ZERO_ADDRESS,
-      ZRX: '0x02d7055704EfF050323A2E5ee4ba05DB2A588959',
     },
     [eSmartBCHNetwork.main]: {
       BANDZ: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
@@ -98,8 +92,6 @@ export const BandzConfig: IBandzConfiguration = {
       USDC: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       USDT: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
       WETH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-      YFI: '0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e',
-      ZRX: '0xE41d2489571d322189246DaFA5ebDe1F4699F498',
       xSUSHI: '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272',
     },
   },

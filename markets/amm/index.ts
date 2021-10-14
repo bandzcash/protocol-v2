@@ -18,7 +18,7 @@ import {
   strategySNXWETH,
   strategyUNIWETH,
   strategyUSDCWETH,
-  strategyYFIWETH,
+  // strategyYFIWETH,
   strategyBALWETH,
 } from './reservesConfigs';
 

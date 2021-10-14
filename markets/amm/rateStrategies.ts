@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { oneRay } from '../../helpers/constants';
 import { IInterestRateStrategyParams } from '../../helpers/types';
 
-// DAIWETH WBTCWETH BANDZWETH BATWETH DAIUSDC CRVWETH LINKWETH MKRWETH RENWETH SNXWETH UNIWETH USDCWETH WBTCUSDC YFIWETH
+// DAIWETH BANDZWETH BATWETH DAIUSDC CRVWETH LINKWETH MKRWETH RENWETH SNXWETH UNIWETH USDCWETH YFIWETH
 export const rateStrategyAmmBase: IInterestRateStrategyParams = {
     name: "rateStrategyAmmBase",
     optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),
@@ -13,7 +13,7 @@ export const rateStrategyAmmBase: IInterestRateStrategyParams = {
     stableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
 }
 
-// WETH WBTC
+// WETH
 export const rateStrategyBaseOne: IInterestRateStrategyParams = {
     name: "rateStrategyBaseOne",
     optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),

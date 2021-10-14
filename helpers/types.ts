@@ -200,10 +200,8 @@ export interface iAssetBase<T> {
   LINK: T;
   KNC: T;
   MANA: T;
-  ZRX: T;
   SNX: T;
   BUSD: T;
-  YFI: T;
   UNI: T;
   USD: T;
   REN: T;
@@ -231,11 +229,9 @@ export type iBandzPoolAssets<T> = Pick<
   | 'LINK'
   | 'KNC'
   | 'MANA'
-  | 'ZRX'
   | 'SNX'
   | 'BUSD'
   | 'WETH'
-  | 'YFI'
   | 'UNI'
   | 'REN'
   | 'ENJ'
@@ -264,7 +260,6 @@ export enum TokenContractId {
   USDC = 'USDC',
   USDT = 'USDT',
   SUSD = 'SUSD',
-  ZRX = 'ZRX',
   MKR = 'MKR',
   LINK = 'LINK',
   KNC = 'KNC',
@@ -273,7 +268,6 @@ export enum TokenContractId {
   SNX = 'SNX',
   BUSD = 'BUSD',
   USD = 'USD',
-  YFI = 'YFI',
   UNI = 'UNI',
   ENJ = 'ENJ',
   WMATIC = 'WMATIC',
