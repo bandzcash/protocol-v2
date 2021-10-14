@@ -108,18 +108,6 @@ export const strategyLINK: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyMANA: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '3500',
-};
-
 export const strategyMKR: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: '6000',
@@ -130,30 +118,6 @@ export const strategyMKR: IReserveParams = {
   reserveDecimals: '18',
   aTokenImpl: eContractid.AToken,
   reserveFactor: '2000',
-};
-
-export const strategyREN: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '5500',
-  liquidationThreshold: '6000',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '2000',
-};
-
-export const strategySNX: IReserveParams = {
-  strategy: rateStrategyVolatileThree,
-  baseLTVAsCollateral: '1500',
-  liquidationThreshold: '4000',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '3500',
 };
 
 // Invalid borrow rates in params currently, replaced with snx params
