@@ -166,14 +166,12 @@ export const getOptionalParamAddressPerNetwork = (
   return getParamPerNetwork(param, network);
 };
 
-export const getParamPerPool = <T>({ proto, amm, matic }: iParamsPerPool<T>, pool: BandzPools) => {
+export const getParamPerPool = <T>({ proto, amm }: iParamsPerPool<T>, pool: BandzPools) => {
   switch (pool) {
     case BandzPools.proto:
       return proto;
     case BandzPools.amm:
       return amm;
-    case BandzPools.matic:
-      return matic;
     default:
       return proto;
   }

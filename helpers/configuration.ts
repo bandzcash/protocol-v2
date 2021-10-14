@@ -8,7 +8,6 @@ import {
 } from './types';
 import { getEthersSignersAddresses, getParamPerPool } from './contracts-helpers';
 import BandzConfig from '../markets/bandz';
-import MaticConfig from '../markets/matic';
 import AmmConfig from '../markets/amm';
 
 import { CommonsConfig } from '../markets/bandz/commons';
@@ -20,7 +19,6 @@ import { deployWETHMocked } from './contracts-deployments';
 export enum ConfigNames {
   Commons = 'Commons',
   Bandz = 'Bandz',
-  Matic = 'Matic',
   Amm = 'Amm',
 }
 
@@ -28,8 +26,6 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Bandz:
       return BandzConfig;
-    case ConfigNames.Matic:
-      return MaticConfig;
     case ConfigNames.Amm:
       return AmmConfig;
     case ConfigNames.Commons:
@@ -55,9 +51,6 @@ export const getReservesConfigByPool = (pool: BandzPools): iMultiPoolsAssets<IRe
       },
       [BandzPools.amm]: {
         ...AmmConfig.ReservesConfig,
-      },
-      [BandzPools.matic]: {
-        ...MaticConfig.ReservesConfig,
       },
     },
     pool

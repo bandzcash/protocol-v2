@@ -17,12 +17,10 @@ export enum eSmartBCHNetwork {
 export enum SmartBCHNetworkNames {
   amber = 'amber',
   main = 'main',
-  matic = 'matic',
 }
 
 export enum BandzPools {
   proto = 'proto',
-  matic = 'matic',
   amm = 'amm',
 }
 
@@ -212,11 +210,6 @@ export type iBandzPoolAssets<T> = Pick<
 
 export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'USDC' | 'USDT' | 'WETH'>;
 
-export type iMaticPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WETH' | 'BANDZ'
->;
-
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
 
 export type iAavePoolTokens<T> = Omit<iBandzPoolAssets<T>, 'ETH'>;
@@ -288,7 +281,7 @@ export interface iSmartBCHParamsPerNetwork<T> {
 
 export interface iParamsPerPool<T> {
   [BandzPools.proto]: T;
-  [BandzPools.matic]: T;
+  // [BandzPools.matic]: T;
   [BandzPools.amm]: T;
 }
 
@@ -377,9 +370,9 @@ export interface IAmmConfiguration extends ICommonConfiguration {
   ReservesConfig: iLpPoolAssets<IReserveParams>;
 }
 
-export interface IMaticConfiguration extends ICommonConfiguration {
-  ReservesConfig: iMaticPoolAssets<IReserveParams>;
-}
+// export interface IMaticConfiguration extends ICommonConfiguration {
+//   ReservesConfig: iMaticPoolAssets<IReserveParams>;
+// }
 
 export interface ITokenAddress {
   [token: string]: tSmartBCHAddress;
