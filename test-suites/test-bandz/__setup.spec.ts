@@ -51,7 +51,7 @@ import {
 } from '../../helpers/oracles-helpers';
 import { DRE, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
-import AaveConfig from '../../markets/bandz';
+import BandzConfig from '../../markets/bandz';
 import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getLendingPool,
@@ -60,10 +60,10 @@ import {
 } from '../../helpers/contracts-getters';
 import { WETH9Mocked } from '../../types/WETH9Mocked';
 
-const MOCK_USD_PRICE_IN_WEI = AaveConfig.ProtocolGlobalParams.MockUsdPriceInWei;
-const ALL_ASSETS_INITIAL_PRICES = AaveConfig.Mocks.AllAssetsInitialPrices;
-const USD_ADDRESS = AaveConfig.ProtocolGlobalParams.UsdAddress;
-const LENDING_RATE_ORACLE_RATES_COMMON = AaveConfig.LendingRateOracleRatesCommon;
+const MOCK_USD_PRICE_IN_WEI = BandzConfig.ProtocolGlobalParams.MockUsdPriceInWei;
+const ALL_ASSETS_INITIAL_PRICES = BandzConfig.Mocks.AllAssetsInitialPrices;
+const USD_ADDRESS = BandzConfig.ProtocolGlobalParams.UsdAddress;
+const LENDING_RATE_ORACLE_RATES_COMMON = BandzConfig.LendingRateOracleRatesCommon;
 
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
@@ -105,7 +105,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   } = {
     ...(await deployAllMockTokens(deployer)),
   };
-  const addressesProvider = await deployLendingPoolAddressesProvider(AaveConfig.MarketId);
+  const addressesProvider = await deployLendingPoolAddressesProvider(BandzConfig.MarketId);
   await waitForTx(await addressesProvider.setPoolAdmin(bandzAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list

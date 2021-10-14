@@ -38,13 +38,13 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
       [pool.address, delegationERC20.address, await getTreasuryAddress(AmmConfig), ZERO_ADDRESS, 'aDEL', 'aDEL'],
       false
     );
-    
+
     //await delegationAToken.initialize(pool.address, ZERO_ADDRESS, delegationERC20.address, ZERO_ADDRESS, '18', 'aDEL', 'aDEL');
 
     console.log((await delegationAToken.decimals()).toString());
   });
 
-  it('Tries to delegate with the caller not being the Aave admin', async () => {
+  it('Tries to delegate with the caller not being the Bandz admin', async () => {
     const { users } = testEnv;
 
     await expect(

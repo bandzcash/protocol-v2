@@ -20,7 +20,7 @@ import {
 import { DelegationAwareATokenFactory } from '../../types';
 import { DelegationAwareAToken } from '../../types/DelegationAwareAToken';
 import { MintableDelegationERC20 } from '../../types/MintableDelegationERC20';
-import AaveConfig from '../../markets/bandz';
+import BandzConfig from '../../markets/bandz';
 
 const { parseEther } = ethers.utils;
 
@@ -38,7 +38,7 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
       [
         pool.address,
         delegationERC20.address,
-        await getTreasuryAddress(AaveConfig),
+        await getTreasuryAddress(BandzConfig),
         ZERO_ADDRESS,
         'aDEL',
         'aDEL',

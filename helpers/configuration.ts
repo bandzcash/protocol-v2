@@ -7,7 +7,7 @@ import {
   IBaseConfiguration,
 } from './types';
 import { getEthersSignersAddresses, getParamPerPool } from './contracts-helpers';
-import AaveConfig from '../markets/bandz';
+import BandzConfig from '../markets/bandz';
 import MaticConfig from '../markets/matic';
 import AmmConfig from '../markets/amm';
 
@@ -27,7 +27,7 @@ export enum ConfigNames {
 export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
   switch (configName) {
     case ConfigNames.Bandz:
-      return AaveConfig;
+      return BandzConfig;
     case ConfigNames.Matic:
       return MaticConfig;
     case ConfigNames.Amm:
@@ -51,7 +51,7 @@ export const getReservesConfigByPool = (pool: BandzPools): iMultiPoolsAssets<IRe
   getParamPerPool<iMultiPoolsAssets<IReserveParams>>(
     {
       [BandzPools.proto]: {
-        ...AaveConfig.ReservesConfig,
+        ...BandzConfig.ReservesConfig,
       },
       [BandzPools.amm]: {
         ...AmmConfig.ReservesConfig,

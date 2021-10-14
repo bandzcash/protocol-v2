@@ -119,7 +119,7 @@ task('verify:general', 'Verify contracts at SmartScan')
       );
 
       // Test helpers
-      console.log('\n- Verifying  Aave  Provider Helpers...\n');
+      console.log('\n- Verifying  Bandz  Provider Helpers...\n');
       await verifyContract(eContractid.AaveProtocolDataProvider, dataProvider, [
         addressesProvider.address,
       ]);

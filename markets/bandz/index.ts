@@ -1,5 +1,5 @@
 import { oneRay, ZERO_ADDRESS } from '../../helpers/constants';
-import { IAaveConfiguration, eSmartBCHNetwork } from '../../helpers/types';
+import { IBandzConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 
 import { CommonsConfig } from './commons';
 import {
@@ -30,7 +30,7 @@ import {
 // POOL--SPECIFIC PARAMS
 // ----------------
 
-export const AaveConfig: IAaveConfiguration = {
+export const BandzConfig: IBandzConfiguration = {
   ...CommonsConfig,
   MarketId: 'Bandz genesis market',
   ProviderId: 1,
@@ -109,4 +109,4 @@ export const AaveConfig: IAaveConfiguration = {
   },
 };
 
-export default AaveConfig;
+export default BandzConfig;

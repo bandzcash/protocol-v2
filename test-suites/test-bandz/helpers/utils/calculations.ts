@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { ONE_YEAR, RAY, MAX_UINT_AMOUNT, PERCENTAGE_FACTOR } from '../../../../helpers/constants';
 import {
   IReserveParams,
-  iAavePoolAssets,
+  iBandzPoolAssets,
   RateMode,
   tSmartBCHAddress,
 } from '../../../../helpers/types';
@@ -13,7 +13,7 @@ import { expect } from 'chai';
 export const strToBN = (amount: string): BigNumber => new BigNumber(amount);
 
 interface Configuration {
-  reservesParams: iAavePoolAssets<IReserveParams>;
+  reservesParams: iBandzPoolAssets<IReserveParams>;
 }
 
 export const configuration: Configuration = <Configuration>{};
