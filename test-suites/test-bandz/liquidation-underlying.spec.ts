@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { DRE, increaseTime } from '../../helpers/misc-utils';
-import { APPROVAL_AMOUNT_LENDING_POOL, oneEther } from '../../helpers/constants';
+import { APPROVAL_AMOUNT_LENDING_POOL, oneBch } from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { makeSuite } from './helpers/make-suite';
 import { ProtocolErrors, RateMode } from '../../helpers/types';
@@ -115,7 +115,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     const userGlobalData = await pool.getUserAccountData(borrower.address);
 
     expect(userGlobalData.healthFactor.toString()).to.be.bignumber.lt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       INVALID_HF
     );
   });
@@ -340,7 +340,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       .decimalPlaces(0, BigNumber.ROUND_DOWN);
 
     expect(userGlobalDataAfter.healthFactor.toString()).to.be.bignumber.gt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       'Invalid health factor'
     );
 
@@ -451,7 +451,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       await helpersContract.getReserveConfigurationData(usdc.address)
     ).decimals.toString();
 
-    const expectedCollateralLiquidated = oneEther.multipliedBy('10');
+    const expectedCollateralLiquidated = oneBch.multipliedBy('10');
 
     const expectedPrincipal = new BigNumber(collateralPrice.toString())
       .times(expectedCollateralLiquidated)
@@ -464,7 +464,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       .decimalPlaces(0, BigNumber.ROUND_DOWN);
 
     expect(userGlobalDataAfter.healthFactor.toString()).to.be.bignumber.gt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       'Invalid health factor'
     );
 

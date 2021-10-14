@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {
-  oneEther,
+  oneBch,
   oneRay,
   RAY,
   ZERO_ADDRESS,
@@ -21,7 +21,7 @@ export const CommonsConfig: ICommonConfiguration = {
   SymbolPrefix: 'Amm',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
-  OracleQuoteUnit: oneEther.toString(),
+  OracleQuoteUnit: oneBch.toString(),
   ProtocolGlobalParams: {
     TokenDistributorPercentageBase: '10000',
     MockUsdPriceInWei: '5848466240000000',

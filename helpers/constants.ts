@@ -12,7 +12,7 @@ export const HALF_WAD = new BigNumber(WAD).multipliedBy(0.5).toString();
 export const RAY = new BigNumber(10).exponentiatedBy(27).toFixed();
 export const HALF_RAY = new BigNumber(RAY).multipliedBy(0.5).toFixed();
 export const WAD_RAY_RATIO = Math.pow(10, 9).toString();
-export const oneEther = new BigNumber(Math.pow(10, 18));
+export const oneBch = new BigNumber(Math.pow(10, 18));
 export const oneUsd = new BigNumber(Math.pow(10, 8));
 export const oneRay = new BigNumber(Math.pow(10, 27));
 export const MAX_UINT_AMOUNT =
@@ -33,29 +33,29 @@ export const BANDZ_REFERRAL = '0';
 
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
-  BANDZ: oneEther.multipliedBy('0.003620948469').toFixed(),
-  BAT: oneEther.multipliedBy('0.00137893825230').toFixed(),
-  BUSD: oneEther.multipliedBy('0.00736484').toFixed(),
-  DAI: oneEther.multipliedBy('0.00369068412860').toFixed(),
-  ENJ: oneEther.multipliedBy('0.00029560').toFixed(),
-  KNC: oneEther.multipliedBy('0.001072').toFixed(),
-  LINK: oneEther.multipliedBy('0.009955').toFixed(),
-  MANA: oneEther.multipliedBy('0.000158').toFixed(),
-  MKR: oneEther.multipliedBy('2.508581').toFixed(),
-  REN: oneEther.multipliedBy('0.00065133').toFixed(),
-  SNX: oneEther.multipliedBy('0.00442616').toFixed(),
-  SUSD: oneEther.multipliedBy('0.00364714136416').toFixed(),
-  TUSD: oneEther.multipliedBy('0.00364714136416').toFixed(),
-  UNI: oneEther.multipliedBy('0.00536479').toFixed(),
-  USDC: oneEther.multipliedBy('0.00367714136416').toFixed(),
-  USDT: oneEther.multipliedBy('0.00369068412860').toFixed(),
-  WETH: oneEther.toFixed(),
-  WBTC: oneEther.multipliedBy('47.332685').toFixed(),
-  YFI: oneEther.multipliedBy('22.407436').toFixed(),
-  ZRX: oneEther.multipliedBy('0.001151').toFixed(),
-  WMATIC: oneEther.multipliedBy('0.003620948469').toFixed(),
-  STAKE: oneEther.multipliedBy('0.003620948469').toFixed(),
-  xSUSHI: oneEther.multipliedBy('0.00913428586').toFixed(),
-  WAVAX: oneEther.multipliedBy('0.006051936629').toFixed(),
+  BANDZ: oneBch.multipliedBy('0.003620948469').toFixed(),
+  BAT: oneBch.multipliedBy('0.00137893825230').toFixed(),
+  BUSD: oneBch.multipliedBy('0.00736484').toFixed(),
+  DAI: oneBch.multipliedBy('0.00369068412860').toFixed(),
+  ENJ: oneBch.multipliedBy('0.00029560').toFixed(),
+  KNC: oneBch.multipliedBy('0.001072').toFixed(),
+  LINK: oneBch.multipliedBy('0.009955').toFixed(),
+  MANA: oneBch.multipliedBy('0.000158').toFixed(),
+  MKR: oneBch.multipliedBy('2.508581').toFixed(),
+  REN: oneBch.multipliedBy('0.00065133').toFixed(),
+  SNX: oneBch.multipliedBy('0.00442616').toFixed(),
+  SUSD: oneBch.multipliedBy('0.00364714136416').toFixed(),
+  TUSD: oneBch.multipliedBy('0.00364714136416').toFixed(),
+  UNI: oneBch.multipliedBy('0.00536479').toFixed(),
+  USDC: oneBch.multipliedBy('0.00367714136416').toFixed(),
+  USDT: oneBch.multipliedBy('0.00369068412860').toFixed(),
+  WETH: oneBch.toFixed(),
+  WBTC: oneBch.multipliedBy('47.332685').toFixed(),
+  YFI: oneBch.multipliedBy('22.407436').toFixed(),
+  ZRX: oneBch.multipliedBy('0.001151').toFixed(),
+  WMATIC: oneBch.multipliedBy('0.003620948469').toFixed(),
+  STAKE: oneBch.multipliedBy('0.003620948469').toFixed(),
+  xSUSHI: oneBch.multipliedBy('0.00913428586').toFixed(),
+  WAVAX: oneBch.multipliedBy('0.006051936629').toFixed(),
   USD: '5848466240000000',
 };

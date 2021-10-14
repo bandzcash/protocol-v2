@@ -10,7 +10,7 @@ import BigNumber from 'bignumber.js';
 import { DRE, evmRevert, evmSnapshot, increaseTime, waitForTx } from '../../helpers/misc-utils';
 import { ethers } from 'ethers';
 import { ProtocolErrors, RateMode } from '../../helpers/types';
-import { APPROVAL_AMOUNT_LENDING_POOL, MAX_UINT_AMOUNT, oneEther } from '../../helpers/constants';
+import { APPROVAL_AMOUNT_LENDING_POOL, MAX_UINT_AMOUNT, oneBch } from '../../helpers/constants';
 import { getUserData } from './helpers/utils/helpers';
 import { calcExpectedStableDebtTokenBalance } from './helpers/utils/calculations';
 const { expect } = require('chai');
@@ -86,7 +86,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
     const userGlobalData = await pool.getUserAccountData(borrower.address);
 
     expect(userGlobalData.healthFactor.toString()).to.be.bignumber.lt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       INVALID_HF
     );
   };
@@ -164,7 +164,7 @@ makeSuite('Uniswap adapters', (testEnv: TestEnv) => {
     const userGlobalData = await pool.getUserAccountData(borrower.address);
 
     expect(userGlobalData.healthFactor.toString()).to.be.bignumber.lt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       INVALID_HF
     );
   };

@@ -7,7 +7,7 @@
 //   MintableERC20Instance,
 // } from '../utils/typechain-types/truffle-contracts';
 // import {testEnvProviderWithoutInstances} from '../utils/truffle/dlp-tests-env';
-// import {oneEther, ETHEREUM_ADDRESS} from '../utils/constants';
+// import {oneBch, ETHEREUM_ADDRESS} from '../utils/constants';
 // import {convertToCurrencyDecimals} from '../utils/misc-utils';
 
 // const expectRevert = require('@openzeppelin/test-helpers').expectRevert;
@@ -158,8 +158,8 @@
 //     await _lendingPoolConfiguratorInstance.unfreezeReserve(ETHEREUM_ADDRESS);
 
 //     //deposit 1 ETH
-//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneEther, '0', {
-//       value: oneEther.toString(),
+//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneBch, '0', {
+//       value: oneBch.toString(),
 //     });
 
 //     //freezes the reserve
@@ -187,9 +187,9 @@
 //     await _lendingPoolInstance.deposit(DAI.address, amountDAI, '0', {from: users[0]});
 
 //     //user 1 deposits 1 ETH
-//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneEther, '0', {
+//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneBch, '0', {
 //       from: users[1],
-//       value: oneEther.toString(),
+//       value: oneBch.toString(),
 //     });
 
 //     const amountDAIToBorrow = await convertToCurrencyDecimals(DAI.address, '10');
@@ -205,7 +205,7 @@
 //     //user 1 repays 1 DAI
 //     await DAI.approve(_lendingPoolCoreInstance.address, amountDAIToBorrow, {from: users[1]});
 
-//     await _lendingPoolInstance.repay(DAI.address, oneEther, users[1], {from: users[1]});
+//     await _lendingPoolInstance.repay(DAI.address, oneBch, users[1], {from: users[1]});
 //   });
 
 //   it('Check that liquidationCall can be executed on a freezed reserve', async () => {
@@ -219,7 +219,7 @@
 //         ETHEREUM_ADDRESS,
 //         DAI.address,
 //         users[1],
-//         oneEther,
+//         oneBch,
 //         true,
 //         {from: users[2]}
 //       ),

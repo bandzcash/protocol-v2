@@ -49,7 +49,7 @@ import {
 import { DRE, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
 import AmmConfig from '../../markets/amm';
-import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
+import { oneBch, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getLendingPool,
   getLendingPoolConfiguratorProxy,
@@ -215,7 +215,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     aggregators,
     fallbackOracle.address,
     mockTokens.WETH.address,
-    oneEther.toString(),
+    oneBch.toString(),
   ]);
   await waitForTx(await addressesProvider.setPriceOracle(fallbackOracle.address));
 

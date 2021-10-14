@@ -2,7 +2,7 @@ import {
   oneRay,
   ZERO_ADDRESS,
   MOCK_CHAINLINK_AGGREGATORS_PRICES,
-  oneEther,
+  oneBch,
 } from '../../helpers/constants';
 import { ICommonConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 
@@ -18,7 +18,7 @@ export const CommonsConfig: ICommonConfiguration = {
   SymbolPrefix: '',
   ProviderId: 0, // Overriden in index.ts
   OracleQuoteCurrency: 'ETH',
-  OracleQuoteUnit: oneEther.toString(),
+  OracleQuoteUnit: oneBch.toString(),
   ProtocolGlobalParams: {
     TokenDistributorPercentageBase: '10000',
     MockUsdPriceInWei: '5848466240000000',
