@@ -28,7 +28,7 @@ import {
   deployFlashLiquidationAdapter,
   authorizeWETHGateway,
   deployATokenImplementations,
-  deployAaveOracle,
+  deployBandzOracle,
 } from '../../helpers/contracts-deployments';
 import { Signer } from 'ethers';
 import { TokenContractId, eContractid, tSmartBCHAddress, BandzPools } from '../../helpers/types';
@@ -210,7 +210,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     config.OracleQuoteCurrency
   );
 
-  await deployAaveOracle([
+  await deployBandzOracle([
     tokens,
     aggregators,
     fallbackOracle.address,

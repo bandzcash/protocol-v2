@@ -8,5 +8,5 @@ task('print-config:fork', 'Deploy development enviroment')
     await DRE.run('bandz:mainnet');
 
     const dataProvider = await getAaveProtocolDataProvider();
-    await DRE.run('print-config', { dataProvider: dataProvider.address, pool: 'Aave' });
+    await DRE.run('print-config', { dataProvider: dataProvider.address, pool: 'Bandz' });
   });

@@ -1,6 +1,6 @@
 import { task } from 'hardhat/config';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
-import { deployAaveOracle, deployLendingRateOracle } from '../../helpers/contracts-deployments';
+import { deployBandzOracle, deployLendingRateOracle } from '../../helpers/contracts-deployments';
 import { setInitialMarketRatesInRatesOracleByHelper } from '../../helpers/oracles-helpers';
 import { ICommonConfiguration, eNetwork, SymbolMap } from '../../helpers/types';
 import { waitForTx, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
@@ -59,7 +59,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         bandzOracle = await await getAaveOracle(bandzOracleAddress);
         await waitForTx(await bandzOracle.setAssetSources(tokens, aggregators));
       } else {
-        bandzOracle = await deployAaveOracle(
+        bandzOracle = await deployBandzOracle(
           [
             tokens,
             aggregators,
