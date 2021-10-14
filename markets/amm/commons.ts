@@ -51,9 +51,6 @@ export const CommonsConfig: ICommonConfiguration = {
     USDC: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    USDT: {
-      borrowRate: oneRay.multipliedBy(0.035).toFixed(),
-    },
   },
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS
@@ -163,7 +160,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.buidlerevm]: {},
     [eSmartBCHNetwork.amber]: {},
     [eSmartBCHNetwork.main]: {
-      USDT: '0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46',
       USDC: '0x986b5E1e1755e3C2440e960477f25201B0a8bbD4',
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
       USD: '0x9326BFA02ADD2366b30bacB125260Af641031331',

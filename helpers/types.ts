@@ -188,10 +188,7 @@ export interface iAssetCommon<T> {
 export interface iAssetBase<T> {
   WETH: T;
   DAI: T;
-  TUSD: T;
   USDC: T;
-  USDT: T;
-  SUSD: T;
   BANDZ: T;
   MKR: T;
   LINK: T;
@@ -205,10 +202,10 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iBandzPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'TUSD' | 'USDC' | 'USDT' | 'SUSD' | 'BANDZ' | 'MKR' | 'LINK' | 'WETH' | 'xSUSHI'
+  'DAI' | 'USDC' | 'BANDZ' | 'MKR' | 'LINK' | 'WETH' | 'xSUSHI'
 >;
 
-export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'USDC' | 'USDT' | 'WETH'>;
+export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'USDC' | 'WETH'>;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
 
@@ -219,11 +216,8 @@ export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 export enum TokenContractId {
   DAI = 'DAI',
   BANDZ = 'BANDZ',
-  TUSD = 'TUSD',
   WETH = 'WETH',
   USDC = 'USDC',
-  USDT = 'USDT',
-  SUSD = 'SUSD',
   MKR = 'MKR',
   LINK = 'LINK',
   USD = 'USD',
