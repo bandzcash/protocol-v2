@@ -197,13 +197,11 @@ export interface iAssetBase<T> {
   BANDZ: T;
   MKR: T;
   LINK: T;
-  KNC: T;
   MANA: T;
   SNX: T;
   UNI: T;
   USD: T;
   REN: T;
-  ENJ: T;
   WMATIC: T;
   STAKE: T;
   xSUSHI: T;
@@ -224,13 +222,11 @@ export type iBandzPoolAssets<T> = Pick<
   | 'BANDZ'
   | 'MKR'
   | 'LINK'
-  | 'KNC'
   | 'MANA'
   | 'SNX'
   | 'WETH'
   | 'UNI'
   | 'REN'
-  | 'ENJ'
   | 'xSUSHI'
 >;
 
@@ -257,13 +253,11 @@ export enum TokenContractId {
   SUSD = 'SUSD',
   MKR = 'MKR',
   LINK = 'LINK',
-  KNC = 'KNC',
   MANA = 'MANA',
   REN = 'REN',
   SNX = 'SNX',
   USD = 'USD',
   UNI = 'UNI',
-  ENJ = 'ENJ',
   WMATIC = 'WMATIC',
   STAKE = 'STAKE',
   xSUSHI = 'xSUSHI',

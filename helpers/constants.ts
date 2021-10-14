@@ -35,8 +35,6 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   BANDZ: oneBch.multipliedBy('0.003620948469').toFixed(),
   DAI: oneBch.multipliedBy('0.00369068412860').toFixed(),
-  ENJ: oneBch.multipliedBy('0.00029560').toFixed(),
-  KNC: oneBch.multipliedBy('0.001072').toFixed(),
   LINK: oneBch.multipliedBy('0.009955').toFixed(),
   MANA: oneBch.multipliedBy('0.000158').toFixed(),
   MKR: oneBch.multipliedBy('2.508581').toFixed(),

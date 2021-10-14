@@ -84,18 +84,6 @@ export const strategyBANDZ: IReserveParams = {
   reserveFactor: '0',
 };
 
-export const strategyENJ: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '5500',
-  liquidationThreshold: '6000',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '2000',
-};
-
 export const strategyWETH: IReserveParams = {
   strategy: rateStrategyWETH,
   baseLTVAsCollateral: '8000',
@@ -106,18 +94,6 @@ export const strategyWETH: IReserveParams = {
   reserveDecimals: '18',
   aTokenImpl: eContractid.AToken,
   reserveFactor: '1000',
-};
-
-export const strategyKNC: IReserveParams = {
-  strategy: rateStrategyVolatileTwo,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '2000',
 };
 
 export const strategyLINK: IReserveParams = {

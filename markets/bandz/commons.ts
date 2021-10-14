@@ -63,9 +63,6 @@ export const CommonsConfig: ICommonConfiguration = {
     LINK: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    KNC: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
     MKR: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
@@ -79,9 +76,6 @@ export const CommonsConfig: ICommonConfiguration = {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     UNI: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
-    ENJ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
   },
@@ -189,8 +183,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.amber]: {
       BANDZ: ZERO_ADDRESS,
       DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
-      ENJ: ZERO_ADDRESS,
-      KNC: '0x19d97ceb36624a31d827032d8216dd2eb15e9845',
       LINK: '0xb8c99b98913bE2ca4899CdcaF33a3e519C20EeEc',
       MANA: '0xDab909dedB72573c626481fC98CEE1152b81DEC2',
       MKR: '0x811B1f727F8F4aE899774B568d2e72916D91F392',
@@ -206,8 +198,6 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.main]: {
       BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
-      ENJ: '0x24D9aB51950F3d62E9144fdC2f3135DAA6Ce8D1B',
-      KNC: '0x656c0544eF4C98A6a98491833A89204Abb045d6b',
       LINK: '0xDC530D9457755926550b59e8ECcdaE7624181557',
       MANA: '0x82A44D92D6c329826dc557c5E1Be6ebeC5D5FeB9',
       MKR: '0x24551a8Fb2A7211A25a17B1481f043A8a8adC7f2',

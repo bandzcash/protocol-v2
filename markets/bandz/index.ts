@@ -9,7 +9,6 @@ import {
   strategyUSDC,
   strategyUSDT,
   strategyBANDZ,
-  strategyKNC,
   strategyLINK,
   strategyMANA,
   strategyMKR,
@@ -18,7 +17,6 @@ import {
   strategyUNI,
   strategyWETH,
   strategyXSUSHI,
-  strategyENJ,
 } from './reservesConfigs';
 
 // ----------------
@@ -32,8 +30,6 @@ export const BandzConfig: IBandzConfiguration = {
   ReservesConfig: {
     BANDZ: strategyBANDZ,
     DAI: strategyDAI,
-    ENJ: strategyENJ,
-    KNC: strategyKNC,
     LINK: strategyLINK,
     MANA: strategyMANA,
     MKR: strategyMKR,
@@ -54,8 +50,6 @@ export const BandzConfig: IBandzConfiguration = {
     [eSmartBCHNetwork.amber]: {
       BANDZ: '',
       DAI: '0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108',
-      ENJ: ZERO_ADDRESS,
-      KNC: '0xCe4aA1dE3091033Ba74FA2Ad951f6adc5E5cF361',
       LINK: '0x1a906E71FF9e28d8E01460639EB8CF0a6f0e2486',
       MANA: '0x78b1F763857C8645E46eAdD9540882905ff32Db7',
       MKR: '0x2eA9df3bABe04451c9C3B06a2c844587c59d9C37',
@@ -71,8 +65,6 @@ export const BandzConfig: IBandzConfiguration = {
     [eSmartBCHNetwork.main]: {
       BANDZ: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-      ENJ: '0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c',
-      KNC: '0xdd974D5C2e2928deA5F71b9825b8b646686BD200',
       LINK: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
       MANA: '0x0F5D2fB29fb7d3CFeE444a200298f468908cC942',
       MKR: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
