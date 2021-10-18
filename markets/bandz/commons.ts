@@ -45,9 +45,6 @@ export const CommonsConfig: ICommonConfiguration = {
     DAI: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
-    USDC: {
-      borrowRate: oneRay.multipliedBy(0.039).toFixed(),
-    },
     BANDZ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
@@ -163,14 +160,12 @@ export const CommonsConfig: ICommonConfiguration = {
       BANDZ: ZERO_ADDRESS,
       DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
       MKR: '0x811B1f727F8F4aE899774B568d2e72916D91F392',
-      USDC: '0xe1480303dde539e2c241bdc527649f37c9cbef7d',
       USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
     },
     [eSmartBCHNetwork.main]: {
       BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
       DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
       MKR: '0x24551a8Fb2A7211A25a17B1481f043A8a8adC7f2',
-      USDC: '0x986b5E1e1755e3C2440e960477f25201B0a8bbD4',
       USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
       xSUSHI: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
     },

@@ -37,7 +37,6 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   DAI: oneBch.multipliedBy('0.00369068412860').toFixed(),
   LINK: oneBch.multipliedBy('0.009955').toFixed(),
   MKR: oneBch.multipliedBy('2.508581').toFixed(),
-  USDC: oneBch.multipliedBy('0.00367714136416').toFixed(),
   WETH: oneBch.toFixed(),
   xSUSHI: oneBch.multipliedBy('0.00913428586').toFixed(),
   USD: '5848466240000000',
