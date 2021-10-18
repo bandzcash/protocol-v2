@@ -446,7 +446,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1",
             "user": "2"
           },
@@ -455,7 +455,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "2"
           },
           "expected": "success"
@@ -463,7 +463,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1",
             "user": "2"
           },
@@ -477,7 +477,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -486,7 +486,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "0"
           },
           "expected": "success"
@@ -494,7 +494,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -529,7 +529,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "1",
@@ -545,7 +545,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "900",
             "borrowRateMode": "variable",
             "user": "1"
@@ -560,9 +560,9 @@
       "actions": [
         {
           "name": "mint",
-          "description": "Mint 10 USDC to cover the interest",
+          "description": "Mint 10 DAI to cover the interest",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "10",
             "user": "1"
           },
@@ -571,7 +571,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "1"
           },
           "expected": "success"
@@ -579,7 +579,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "-1",
             "user": "1",
             "onBehalfOf": "1",
@@ -595,7 +595,7 @@
         {
           "name": "withdraw",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "-1",
             "user": "0"
           },
@@ -721,7 +721,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -730,7 +730,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "1"
           },
           "expected": "success"
@@ -738,7 +738,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -747,7 +747,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "borrowRateMode": "variable",
             "user": "3"
@@ -789,7 +789,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "3"

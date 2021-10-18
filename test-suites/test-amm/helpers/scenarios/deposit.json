@@ -70,7 +70,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -79,7 +79,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "0"
           },
           "expected": "success"
@@ -87,7 +87,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "0"
           },
@@ -101,7 +101,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },
@@ -110,7 +110,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "user": "1"
           },
           "expected": "success"
@@ -118,7 +118,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "USDC",
+            "reserve": "DAI",
             "amount": "1000",
             "user": "1"
           },

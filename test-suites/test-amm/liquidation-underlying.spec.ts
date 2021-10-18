@@ -226,14 +226,14 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   });
 
   // USDC before
-  it('User 3 deposits 1000 USDC, user 4 1 WETH, user 4 borrows - drops HF, liquidates the borrow', async () => {
+  it('User 3 deposits 1000 DAI, user 4 1 WETH, user 4 borrows - drops HF, liquidates the borrow', async () => {
     const { dai, users, pool, oracle, weth, helpersContract } = testEnv;
 
     const depositor = users[3];
     const borrower = users[4];
     const liquidator = users[5];
 
-    //mints USDC to depositor
+    //mints DAI to depositor
     await dai
       .connect(depositor.signer)
       .mint(await convertToCurrencyDecimals(dai.address, '1000'));
@@ -241,12 +241,12 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     //approve protocol to access depositor wallet
     await dai.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //depositor deposits 1000 USDC
-    const amountUSDCtoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    //depositor deposits 1000 DAI
+    const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
 
     await pool
       .connect(depositor.signer)
-      .deposit(dai.address, amountUSDCtoDeposit, depositor.address, '0');
+      .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
 
     //borrower deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
@@ -266,7 +266,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
 
     const daiPrice = await oracle.getAssetPrice(dai.address);
 
-    const amountUSDCToBorrow = await convertToCurrencyDecimals(
+    const amountDAIToBorrow = await convertToCurrencyDecimals(
       dai.address,
       new BigNumber(userGlobalData.availableBorrowsETH.toString())
         .div(daiPrice.toString())
@@ -276,7 +276,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
 
     await pool
       .connect(borrower.signer)
-      .borrow(dai.address, amountUSDCToBorrow, RateMode.Variable, '0', borrower.address);
+      .borrow(dai.address, amountDAIToBorrow, RateMode.Variable, '0', borrower.address);
 
     //drops HF below 1
     await oracle.setAssetPrice(
