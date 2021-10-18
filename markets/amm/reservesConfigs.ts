@@ -54,18 +54,6 @@ export const strategyBANDZWETH: IReserveParams = {
   reserveFactor: '500'
 };
 
-export const strategyLINKWETH: IReserveParams = {
-  strategy: rateStrategyAmmBase,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '7000',
-  liquidationBonus: '11500',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: false,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '1500'
-};
-
 // export const strategyYFIWETH: IReserveParams = {
 //   strategy: rateStrategyAmmBase,
 //   baseLTVAsCollateral: '5000',

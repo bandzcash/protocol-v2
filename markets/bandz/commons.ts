@@ -48,9 +48,6 @@ export const CommonsConfig: ICommonConfiguration = {
     BANDZ: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    LINK: {
-      borrowRate: oneRay.multipliedBy(0.03).toFixed(),
-    },
   },
   // ----------------
   // COMMON PROTOCOL ADDRESSES ACROSS POOLS

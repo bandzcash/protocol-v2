@@ -13,10 +13,6 @@ const scenarioFolder = './test-suites/test-amm/helpers/scenarios/';
 const selectedScenarios: string[] = [];
 
 fs.readdirSync(scenarioFolder).forEach((file) => {
-  console.log("------------------------------------------------");
-  console.log(file);
-  console.log("------------------------------------------------");
-
   if ( ! file.endsWith('.json')) return;
   if (selectedScenarios.length > 0 && !selectedScenarios.includes(file)) return;
 
