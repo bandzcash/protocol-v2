@@ -168,31 +168,6 @@
           "revertMessage": "Interest rate rebalance conditions were not met"
         }
       ]
-    },
-
-    {
-      "description": "User 1 borrows the remaining DAI (USDC before) (usage ratio = 100%) at variable. User 0 rebalances user 1, fails since there are no stable borrows (revert expected)",
-      "actions": [
-        {
-          "name": "borrow",
-          "args": {
-            "reserve": "DAI",
-            "amount": "20",
-            "borrowRateMode": "variable",
-            "user": "1"
-          },
-          "expected": "success"
-        },
-        {
-          "name": "rebalanceStableBorrowRate",
-          "args": {
-            "reserve": "DAI",
-            "user": "0",
-            "target": "1"
-          },
-          "expected": "revert"
-        }
-      ]
     }
   ]
 }

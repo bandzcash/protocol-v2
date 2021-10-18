@@ -13,6 +13,11 @@ const scenarioFolder = './test-suites/test-bandz/helpers/scenarios/';
 const selectedScenarios: string[] = [];
 
 fs.readdirSync(scenarioFolder).forEach((file) => {
+  console.log('------------------------------------------------');
+  console.log(file);
+  console.log('------------------------------------------------');
+
+  if (!file.endsWith('.json')) return;
   if (selectedScenarios.length > 0 && !selectedScenarios.includes(file)) return;
 
   const scenario = require(`./helpers/scenarios/${file}`);

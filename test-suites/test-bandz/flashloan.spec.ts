@@ -281,31 +281,10 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     const currentLiquidityIndex = reserveData.liquidityIndex.toString();
     const currentUserBalance = userData.currentATokenBalance.toString();
 
-    console.log('currentUserBalance --------------------------');
-    console.log(currentUserBalance);
-
     const expectedLiquidity = await convertToCurrencyDecimals(dai.address, '2000.450');
-
-    console.log('expectedLiquidity --------------------------');
-    console.log(expectedLiquidity);
-
-    // console.log("currentLiquidityIndex --------------------------");
-    // console.log(currentLiquidityIndex);
-    // console.log("oneRay --------------------------");
-    // console.log(oneRay);
-    // console.log("expected --------------------------");
-    // console.log(new BigNumber('1.000225').multipliedBy(oneRay).toFixed());
 
     expect(totalLiquidity).to.be.equal(expectedLiquidity, 'Invalid total liquidity');
     expect(currentLiqudityRate).to.be.equal('0', 'Invalid liquidity rate');
-    // expect(currentLiquidityIndex).to.be.equal(
-    //   new BigNumber('1.00045').multipliedBy(oneRay).toFixed(),
-    //   'Invalid liquidity index'
-    // );
-
-    // actual:   -1000225000000000000000000000
-    // expected: +1000450000000000000000000000
-
     expect(currentLiquidityIndex).to.be.equal(
       new BigNumber('1.000225').multipliedBy(oneRay).toFixed(),
       'Invalid liquidity index'
