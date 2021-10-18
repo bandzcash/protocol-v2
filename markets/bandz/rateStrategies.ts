@@ -57,7 +57,7 @@ export const rateStrategyBANDZ: IInterestRateStrategyParams = {
   stableRateSlope2: '0',
 }
 
-// LINK MKR REN
+// LINK REN
 export const rateStrategyVolatileOne: IInterestRateStrategyParams = {
   name: "rateStrategyVolatileOne",
   optimalUtilizationRate: new BigNumber(0.45).multipliedBy(oneRay).toFixed(),

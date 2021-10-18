@@ -60,18 +60,6 @@ export const strategyLINK: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyMKR: IReserveParams = {
-  strategy: rateStrategyVolatileOne,
-  baseLTVAsCollateral: '6000',
-  liquidationThreshold: '6500',
-  liquidationBonus: '11000',
-  borrowingEnabled: true,
-  stableBorrowRateEnabled: true,
-  reserveDecimals: '18',
-  aTokenImpl: eContractid.AToken,
-  reserveFactor: '2000',
-};
-
 // Invalid borrow rates in params currently, replaced with snx params
 export const strategyUNI: IReserveParams = {
   strategy: rateStrategyVolatileThree,

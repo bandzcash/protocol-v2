@@ -8,7 +8,6 @@ import {
   strategyDAIWETH,
   strategyBANDZWETH,
   strategyLINKWETH,
-  strategyMKRWETH,
   // strategyYFIWETH,
   strategyBALWETH,
 } from './reservesConfigs';

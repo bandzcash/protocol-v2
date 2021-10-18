@@ -189,7 +189,6 @@ export interface iAssetBase<T> {
   WETH: T;
   DAI: T;
   BANDZ: T;
-  MKR: T;
   LINK: T;
   USD: T;
   xSUSHI: T;
@@ -201,7 +200,7 @@ export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
 export type iBandzPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  'DAI' | 'BANDZ' | 'MKR' | 'LINK' | 'WETH' | 'xSUSHI'
+  'DAI' | 'BANDZ' | 'LINK' | 'WETH' | 'xSUSHI'
 >;
 
 export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'WETH'>;
@@ -216,7 +215,6 @@ export enum TokenContractId {
   DAI = 'DAI',
   BANDZ = 'BANDZ',
   WETH = 'WETH',
-  MKR = 'MKR',
   LINK = 'LINK',
   USD = 'USD',
   xSUSHI = 'xSUSHI',
