@@ -181,25 +181,24 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     await configurator.connect(users[1].signer).setPoolPause(false);
   });
 
+  // USDC before
   it('Liquidation call', async () => {
-    const { users, pool, usdc, oracle, weth, configurator, helpersContract } = testEnv;
+    const { users, pool, dai, oracle, weth, configurator, helpersContract } = testEnv;
     const depositor = users[3];
     const borrower = users[4];
 
-    //mints USDC to depositor
-    await usdc
-      .connect(depositor.signer)
-      .mint(await convertToCurrencyDecimals(usdc.address, '1000'));
+    //mints DAI to depositor
+    await dai.connect(depositor.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
 
     //approve protocol to access depositor wallet
-    await usdc.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await dai.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //user 3 deposits 1000 USDC
-    const amountUSDCtoDeposit = await convertToCurrencyDecimals(usdc.address, '1000');
+    //user 3 deposits 1000 DAI
+    const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
 
     await pool
       .connect(depositor.signer)
-      .deposit(usdc.address, amountUSDCtoDeposit, depositor.address, '0');
+      .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
 
     //user 4 deposits 1 ETH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
@@ -217,32 +216,32 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     //user 4 borrows
     const userGlobalData = await pool.getUserAccountData(borrower.address);
 
-    const usdcPrice = await oracle.getAssetPrice(usdc.address);
+    const daiPrice = await oracle.getAssetPrice(dai.address);
 
-    const amountUSDCToBorrow = await convertToCurrencyDecimals(
-      usdc.address,
+    const amountDAIToBorrow = await convertToCurrencyDecimals(
+      dai.address,
       new BigNumber(userGlobalData.availableBorrowsETH.toString())
-        .div(usdcPrice.toString())
+        .div(daiPrice.toString())
         .multipliedBy(0.9502)
         .toFixed(0)
     );
 
     await pool
       .connect(borrower.signer)
-      .borrow(usdc.address, amountUSDCToBorrow, RateMode.Stable, '0', borrower.address);
+      .borrow(dai.address, amountDAIToBorrow, RateMode.Stable, '0', borrower.address);
 
     // Drops HF below 1
     await oracle.setAssetPrice(
-      usdc.address,
-      new BigNumber(usdcPrice.toString()).multipliedBy(1.2).toFixed(0)
+      dai.address,
+      new BigNumber(daiPrice.toString()).multipliedBy(1.2).toFixed(0)
     );
 
     //mints dai to the liquidator
-    await usdc.mint(await convertToCurrencyDecimals(usdc.address, '1000'));
-    await usdc.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await dai.mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    await dai.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     const userReserveDataBefore = await helpersContract.getUserReserveData(
-      usdc.address,
+      dai.address,
       borrower.address
     );
 
@@ -255,15 +254,16 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
 
     // Do liquidation
     await expect(
-      pool.liquidationCall(weth.address, usdc.address, borrower.address, amountToLiquidate, true)
+      pool.liquidationCall(weth.address, dai.address, borrower.address, amountToLiquidate, true)
     ).revertedWith(LP_IS_PAUSED);
 
     // Unpause pool
     await configurator.connect(users[1].signer).setPoolPause(false);
   });
 
+  // USDC before
   it('SwapBorrowRateMode', async () => {
-    const { pool, weth, dai, usdc, users, configurator } = testEnv;
+    const { pool, weth, dai, users, configurator } = testEnv;
     const user = users[1];
     const amountWETHToDeposit = parseEther('10');
     const amountDAIToDeposit = parseEther('120');
@@ -277,14 +277,14 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     await dai.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
     await pool.connect(user.signer).deposit(dai.address, amountDAIToDeposit, user.address, '0');
 
-    await pool.connect(user.signer).borrow(usdc.address, amountToBorrow, 2, 0, user.address);
+    await pool.connect(user.signer).borrow(dai.address, amountToBorrow, 2, 0, user.address);
 
     // Pause pool
     await configurator.connect(users[1].signer).setPoolPause(true);
 
     // Try to repay
     await expect(
-      pool.connect(user.signer).swapBorrowRateMode(usdc.address, RateMode.Stable)
+      pool.connect(user.signer).swapBorrowRateMode(dai.address, RateMode.Stable)
     ).revertedWith(LP_IS_PAUSED);
 
     // Unpause pool

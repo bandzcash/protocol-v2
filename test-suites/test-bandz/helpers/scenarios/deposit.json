@@ -65,7 +65,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 USDC in an empty reserve",
+      "description": "User 0 deposits 1000 DAI (USDC before) in an empty reserve",
       "actions": [
         {
           "name": "mint",
@@ -96,7 +96,7 @@
       ]
     },
     {
-      "description": "User 1 deposits 1000 USDC after user 0",
+      "description": "User 1 deposits 1000 DAI (USDC before) after user 0",
       "actions": [
         {
           "name": "mint",

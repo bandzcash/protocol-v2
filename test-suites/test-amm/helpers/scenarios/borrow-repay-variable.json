@@ -441,7 +441,7 @@
     },
 
     {
-      "description": "User 2 deposits 1 USDC to account for rounding errors",
+      "description": "User 2 deposits 1 DAI (USDC before) to account for rounding errors",
       "actions": [
         {
           "name": "mint",
@@ -472,7 +472,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 USDC, user 1 deposits 1 WETH as collateral and borrows 100 USDC at variable rate",
+      "description": "User 0 deposits 1000 DAI (USDC before), user 1 deposits 1 WETH as collateral and borrows 100 USDC at variable rate",
       "actions": [
         {
           "name": "mint",
@@ -540,7 +540,7 @@
       ]
     },
     {
-      "description": "User 1 tries to borrow the rest of the USDC liquidity (revert expected)",
+      "description": "User 1 tries to borrow the rest of the DAI (USDC before) liquidity (revert expected)",
       "actions": [
         {
           "name": "borrow",
@@ -556,7 +556,7 @@
       ]
     },
     {
-      "description": "User 1 repays the USDC borrow after one year",
+      "description": "User 1 repays the DAI (USDC before) borrow after one year",
       "actions": [
         {
           "name": "mint",
@@ -590,7 +590,7 @@
       ]
     },
     {
-      "description": "User 0 withdraws the deposited USDC plus interest",
+      "description": "User 0 withdraws the deposited DAI (USDC before) plus interest",
       "actions": [
         {
           "name": "withdraw",
@@ -716,7 +716,7 @@
       ]
     },
     {
-      "description": "User 1 deposits 1000 USDC, user 3 tries to borrow 1000 USDC without any collateral (revert expected)",
+      "description": "User 1 deposits 1000 DAI (USDC before), user 3 tries to borrow 1000 DAI without any collateral (revert expected)",
       "actions": [
         {
           "name": "mint",
@@ -758,7 +758,7 @@
       ]
     },
     {
-      "description": "user 3 deposits 0.1 WETH collateral to borrow 100 USDC; 0.1 WETH is not enough to borrow 100 USDC (revert expected)",
+      "description": "user 3 deposits 0.1 WETH collateral to borrow 100 DAI (USDC before); 0.1 WETH is not enough to borrow 100 DAI (revert expected)",
       "actions": [
         {
           "name": "mint",

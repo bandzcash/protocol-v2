@@ -62,7 +62,7 @@
       ]
     },
     {
-      "description": "User 0 Deposits 1000 USDC in an empty reserve",
+      "description": "User 0 Deposits 1000 DAI (USDC before) in an empty reserve",
       "actions": [
         {
           "name": "mint",
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "description": "User 0 withdraws half of the deposited USDC",
+      "description": "User 0 withdraws half of the deposited DAI (USDC before)",
       "actions": [
         {
           "name": "withdraw",
@@ -107,7 +107,7 @@
       ]
     },
     {
-      "description": "User 0 withdraws remaining half of the deposited USDC",
+      "description": "User 0 withdraws remaining half of the deposited DAI (USDC before)",
       "actions": [
         {
           "name": "withdraw",
@@ -238,7 +238,7 @@
       ]
     },
     {
-      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 USDC and 1 WETH, borrows 100 DAI at stable rate (revert expected). User 1 tries to withdraw all the USDC",
+      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 DAI (USDC before) and 1 WETH, borrows 100 DAI at stable rate (revert expected). User 1 tries to withdraw all the DAI",
       "actions": [
         {
           "name": "deposit",
@@ -323,7 +323,7 @@
       ]
     },
     {
-      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 USDC and 1 WETH, borrows 100 DAI at variable rate. User 1 tries to withdraw all the USDC",
+      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 DAI (USDC before) and 1 WETH, borrows 100 DAI at variable rate. User 1 tries to withdraw all the DAI",
       "actions": [
         {
           "name": "mint",

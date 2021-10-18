@@ -235,31 +235,32 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.reverted;
   });
 
-  it('Deposits USDC into the reserve', async () => {
-    const { usdc, pool } = testEnv;
+  it('Deposits DAI into the reserve', async () => {
+    const { dai, pool } = testEnv;
     const userAddress = await pool.signer.getAddress();
 
-    await usdc.mint(await convertToCurrencyDecimals(usdc.address, '1000'));
+    await dai.mint(await convertToCurrencyDecimals(dai.address, '1000'));
 
-    await usdc.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await dai.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const amountToDeposit = await convertToCurrencyDecimals(usdc.address, '1000');
+    const amountToDeposit = await convertToCurrencyDecimals(dai.address, '1000');
 
-    await pool.deposit(usdc.address, amountToDeposit, userAddress, '0');
+    await pool.deposit(dai.address, amountToDeposit, userAddress, '0');
   });
 
-  it('Takes out a 500 USDC flashloan, returns the funds correctly', async () => {
-    const { usdc, pool, helpersContract, deployer: depositor } = testEnv;
+  // USDC before
+  it('Takes out a 500 DAI flashloan, returns the funds correctly', async () => {
+    const { dai, pool, helpersContract, deployer: depositor } = testEnv;
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(false);
 
-    const reserveDataBefore = await helpersContract.getReserveData(usdc.address);
+    const reserveDataBefore = await helpersContract.getReserveData(dai.address);
 
-    const flashloanAmount = await convertToCurrencyDecimals(usdc.address, '500');
+    const flashloanAmount = await convertToCurrencyDecimals(dai.address, '500');
 
     await pool.flashLoan(
       _mockFlashLoanReceiver.address,
-      [usdc.address],
+      [dai.address],
       [flashloanAmount],
       [0],
       _mockFlashLoanReceiver.address,
@@ -267,10 +268,10 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
       '0'
     );
 
-    const reserveDataAfter = helpersContract.getReserveData(usdc.address);
+    const reserveDataAfter = helpersContract.getReserveData(dai.address);
 
-    const reserveData = await helpersContract.getReserveData(usdc.address);
-    const userData = await helpersContract.getUserReserveData(usdc.address, depositor.address);
+    const reserveData = await helpersContract.getReserveData(dai.address);
+    const userData = await helpersContract.getUserReserveData(dai.address, depositor.address);
 
     const totalLiquidity = reserveData.availableLiquidity
       .add(reserveData.totalStableDebt)
@@ -280,7 +281,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     const currentLiquidityIndex = reserveData.liquidityIndex.toString();
     const currentUserBalance = userData.currentATokenBalance.toString();
 
-    const expectedLiquidity = await convertToCurrencyDecimals(usdc.address, '1000.450');
+    const expectedLiquidity = await convertToCurrencyDecimals(dai.address, '1000.450');
 
     expect(totalLiquidity).to.be.equal(expectedLiquidity, 'Invalid total liquidity');
     expect(currentLiqudityRate).to.be.equal('0', 'Invalid liquidity rate');
@@ -291,11 +292,12 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     expect(currentUserBalance.toString()).to.be.equal(expectedLiquidity, 'Invalid user balance');
   });
 
-  it('Takes out a 500 USDC flashloan with mode = 0, does not return the funds. (revert expected)', async () => {
-    const { usdc, pool, users } = testEnv;
+  // USDC before
+  it('Takes out a 500 DAI flashloan with mode = 0, does not return the funds. (revert expected)', async () => {
+    const { dai, pool, users } = testEnv;
     const caller = users[2];
 
-    const flashloanAmount = await convertToCurrencyDecimals(usdc.address, '500');
+    const flashloanAmount = await convertToCurrencyDecimals(dai.address, '500');
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
 
@@ -304,7 +306,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
         .connect(caller.signer)
         .flashLoan(
           _mockFlashLoanReceiver.address,
-          [usdc.address],
+          [dai.address],
           [flashloanAmount],
           [2],
           caller.address,
@@ -314,8 +316,9 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.revertedWith(VL_COLLATERAL_BALANCE_IS_0);
   });
 
-  it('Caller deposits 5 WETH as collateral, Takes a USDC flashloan with mode = 2, does not return the funds. A loan for caller is created', async () => {
-    const { usdc, pool, weth, users, helpersContract } = testEnv;
+  // USDC before
+  it('Caller deposits 5 WETH as collateral, Takes a DAI flashloan with mode = 2, does not return the funds. A loan for caller is created', async () => {
+    const { dai, pool, weth, users, helpersContract } = testEnv;
 
     const caller = users[2];
 
@@ -329,13 +332,13 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
 
-    const flashloanAmount = await convertToCurrencyDecimals(usdc.address, '500');
+    const flashloanAmount = await convertToCurrencyDecimals(dai.address, '500');
 
     await pool
       .connect(caller.signer)
       .flashLoan(
         _mockFlashLoanReceiver.address,
-        [usdc.address],
+        [dai.address],
         [flashloanAmount],
         [2],
         caller.address,
@@ -343,12 +346,12 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
         '0'
       );
     const { variableDebtTokenAddress } = await helpersContract.getReserveTokensAddresses(
-      usdc.address
+      dai.address
     );
 
-    const usdcDebtToken = await getVariableDebtToken(variableDebtTokenAddress);
+    const daiDebtToken = await getVariableDebtToken(variableDebtTokenAddress);
 
-    const callerDebt = await usdcDebtToken.balanceOf(caller.address);
+    const callerDebt = await daiDebtToken.balanceOf(caller.address);
 
     expect(callerDebt.toString()).to.be.equal('500000000', 'Invalid user debt');
   });
