@@ -146,22 +146,22 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.amber]: '0xAD1a978cdbb8175b2eaeC47B01404f8AEC5f4F0d',
     [eSmartBCHNetwork.main]: ZERO_ADDRESS,
   },
-  ChainlinkAggregator: {
-    [eSmartBCHNetwork.coverage]: {},
-    [eSmartBCHNetwork.hardhat]: {},
-    [eSmartBCHNetwork.buidlerevm]: {},
-    [eSmartBCHNetwork.amber]: {
-      BANDZ: ZERO_ADDRESS,
-      DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
-      USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
-    },
-    [eSmartBCHNetwork.main]: {
-      BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
-      DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
-      USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-      xSUSHI: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
-    },
-  },
+  // ChainlinkAggregator: {
+  //   [eSmartBCHNetwork.coverage]: {},
+  //   [eSmartBCHNetwork.hardhat]: {},
+  //   [eSmartBCHNetwork.buidlerevm]: {},
+  //   [eSmartBCHNetwork.amber]: {
+  //     BANDZ: ZERO_ADDRESS,
+  //     DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
+  //     USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
+  //   },
+  //   [eSmartBCHNetwork.main]: {
+  //     BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
+  //     DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
+  //     USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
+  //     xSUSHI: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
+  //   },
+  // },
   ReserveAssets: {
     [eSmartBCHNetwork.coverage]: {},
     [eSmartBCHNetwork.hardhat]: {},

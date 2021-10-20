@@ -324,7 +324,7 @@ export interface IBaseConfiguration {
   TokenDistributor: iParamsPerNetwork<tSmartBCHAddress>;
   AaveOracle: iParamsPerNetwork<tSmartBCHAddress>;
   FallbackOracle: iParamsPerNetwork<tSmartBCHAddress>;
-  ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
+  // ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
   PoolAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;
   PoolAdminIndex: number;
   EmergencyAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;

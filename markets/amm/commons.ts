@@ -151,16 +151,16 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.amber]: '0xAD1a978cdbb8175b2eaeC47B01404f8AEC5f4F0d',
     [eSmartBCHNetwork.main]: ZERO_ADDRESS,
   },
-  ChainlinkAggregator: {
-    [eSmartBCHNetwork.coverage]: {},
-    [eSmartBCHNetwork.hardhat]: {},
-    [eSmartBCHNetwork.buidlerevm]: {},
-    [eSmartBCHNetwork.amber]: {},
-    [eSmartBCHNetwork.main]: {
-      DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
-      USD: '0x9326BFA02ADD2366b30bacB125260Af641031331',
-    },
-  },
+  // ChainlinkAggregator: {
+  //   [eSmartBCHNetwork.coverage]: {},
+  //   [eSmartBCHNetwork.hardhat]: {},
+  //   [eSmartBCHNetwork.buidlerevm]: {},
+  //   [eSmartBCHNetwork.amber]: {},
+  //   [eSmartBCHNetwork.main]: {
+  //     DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
+  //     USD: '0x9326BFA02ADD2366b30bacB125260Af641031331',
+  //   },
+  // },
   ReserveAssets: {
     [eSmartBCHNetwork.coverage]: {},
     [eSmartBCHNetwork.hardhat]: {},

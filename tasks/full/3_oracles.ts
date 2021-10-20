@@ -31,7 +31,7 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
         ProtocolGlobalParams: { UsdAddress },
         ReserveAssets,
         FallbackOracle,
-        ChainlinkAggregator,
+        // ChainlinkAggregator,
       } = poolConfig as ICommonConfiguration;
       const lendingRateOracles = getLendingRateOracles(poolConfig);
       const addressesProvider = await getLendingPoolAddressesProvider();
