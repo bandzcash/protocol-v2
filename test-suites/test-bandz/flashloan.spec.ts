@@ -31,7 +31,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     _mockFlashLoanReceiver = await getMockFlashLoanReceiver();
   });
 
-  it('Deposits WETH into the reserve', async () => {
+  it('Deposits WBCH into the reserve', async () => {
     const { pool, weth } = testEnv;
     const userAddress = await pool.signer.getAddress();
     const amountToDeposit = ethers.utils.parseEther('1');
@@ -43,7 +43,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     await pool.deposit(weth.address, amountToDeposit, userAddress, '0');
   });
 
-  it('Takes WETH flashloan with mode = 0, returns the funds correctly', async () => {
+  it('Takes WBCH flashloan with mode = 0, returns the funds correctly', async () => {
     const { pool, helpersContract, weth } = testEnv;
 
     await pool.flashLoan(
@@ -72,7 +72,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     expect(currentLiquidityIndex.toString()).to.be.equal('1000720000000000000000000000');
   });
 
-  it('Takes an ETH flashloan with mode = 0 as big as the available liquidity', async () => {
+  it('Takes an BCH flashloan with mode = 0 as big as the available liquidity', async () => {
     const { pool, helpersContract, weth } = testEnv;
 
     const reserveDataBefore = await helpersContract.getReserveData(weth.address);
@@ -100,7 +100,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     expect(currentLiquidityIndex.toString()).to.be.equal('1001620648000000000000000000');
   });
 
-  it('Takes WETH flashloan, does not return the funds with mode = 0. (revert expected)', async () => {
+  it('Takes WBCH flashloan, does not return the funds with mode = 0. (revert expected)', async () => {
     const { pool, weth, users } = testEnv;
     const caller = users[1];
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
@@ -120,7 +120,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.revertedWith(SAFEERC20_LOWLEVEL_CALL);
   });
 
-  it('Takes WETH flashloan, simulating a receiver as EOA (revert expected)', async () => {
+  it('Takes WBCH flashloan, simulating a receiver as EOA (revert expected)', async () => {
     const { pool, weth, users } = testEnv;
     const caller = users[1];
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
@@ -141,7 +141,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.revertedWith(LP_INVALID_FLASH_LOAN_EXECUTOR_RETURN);
   });
 
-  it('Takes a WETH flashloan with an invalid mode. (revert expected)', async () => {
+  it('Takes a WBCH flashloan with an invalid mode. (revert expected)', async () => {
     const { pool, weth, users } = testEnv;
     const caller = users[1];
     await _mockFlashLoanReceiver.setSimulateEOA(false);
@@ -162,7 +162,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.reverted;
   });
 
-  it('Caller deposits 1000 DAI as collateral, Takes WETH flashloan with mode = 2, does not return the funds. A variable loan for caller is created', async () => {
+  it('Caller deposits 1000 DAI as collateral, Takes WBCH flashloan with mode = 2, does not return the funds. A variable loan for caller is created', async () => {
     const { dai, pool, weth, users, helpersContract } = testEnv;
 
     const caller = users[1];
@@ -326,7 +326,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   // USDC before
-  it('Caller deposits 5 WETH as collateral, Takes a DAI flashloan with mode = 2, does not return the funds. A loan for caller is created', async () => {
+  it('Caller deposits 5 WBCH as collateral, Takes a DAI flashloan with mode = 2, does not return the funds. A loan for caller is created', async () => {
     const { dai, pool, weth, users, helpersContract } = testEnv;
 
     const caller = users[2];
@@ -365,7 +365,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     expect(callerDebt.toString()).to.be.equal('500000000000000000000', 'Invalid user debt');
   });
 
-  it('Caller deposits 1000 DAI as collateral, Takes a WETH flashloan with mode = 0, does not approve the transfer of the funds', async () => {
+  it('Caller deposits 1000 DAI as collateral, Takes a WBCH flashloan with mode = 0, does not approve the transfer of the funds', async () => {
     const { dai, pool, weth, users } = testEnv;
     const caller = users[3];
 
@@ -397,7 +397,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.revertedWith(SAFEERC20_LOWLEVEL_CALL);
   });
 
-  it('Caller takes a WETH flashloan with mode = 1', async () => {
+  it('Caller takes a WBCH flashloan with mode = 1', async () => {
     const { dai, pool, weth, users, helpersContract } = testEnv;
 
     const caller = users[3];
@@ -429,7 +429,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     expect(callerDebt.toString()).to.be.equal('800000000000000000', 'Invalid user debt');
   });
 
-  it('Caller takes a WETH flashloan with mode = 1 onBehalfOf user without allowance', async () => {
+  it('Caller takes a WBCH flashloan with mode = 1 onBehalfOf user without allowance', async () => {
     const { dai, pool, weth, users, helpersContract } = testEnv;
 
     const caller = users[5];
@@ -465,7 +465,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.revertedWith(LP_BORROW_ALLOWANCE_NOT_ENOUGH);
   });
 
-  it('Caller takes a WETH flashloan with mode = 1 onBehalfOf user with allowance. A loan for onBehalfOf is creatd.', async () => {
+  it('Caller takes a WBCH flashloan with mode = 1 onBehalfOf user with allowance. A loan for onBehalfOf is creatd.', async () => {
     const { dai, pool, weth, users, helpersContract } = testEnv;
 
     const caller = users[5];

@@ -129,7 +129,7 @@
 //       from: _borrowerAddress,
 //     })
 
-//     //user 2 deposits 5 ETH tries to borrow. needs to be reverted as you can't borrow more than 25% of the available reserve (250 DAI)
+//     //user 2 deposits 5 BCH tries to borrow. needs to be reverted as you can't borrow more than 25% of the available reserve (250 DAI)
 //     const amountETHToDeposit = await convertToCurrencyDecimals(ETHEREUM_ADDRESS, "5")
 //     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, amountETHToDeposit, "0", {
 //       from: _borrowerAddress,
@@ -168,7 +168,7 @@
 //       from: user,
 //     })
 
-//     //user deposits 5 ETH as collateral
+//     //user deposits 5 BCH as collateral
 //     const amountETHToDeposit = await convertToCurrencyDecimals(ETHEREUM_ADDRESS, "5")
 //     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, amountETHToDeposit, "0", {
 //       from: user,
@@ -188,7 +188,7 @@
 
 //     expect(userData.currentATokenBalance.toString()).to.be.equal("0")
 
-//     //user tries to borrow the DAI at a stable rate using the ETH as collateral
+//     //user tries to borrow the DAI at a stable rate using the BCH as collateral
 //     const amountDAIToBorrow = await convertToCurrencyDecimals(_daiAddress, "100")
 
 //     //user tries to borrow. No revert expected

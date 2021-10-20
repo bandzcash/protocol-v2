@@ -27,14 +27,14 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(RC_INVALID_RESERVE_FACTOR);
   });
 
-  it('Deactivates the ETH reserve', async () => {
+  it('Deactivates the BCH reserve', async () => {
     const { configurator, weth, helpersContract } = testEnv;
     await configurator.deactivateReserve(weth.address);
     const { isActive } = await helpersContract.getReserveConfigurationData(weth.address);
     expect(isActive).to.be.equal(false);
   });
 
-  it('Rectivates the ETH reserve', async () => {
+  it('Rectivates the BCH reserve', async () => {
     const { configurator, weth, helpersContract } = testEnv;
     await configurator.activateReserve(weth.address);
 
@@ -58,7 +58,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Freezes the ETH reserve', async () => {
+  it('Freezes the BCH reserve', async () => {
     const { configurator, weth, helpersContract } = testEnv;
 
     await configurator.freezeReserve(weth.address);
@@ -85,7 +85,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
   });
 
-  it('Unfreezes the ETH reserve', async () => {
+  it('Unfreezes the BCH reserve', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.unfreezeReserve(weth.address);
 
@@ -128,7 +128,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Deactivates the ETH reserve for borrowing', async () => {
+  it('Deactivates the BCH reserve for borrowing', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.disableBorrowingOnReserve(weth.address);
     const {
@@ -154,7 +154,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
   });
 
-  it('Activates the ETH reserve for borrowing', async () => {
+  it('Activates the BCH reserve for borrowing', async () => {
     const { configurator, weth, helpersContract } = testEnv;
     await configurator.enableBorrowingOnReserve(weth.address, true);
     const { variableBorrowIndex } = await helpersContract.getReserveData(weth.address);
@@ -200,7 +200,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Deactivates the ETH reserve as collateral', async () => {
+  it('Deactivates the BCH reserve as collateral', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.configureReserveAsCollateral(weth.address, 0, 0, 0);
 
@@ -227,7 +227,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
   });
 
-  it('Activates the ETH reserve as collateral', async () => {
+  it('Activates the BCH reserve as collateral', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.configureReserveAsCollateral(weth.address, '8000', '8250', '10500');
 
@@ -264,7 +264,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Disable stable borrow rate on the ETH reserve', async () => {
+  it('Disable stable borrow rate on the BCH reserve', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.disableReserveStableRate(weth.address);
     const {
@@ -290,7 +290,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
   });
 
-  it('Enables stable borrow rate on the ETH reserve', async () => {
+  it('Enables stable borrow rate on the BCH reserve', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.enableReserveStableRate(weth.address);
     const {
@@ -316,7 +316,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     expect(reserveFactor).to.be.equal(strategyWETH.reserveFactor);
   });
 
-  it('Disable stable borrow rate to return to the original state on the ETH reserve', async () => {
+  it('Disable stable borrow rate to return to the original state on the BCH reserve', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.disableReserveStableRate(weth.address);
     const {
@@ -358,7 +358,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Changes the reserve factor of WETH', async () => {
+  it('Changes the reserve factor of WBCH', async () => {
     const { configurator, helpersContract, weth } = testEnv;
     await configurator.setReserveFactor(weth.address, '1000');
     const {

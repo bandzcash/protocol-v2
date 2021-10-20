@@ -34,7 +34,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI, user 1 deposits 1 WETH as collateral and borrows 100 DAI at variable rate",
+      "description": "User 0 deposits 1000 DAI, user 1 deposits 1 WBCH as collateral and borrows 100 DAI at variable rate",
       "actions": [
         {
           "name": "mint",
@@ -65,7 +65,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "1"
           },
@@ -74,7 +74,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "1"
           },
           "expected": "success"
@@ -82,7 +82,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "1"
           },
@@ -203,7 +203,7 @@
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "1"
           },
@@ -212,12 +212,12 @@
       ]
     },
     {
-      "description": "User 2 deposits a small amount of WETH to account for rounding errors",
+      "description": "User 2 deposits a small amount of WBCH to account for rounding errors",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0.001",
             "user": "2"
           },
@@ -226,7 +226,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "2"
           },
           "expected": "success"
@@ -234,7 +234,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0.001",
             "user": "2"
           },
@@ -243,12 +243,12 @@
       ]
     },
     {
-      "description": "User 0 deposits 1 WETH, user 1 borrows 0.5 WETH at variable rate",
+      "description": "User 0 deposits 1 WBCH, user 1 borrows 0.5 WBCH at variable rate",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "0"
           },
@@ -257,7 +257,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "0"
           },
           "expected": "success"
@@ -265,7 +265,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "0"
           },
@@ -274,12 +274,12 @@
       ]
     },
     {
-      "description": "User 1 tries to repay 0 WETH",
+      "description": "User 1 tries to repay 0 WBCH",
       "actions": [
         {
           "name": "repay",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0",
             "user": "1",
             "onBehalfOf": "1",
@@ -296,7 +296,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "2",
             "borrowRateMode": "variable",
@@ -308,12 +308,12 @@
       ]
     },
     {
-      "description": "User 3 repays a small amount of WETH on behalf of user 1",
+      "description": "User 3 repays a small amount of WBCH on behalf of user 1",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "3"
           },
@@ -322,7 +322,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "3"
           },
           "expected": "success"
@@ -330,12 +330,12 @@
       ]
     },
     {
-      "description": "User 0 withdraws the deposited WETH plus interest",
+      "description": "User 0 withdraws the deposited WBCH plus interest",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "0"
           },
@@ -375,7 +375,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI (USDC before), user 1 deposits 1 WETH as collateral and borrows 100 DAI at variable rate",
+      "description": "User 0 deposits 1000 DAI (USDC before), user 1 deposits 1 WBCH as collateral and borrows 100 DAI at variable rate",
       "actions": [
         {
           "name": "mint",
@@ -406,7 +406,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "1"
           },
@@ -415,7 +415,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "1"
           },
           "expected": "success"
@@ -423,7 +423,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "1"
           },
@@ -512,7 +512,7 @@
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "1"
           },
@@ -563,12 +563,12 @@
       ]
     },
     {
-      "description": "User 3 deposits 0.1 WETH collateral to borrow 100 DAI; 0.1 WETH is not enough to borrow 100 DAI (revert expected)",
+      "description": "User 3 deposits 0.1 WBCH collateral to borrow 100 DAI; 0.1 WBCH is not enough to borrow 100 DAI (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0.1",
             "user": "1"
           },
@@ -577,7 +577,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "1"
           },
           "expected": "success"
@@ -585,7 +585,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0.1",
             "user": "3"
           },
@@ -605,12 +605,12 @@
       ]
     },
     {
-      "description": "User 3 withdraws the 0.1 WETH",
+      "description": "User 3 withdraws the 0.1 WBCH",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "3"
           },
@@ -661,12 +661,12 @@
       ]
     },
     {
-      "description": "User 3 deposits 0.1 WETH collateral to borrow 100 DAI (USDC before); 0.1 WETH is not enough to borrow 100 DAI (revert expected)",
+      "description": "User 3 deposits 0.1 WBCH collateral to borrow 100 DAI (USDC before); 0.1 WBCH is not enough to borrow 100 DAI (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "3"
           },
@@ -675,7 +675,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "1"
           },
           "expected": "success"
@@ -683,7 +683,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0.1",
             "user": "3"
           },
@@ -703,12 +703,12 @@
       ]
     },
     {
-      "description": "User 3 withdraws the 0.1 WETH",
+      "description": "User 3 withdraws the 0.1 WBCH",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "3"
           },
@@ -717,7 +717,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI, user 6 deposits 2 WETH and borrow 100 DAI at variable rate first, then 100 DAI at stable rate, repays everything. User 0 withdraws",
+      "description": "User 0 deposits 1000 DAI, user 6 deposits 2 WBCH and borrow 100 DAI at variable rate first, then 100 DAI at stable rate, repays everything. User 0 withdraws",
       "actions": [
         {
           "name": "mint",
@@ -748,7 +748,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "2",
             "user": "6"
           },
@@ -757,7 +757,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "6"
           },
           "expected": "success"
@@ -765,7 +765,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "2",
             "user": "6"
           },

@@ -119,7 +119,7 @@
 //     );
 //   });
 
-//   it('Freezes the ETH reserve', async () => {
+//   it('Freezes the BCH reserve', async () => {
 //     await _lendingPoolConfiguratorInstance.freezeReserve(ETHEREUM_ADDRESS);
 //   });
 
@@ -151,13 +151,13 @@
 //     );
 //   });
 
-//   it('unfreezes the reserve, user deposits 1 ETH, freezes the reserve, check that the user can redeem', async () => {
-//     const {aWETH} = _aTokenInstances;
+//   it('unfreezes the reserve, user deposits 1 BCH, freezes the reserve, check that the user can redeem', async () => {
+//     const {aWBCH} = _aTokenInstances;
 
 //     //unfreezes the reserve
 //     await _lendingPoolConfiguratorInstance.unfreezeReserve(ETHEREUM_ADDRESS);
 
-//     //deposit 1 ETH
+//     //deposit 1 BCH
 //     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneBch, '0', {
 //       value: oneBch.toString(),
 //     });
@@ -165,13 +165,13 @@
 //     //freezes the reserve
 //     await _lendingPoolConfiguratorInstance.freezeReserve(ETHEREUM_ADDRESS);
 
-//     const balance = await aWETH.balanceOf(deployer);
+//     const balance = await aWBCH.balanceOf(deployer);
 
-//     await aWETH.redeem(balance);
+//     await aWBCH.redeem(balance);
 //   });
 
-//   it('unfreezes the reserve, user 0 deposits 100 DAI, user 1 deposits 1 ETH and borrows 50 DAI, freezes the reserve, checks that the user 1 can repay', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
+//   it('unfreezes the reserve, user 0 deposits 100 DAI, user 1 deposits 1 BCH and borrows 50 DAI, freezes the reserve, checks that the user 1 can repay', async () => {
+//     const {aWBCH, aDAI} = _aTokenInstances;
 //     const {DAI} = _tokenInstances;
 
 //     //unfreezes the reserve
@@ -186,7 +186,7 @@
 
 //     await _lendingPoolInstance.deposit(DAI.address, amountDAI, '0', {from: users[0]});
 
-//     //user 1 deposits 1 ETH
+//     //user 1 deposits 1 BCH
 //     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneBch, '0', {
 //       from: users[1],
 //       value: oneBch.toString(),
@@ -209,7 +209,7 @@
 //   });
 
 //   it('Check that liquidationCall can be executed on a freezed reserve', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
+//     const {aWBCH, aDAI} = _aTokenInstances;
 //     const {DAI} = _tokenInstances;
 
 //     //user 2 tries to liquidate
@@ -228,7 +228,7 @@
 //   });
 
 //   it('Check that rebalanceStableBorrowRate can be executed on a freezed reserve', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
+//     const {aWBCH, aDAI} = _aTokenInstances;
 //     const {DAI} = _tokenInstances;
 
 //     //user 2 tries to liquidate

@@ -61,7 +61,7 @@ export enum eContractid {
   ATokensAndRatesHelper = 'ATokensAndRatesHelper',
   UiPoolDataProvider = 'UiPoolDataProvider',
   WETHGateway = 'WETHGateway',
-  WETH = 'WETH',
+  WBCH = 'WBCH',
   WETHMocked = 'WETHMocked',
   SelfdestructTransferMock = 'SelfdestructTransferMock',
   LendingPoolImpl = 'LendingPoolImpl',
@@ -177,7 +177,7 @@ export enum ProtocolErrors {
 }
 
 export type tSmartBCHAddress = string;
-export type tStringTokenBigUnits = string; // 1 ETH, or 10e18 DAI
+export type tStringTokenBigUnits = string; // 1 BCH, or 10e18 DAI
 export type tBigNumberTokenBigUnits = BigNumber;
 export type tStringTokenSmallUnits = string; // 1 wei, or 1 basic unit of DAI
 export type tBigNumberTokenSmallUnits = BigNumber;
@@ -186,31 +186,31 @@ export interface iAssetCommon<T> {
   [key: string]: T;
 }
 export interface iAssetBase<T> {
-  WETH: T;
+  WBCH: T;
   DAI: T;
   BANDZ: T;
   USD: T;
   xSUSHI: T;
 }
 
-export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
+export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'BCH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iBandzPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'BANDZ' | 'WETH' | 'xSUSHI'>;
+export type iBandzPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'BANDZ' | 'WBCH' | 'xSUSHI'>;
 
-export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'WETH'>;
+export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'WBCH'>;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
 
-export type iAavePoolTokens<T> = Omit<iBandzPoolAssets<T>, 'ETH'>;
+export type iAavePoolTokens<T> = Omit<iBandzPoolAssets<T>, 'BCH'>;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
   DAI = 'DAI',
   BANDZ = 'BANDZ',
-  WETH = 'WETH',
+  WBCH = 'WBCH',
   USD = 'USD',
   xSUSHI = 'xSUSHI',
 }
@@ -330,7 +330,7 @@ export interface IBaseConfiguration {
   EmergencyAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;
   EmergencyAdminIndex: number;
   ATokenDomainSeparator: iParamsPerNetwork<string>;
-  WETH: iParamsPerNetwork<tSmartBCHAddress>;
+  WBCH: iParamsPerNetwork<tSmartBCHAddress>;
   WrappedNativeToken: iParamsPerNetwork<tSmartBCHAddress>;
   WethGateway: iParamsPerNetwork<tSmartBCHAddress>;
   ReserveFactorTreasuryAddress: iParamsPerNetwork<tSmartBCHAddress>;

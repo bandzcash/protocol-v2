@@ -20,7 +20,7 @@ export const CommonsConfig: ICommonConfiguration = {
   VariableDebtTokenNamePrefix: 'Bandz AMM Market variable debt',
   SymbolPrefix: 'Amm',
   ProviderId: 0, // Overriden in index.ts
-  OracleQuoteCurrency: 'ETH',
+  OracleQuoteCurrency: 'BCH',
   OracleQuoteUnit: oneBch.toString(),
   ProtocolGlobalParams: {
     TokenDistributorPercentageBase: '10000',
@@ -42,7 +42,7 @@ export const CommonsConfig: ICommonConfiguration = {
   },
   // TODO: reorg alphabetically, checking the reason of tests failing
   LendingRateOracleRatesCommon: {
-    WETH: {
+    WBCH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
     DAI: {
@@ -179,7 +179,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.amber]: '',
     [eSmartBCHNetwork.main]: '',
   },
-  WETH: {
+  WBCH: {
     [eSmartBCHNetwork.coverage]: '', // deployed in local evm
     [eSmartBCHNetwork.hardhat]: '', // deployed in local evm
     [eSmartBCHNetwork.buidlerevm]: '', // deployed in local evm

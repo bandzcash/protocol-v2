@@ -13,7 +13,7 @@ export const rateStrategyAmmBase: IInterestRateStrategyParams = {
     stableRateSlope2: new BigNumber(3).multipliedBy(oneRay).toFixed(),
 }
 
-// WETH
+// WBCH
 export const rateStrategyBaseOne: IInterestRateStrategyParams = {
     name: "rateStrategyBaseOne",
     optimalUtilizationRate: new BigNumber(0.65).multipliedBy(oneRay).toFixed(),

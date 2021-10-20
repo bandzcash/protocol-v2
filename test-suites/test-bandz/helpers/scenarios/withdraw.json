@@ -121,12 +121,12 @@
       ]
     },
     {
-      "description": "User 0 Deposits 1 WETH in an empty reserve",
+      "description": "User 0 Deposits 1 WBCH in an empty reserve",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "0"
           },
@@ -135,7 +135,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "0"
           },
           "expected": "success"
@@ -143,7 +143,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "0"
           },
@@ -152,12 +152,12 @@
       ]
     },
     {
-      "description": "User 0 withdraws half of the deposited WETH",
+      "description": "User 0 withdraws half of the deposited WBCH",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "0.5",
             "user": "0"
           },
@@ -166,12 +166,12 @@
       ]
     },
     {
-      "description": "User 0 withdraws remaining half of the deposited WETH",
+      "description": "User 0 withdraws remaining half of the deposited WBCH",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "-1",
             "user": "0"
           },

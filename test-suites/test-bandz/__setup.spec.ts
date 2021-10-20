@@ -71,7 +71,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
   const protoConfigData = getReservesConfigByPool(BandzPools.proto);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
-    if (tokenSymbol === 'WETH') {
+    if (tokenSymbol === 'WBCH') {
       tokens[tokenSymbol] = await deployWETHMocked();
       await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
       continue;
@@ -152,13 +152,13 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await setInitialAssetPricesInOracle(
     ALL_ASSETS_INITIAL_PRICES,
     {
-      WETH: mockTokens.WETH.address,
+      WBCH: mockTokens.WBCH.address,
       DAI: mockTokens.DAI.address,
       BANDZ: mockTokens.BANDZ.address,
       // DAI: mockTokens.LpDAI.address,
       // USDT: mockTokens.LpUSDT.address,
       // WBTC: mockTokens.LpWBTC.address,
-      // WETH: mockTokens.LpWETH.address,
+      // WBCH: mockTokens.LpWBCH.address,
       USD: USD_ADDRESS,
       xSUSHI: mockTokens.xSUSHI.address,
     },
@@ -191,7 +191,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     tokens,
     aggregators,
     fallbackOracle.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
     oneBch.toString(),
   ]);
   await waitForTx(await addressesProvider.setPriceOracle(fallbackOracle.address));
@@ -252,7 +252,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const adapterParams: [string, string, string] = [
     addressesProvider.address,
     mockUniswapRouter.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
   ];
 
   await deployUniswapLiquiditySwapAdapter(adapterParams);
@@ -267,7 +267,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider();
 
-  const gateWay = await deployWETHGateway([mockTokens.WETH.address]);
+  const gateWay = await deployWETHGateway([mockTokens.WBCH.address]);
   await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
 
   console.timeEnd('setup');

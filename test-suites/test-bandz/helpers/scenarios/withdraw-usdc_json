@@ -3,7 +3,7 @@
   "description": "withdraw function.",
   "stories": [
     {
-      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 DAI (USDC before) and 1 WETH, borrows 100 DAI. User 1 tries to withdraw all the DAI",
+      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 DAI (USDC before) and 1 WBCH, borrows 100 DAI. User 1 tries to withdraw all the DAI",
       "actions": [
         {
           "name": "deposit",
@@ -43,7 +43,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "1"
           },
@@ -52,7 +52,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "1"
           },
           "expected": "success"
@@ -60,7 +60,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "1",
             "user": "1"
           },

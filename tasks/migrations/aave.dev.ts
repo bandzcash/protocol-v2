@@ -29,7 +29,7 @@ task('bandz:dev', 'Deploy development enviroment')
     console.log('4. Deploy oracles');
     await localBRE.run('dev:deploy-oracles', { verify, pool: POOL_NAME });
 
-    console.log('5. Deploy WETH Gateway');
+    console.log('5. Deploy WBCH Gateway');
     await localBRE.run('full-deploy-weth-gateway', { verify, pool: POOL_NAME });
 
     console.log('6. Initialize lending pool');

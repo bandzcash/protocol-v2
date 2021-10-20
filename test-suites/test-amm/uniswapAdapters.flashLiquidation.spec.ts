@@ -41,10 +41,10 @@
 //     await pool
 //       .connect(depositor.signer)
 //       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
-//     //user 2 deposits 1 ETH
+//     //user 2 deposits 1 BCH
 //     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-//     //mints WETH to borrower
+//     //mints WBCH to borrower
 //     await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
 
 //     //approve protocol to access the borrower wallet
@@ -108,10 +108,10 @@
 //     await pool
 //       .connect(depositor.signer)
 //       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
-//     //user 2 deposits 1 ETH
+//     //user 2 deposits 1 BCH
 //     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-//     //mints WETH to borrower
+//     //mints WBCH to borrower
 //     await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
 
 //     //approve protocol to access the borrower wallet
@@ -229,7 +229,7 @@
 
 //         const liquidatorWethBalanceBefore = await weth.balanceOf(liquidator.address);
 
-//         // Set how much ETH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(weth.address, expectedSwap)).wait();
 
 //         const collateralPrice = await oracle.getAssetPrice(weth.address);
@@ -369,7 +369,7 @@
 //         // Profit after flash loan liquidation
 //         expect(liquidatorWethBalanceAfter).to.be.equal(
 //           liquidatorWethBalanceBefore.add(expectedProfit),
-//           'Invalid expected WETH profit'
+//           'Invalid expected WBCH profit'
 //         );
 //       });
 //     });
@@ -508,7 +508,7 @@
 //           .multipliedBy(1.0009)
 //           .toFixed(0);
 
-//         // Set how much ETH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
 //         await (
 //           await mockUniswapRouter.setAmountToSwap(
 //             weth.address,
@@ -605,7 +605,7 @@
 //         // Net Profit == 0 after flash loan liquidation
 //         expect(liquidatorWethBalanceAfter).to.be.equal(
 //           liquidatorWethBalanceBefore,
-//           'Invalid expected WETH profit'
+//           'Invalid expected WBCH profit'
 //         );
 //       });
 //     });
@@ -664,7 +664,7 @@
 //           .multipliedBy(1.0009)
 //           .toFixed(0);
 
-//         // Set how much ETH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
 //         await (
 //           await mockUniswapRouter.setAmountToSwap(
 //             weth.address,
@@ -721,7 +721,7 @@
 //         const borrower = users[1];
 //         const expectedSwap = ethers.utils.parseEther('0.4');
 
-//         // Set how much ETH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(weth.address, expectedSwap)).wait();
 
 //         const userReserveDataBefore = await getUserData(
@@ -765,7 +765,7 @@
 //         const borrower = users[1];
 //         const expectedSwap = ethers.utils.parseEther('0.4');
 
-//         // Set how much ETH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(weth.address, expectedSwap)).wait();
 
 //         const userReserveDataBefore = await getUserData(
@@ -810,7 +810,7 @@
 //         const borrower = users[1];
 //         const expectedSwap = ethers.utils.parseEther('0.4');
 
-//         // Set how much ETH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(weth.address, expectedSwap)).wait();
 
 //         const userReserveDataBefore = await getUserData(

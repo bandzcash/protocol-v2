@@ -58,7 +58,7 @@ export interface TestEnv {
   oracle: PriceOracle;
   helpersContract: AaveProtocolDataProvider;
   weth: WETH9Mocked;
-  aWETH: AToken;
+  aWBCH: AToken;
   dai: MintableERC20;
   aDai: AToken;
   bandz: MintableERC20;
@@ -84,7 +84,7 @@ const testEnv: TestEnv = {
   helpersContract: {} as AaveProtocolDataProvider,
   oracle: {} as PriceOracle,
   weth: {} as WETH9Mocked,
-  aWETH: {} as AToken,
+  aWBCH: {} as AToken,
   dai: {} as MintableERC20,
   aDai: {} as AToken,
   bandz: {} as MintableERC20,
@@ -131,13 +131,13 @@ export async function initializeMakeSuite() {
   const allTokens = await testEnv.helpersContract.getAllATokens();
   const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aDAI')?.tokenAddress;
 
-  const aWEthAddress = allTokens.find((aToken) => aToken.symbol === 'aWETH')?.tokenAddress;
+  const aWEthAddress = allTokens.find((aToken) => aToken.symbol === 'aWBCH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
 
   const daiAddress = reservesTokens.find((token) => token.symbol === 'DAI')?.tokenAddress;
   const bandzAddress = reservesTokens.find((token) => token.symbol === 'BANDZ')?.tokenAddress;
-  const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
+  const wethAddress = reservesTokens.find((token) => token.symbol === 'WBCH')?.tokenAddress;
 
   if (!aDaiAddress || !aWEthAddress) {
     process.exit(1);
@@ -147,7 +147,7 @@ export async function initializeMakeSuite() {
   }
 
   testEnv.aDai = await getAToken(aDaiAddress);
-  testEnv.aWETH = await getAToken(aWEthAddress);
+  testEnv.aWBCH = await getAToken(aWEthAddress);
 
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.bandz = await getMintableERC20(bandzAddress);

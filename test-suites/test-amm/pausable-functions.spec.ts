@@ -205,10 +205,10 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
       .connect(depositor.signer)
       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
 
-    //user 4 deposits 1 ETH
+    //user 4 deposits 1 BCH
     const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
 
-    //mints WETH to borrower
+    //mints WBCH to borrower
     await weth.connect(borrower.signer).mint(amountETHtoDeposit);
 
     //approve protocol to access borrower wallet

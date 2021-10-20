@@ -35,7 +35,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES = {
   // Update to USD-based price feeds
   BANDZ: oneBch.multipliedBy('0.003620948469').toFixed(),
   DAI: oneBch.multipliedBy('0.00369068412860').toFixed(),
-  WETH: oneBch.toFixed(),
+  WBCH: oneBch.toFixed(),
   xSUSHI: oneBch.multipliedBy('0.00913428586').toFixed(),
   USD: '5848466240000000',
 };
