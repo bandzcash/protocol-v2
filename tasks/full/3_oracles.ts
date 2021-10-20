@@ -40,7 +40,8 @@ task('full:deploy-oracles', 'Deploy oracles for dev enviroment')
       const lendingRateOracleAddress = getParamPerNetwork(poolConfig.LendingRateOracle, network);
       const fallbackOracleAddress = await getParamPerNetwork(FallbackOracle, network);
       const reserveAssets = await getParamPerNetwork(ReserveAssets, network);
-      const chainlinkAggregators = await getParamPerNetwork(ChainlinkAggregator, network);
+      // const chainlinkAggregators = await getParamPerNetwork(ChainlinkAggregator, network);
+      const chainlinkAggregators = {};
 
       const tokensToWatch: SymbolMap<string> = {
         ...reserveAssets,
