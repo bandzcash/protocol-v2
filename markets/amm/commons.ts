@@ -184,16 +184,16 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.hardhat]: '', // deployed in local evm
     [eSmartBCHNetwork.buidlerevm]: '', // deployed in local evm
     // [eSmartBCHNetwork.kovan]: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-    [eSmartBCHNetwork.amber]: '0xc778417e063141139fce010982780140aa0cd5ab',
-    [eSmartBCHNetwork.main]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    [eSmartBCHNetwork.amber]: '0x17F4FCF5b6E0A95D4eE331c8529041896A073F9b',
+    [eSmartBCHNetwork.main]: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
   },
   WrappedNativeToken: {
     [eSmartBCHNetwork.coverage]: '', // deployed in local evm
     [eSmartBCHNetwork.hardhat]: '', // deployed in local evm
     [eSmartBCHNetwork.buidlerevm]: '', // deployed in local evm
     // [eSmartBCHNetwork.kovan]: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-    [eSmartBCHNetwork.amber]: '0xc778417e063141139fce010982780140aa0cd5ab',
-    [eSmartBCHNetwork.main]: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+    [eSmartBCHNetwork.amber]: '0x17F4FCF5b6E0A95D4eE331c8529041896A073F9b',
+    [eSmartBCHNetwork.main]: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
   },
   ReserveFactorTreasuryAddress: {
     [eSmartBCHNetwork.coverage]: '0x464c71f6c2f760dda6093dcb91c24c39e5d6e18c',

@@ -30,7 +30,7 @@ export const AmmConfig: IAmmConfiguration = {
     [eSmartBCHNetwork.amber]: {},
     [eSmartBCHNetwork.main]: {
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-      WBCH: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+      WBCH: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
     },
   },
 };
