@@ -190,14 +190,14 @@ export interface iAssetBase<T> {
   DAI: T;
   BANDZ: T;
   USD: T;
-  xSUSHI: T;
+  xMIST: T;
 }
 
 export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'BCH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iBandzPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'BANDZ' | 'WBCH' | 'xSUSHI'>;
+export type iBandzPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'BANDZ' | 'WBCH' | 'xMIST'>;
 
 export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'WBCH'>;
 
@@ -212,7 +212,7 @@ export enum TokenContractId {
   BANDZ = 'BANDZ',
   WBCH = 'WBCH',
   USD = 'USD',
-  xSUSHI = 'xSUSHI',
+  xMIST = 'xMIST',
 }
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {

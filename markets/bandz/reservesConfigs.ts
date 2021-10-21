@@ -61,7 +61,7 @@ export const strategyUNI: IReserveParams = {
   reserveFactor: '2000',
 };
 
-export const strategyXSUSHI: IReserveParams = {
+export const strategyXMIST: IReserveParams = {
   strategy: rateStrategyVolatileFour,
   baseLTVAsCollateral: '2500',
   liquidationThreshold: '4500',

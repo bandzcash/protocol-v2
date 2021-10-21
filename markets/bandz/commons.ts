@@ -159,7 +159,7 @@ export const CommonsConfig: ICommonConfiguration = {
   //     BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
   //     DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
   //     USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
-  //     xSUSHI: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
+  //     xMIST: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
   //   },
   // },
   ReserveAssets: {

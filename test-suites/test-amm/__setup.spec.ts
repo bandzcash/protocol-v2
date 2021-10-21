@@ -162,7 +162,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
       // WBTC: mockTokens.LpWBTC.address,
       // WBCH: mockTokens.LpWBCH.address,
       USD: USD_ADDRESS,
-      xSUSHI: ZERO_ADDRESS,
+      xMIST: ZERO_ADDRESS,
     },
     fallbackOracle
   );

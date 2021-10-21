@@ -7,7 +7,7 @@ import {
   strategyBANDZ,
   strategyUNI,
   strategyWBCH,
-  strategyXSUSHI,
+  strategyXMIST,
 } from './reservesConfigs';
 
 // ----------------
@@ -22,7 +22,7 @@ export const BandzConfig: IBandzConfiguration = {
     BANDZ: strategyBANDZ,
     DAI: strategyDAI,
     WBCH: strategyWBCH,
-    xSUSHI: strategyXSUSHI,
+    xMIST: strategyXMIST,
   },
   ReserveAssets: {
     [eSmartBCHNetwork.buidlerevm]: {},
@@ -37,7 +37,7 @@ export const BandzConfig: IBandzConfiguration = {
       BANDZ: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
       DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       WBCH: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
-      xSUSHI: '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272',
+      xMIST: '0xC41C680c60309d4646379eD62020c534eB67b6f4',
     },
   },
 };
