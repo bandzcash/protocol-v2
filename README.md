@@ -181,7 +181,7 @@ await network.provider.request({ method: "hardhat_impersonateAccount",  params: 
 
 const signer = await ethers.provider.getSigner("0xb1adceddb2941033a090dd166a462fe1c2029484")
 
-// ERC20 token DAI Mainnet instance
+// SEP20 token DAI Mainnet instance
 const DAI = await contractGetters.getIErc20Detailed("0x6B175474E89094C44Da98b954EedeAC495271d0F");
 
 // Approve 100 DAI to LendingPool address
@@ -217,7 +217,7 @@ const signer = await contractGetters.getFirstSigner();
 // Lending pool instance
 const lendingPool = await contractGetters.getLendingPool("0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9");
 
-// ERC20 token DAI Mainnet instance
+// SEP20 token DAI Mainnet instance
 const DAI = await contractGetters.getIErc20Detailed("0x6B175474E89094C44Da98b954EedeAC495271d0F");
 
 // Approve 100 DAI to LendingPool address
