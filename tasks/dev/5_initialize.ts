@@ -39,7 +39,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
       StableDebtTokenNamePrefix,
       VariableDebtTokenNamePrefix,
       SymbolPrefix,
-      WethGateway,
+      WbchGateway,
       ReservesConfig,
     } = poolConfig;
     const mockTokens = await getAllMockedTokens();
@@ -92,7 +92,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     const lendingPoolAddress = await addressesProvider.getLendingPool();
 
-    let gateway = getParamPerNetwork(WethGateway, network);
+    let gateway = getParamPerNetwork(WbchGateway, network);
     if (!notFalsyOrZeroAddress(gateway)) {
       gateway = (await getWETHGateway()).address;
     }

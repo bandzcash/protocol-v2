@@ -21,7 +21,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
   } = ProtocolErrors;
 
   it('Deposits WBCH, borrows DAI/Check liquidation fails because health factor is above 1', async () => {
-    const { dai, weth, users, pool, oracle } = testEnv;
+    const { dai, wbch, users, pool, oracle } = testEnv;
     const depositor = users[0];
     const borrower = users[1];
 
@@ -37,18 +37,18 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
       .connect(depositor.signer)
       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
 
-    const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
+    const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
     //mints WBCH to borrower
-    await weth.connect(borrower.signer).mint(amountETHtoDeposit);
+    await wbch.connect(borrower.signer).mint(amountETHtoDeposit);
 
     //approve protocol to access borrower wallet
-    await weth.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wbch.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     //user 2 deposits 1 WBCH
     await pool
       .connect(borrower.signer)
-      .deposit(weth.address, amountETHtoDeposit, borrower.address, '0');
+      .deposit(wbch.address, amountETHtoDeposit, borrower.address, '0');
 
     //user 2 borrows
     const userGlobalData = await pool.getUserAccountData(borrower.address);
@@ -75,7 +75,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
 
     //someone tries to liquidate user 2
     await expect(
-      pool.liquidationCall(weth.address, dai.address, borrower.address, 1, true)
+      pool.liquidationCall(wbch.address, dai.address, borrower.address, 1, true)
     ).to.be.revertedWith(LPCM_HEALTH_FACTOR_NOT_BELOW_THRESHOLD);
   });
 
@@ -99,11 +99,11 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
   });
 
   it('Tries to liquidate a different currency than the loan principal', async () => {
-    const { pool, users, weth } = testEnv;
+    const { pool, users, wbch } = testEnv;
     const borrower = users[1];
     //user 2 tries to borrow
     await expect(
-      pool.liquidationCall(weth.address, weth.address, borrower.address, oneBch.toString(), true)
+      pool.liquidationCall(wbch.address, wbch.address, borrower.address, oneBch.toString(), true)
     ).revertedWith(LPCM_SPECIFIED_CURRENCY_NOT_BORROWED_BY_USER);
   });
 
@@ -117,7 +117,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
   });
 
   it('Liquidates the borrow', async () => {
-    const { pool, dai, weth, aWBCH, aDai, users, oracle, helpersContract, deployer } = testEnv;
+    const { pool, dai, wbch, aWBCH, aDai, users, oracle, helpersContract, deployer } = testEnv;
     const borrower = users[1];
 
     //mints dai to the caller
@@ -128,7 +128,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     await dai.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     const daiReserveDataBefore = await getReserveData(helpersContract, dai.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(weth.address);
+    const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const userReserveDataBefore = await getUserData(
       pool,
@@ -142,7 +142,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
       .toFixed(0);
 
     const tx = await pool.liquidationCall(
-      weth.address,
+      wbch.address,
       dai.address,
       borrower.address,
       amountToLiquidate,
@@ -157,13 +157,13 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     const daiReserveDataAfter = await helpersContract.getReserveData(dai.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(weth.address);
+    const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
-    const collateralPrice = (await oracle.getAssetPrice(weth.address)).toString();
+    const collateralPrice = (await oracle.getAssetPrice(wbch.address)).toString();
     const principalPrice = (await oracle.getAssetPrice(dai.address)).toString();
 
     const collateralDecimals = (
-      await helpersContract.getReserveConfigurationData(weth.address)
+      await helpersContract.getReserveConfigurationData(wbch.address)
     ).decimals.toString();
     const principalDecimals = (
       await helpersContract.getReserveConfigurationData(dai.address)
@@ -225,14 +225,14 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     );
 
     expect(
-      (await helpersContract.getUserReserveData(weth.address, deployer.address))
+      (await helpersContract.getUserReserveData(wbch.address, deployer.address))
         .usageAsCollateralEnabled
     ).to.be.true;
   });
 
   // USDC before
   it('User 3 deposits 1000 DAI, user 4 1 WBCH, user 4 borrows at variable - drops HF, liquidates the borrow', async () => {
-    const { users, pool, dai, oracle, weth, helpersContract } = testEnv;
+    const { users, pool, dai, oracle, wbch, helpersContract } = testEnv;
     const depositor = users[3];
     const borrower = users[4];
 
@@ -252,17 +252,17 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
 
     //user 4 deposits 1 BCH
-    const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
+    const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
     //mints WBCH to borrower
-    await weth.connect(borrower.signer).mint(amountETHtoDeposit);
+    await wbch.connect(borrower.signer).mint(amountETHtoDeposit);
 
     //approve protocol to access borrower wallet
-    await weth.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wbch.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     await pool
       .connect(borrower.signer)
-      .deposit(weth.address, amountETHtoDeposit, borrower.address, '0');
+      .deposit(wbch.address, amountETHtoDeposit, borrower.address, '0');
 
     //user 4 borrows
     const userGlobalData = await pool.getUserAccountData(borrower.address);
@@ -301,14 +301,14 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     );
 
     const daiReserveDataBefore = await helpersContract.getReserveData(dai.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(weth.address);
+    const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const amountToLiquidate = new BigNumber(userReserveDataBefore.currentVariableDebt.toString())
       .multipliedBy(0.5)
       .toFixed(0);
 
     await pool.liquidationCall(
-      weth.address,
+      wbch.address,
       dai.address,
       borrower.address,
       amountToLiquidate,
@@ -323,13 +323,13 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     const daiReserveDataAfter = await helpersContract.getReserveData(dai.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(weth.address);
+    const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
-    const collateralPrice = (await oracle.getAssetPrice(weth.address)).toString();
+    const collateralPrice = (await oracle.getAssetPrice(wbch.address)).toString();
     const principalPrice = (await oracle.getAssetPrice(dai.address)).toString();
 
     const collateralDecimals = (
-      await helpersContract.getReserveConfigurationData(weth.address)
+      await helpersContract.getReserveConfigurationData(wbch.address)
     ).decimals.toString();
     const principalDecimals = (
       await helpersContract.getReserveConfigurationData(dai.address)

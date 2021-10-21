@@ -33,7 +33,7 @@ task('sidechain:mainnet', 'Deploy market at sidechain')
     console.log('4. Deploy Data Provider');
     await DRE.run('full:data-provider', { pool: POOL_NAME });
     console.log('5. Deploy WBCH Gateway');
-    await DRE.run('full-deploy-weth-gateway', { pool: POOL_NAME });
+    await DRE.run('full-deploy-wbch-gateway', { pool: POOL_NAME });
 
     console.log('6. Initialize lending pool');
     await DRE.run('full:initialize-lending-pool', { pool: POOL_NAME });

@@ -332,7 +332,7 @@ export interface IBaseConfiguration {
   ATokenDomainSeparator: iParamsPerNetwork<string>;
   WBCH: iParamsPerNetwork<tSmartBCHAddress>;
   WrappedNativeToken: iParamsPerNetwork<tSmartBCHAddress>;
-  WethGateway: iParamsPerNetwork<tSmartBCHAddress>;
+  WbchGateway: iParamsPerNetwork<tSmartBCHAddress>;
   ReserveFactorTreasuryAddress: iParamsPerNetwork<tSmartBCHAddress>;
   IncentivesController: iParamsPerNetwork<tSmartBCHAddress>;
   StableDebtTokenImplementation?: iParamsPerNetwork<tSmartBCHAddress>;

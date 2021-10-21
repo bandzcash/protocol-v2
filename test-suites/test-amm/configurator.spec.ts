@@ -18,50 +18,50 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   } = ProtocolErrors;
 
   it('Reverts trying to set an invalid reserve factor', async () => {
-    const { configurator, weth } = testEnv;
+    const { configurator, wbch } = testEnv;
 
     const invalidReserveFactor = 65536;
 
     await expect(
-      configurator.setReserveFactor(weth.address, invalidReserveFactor)
+      configurator.setReserveFactor(wbch.address, invalidReserveFactor)
     ).to.be.revertedWith(RC_INVALID_RESERVE_FACTOR);
   });
 
   it('Deactivates the BCH reserve', async () => {
-    const { configurator, weth, helpersContract } = testEnv;
-    await configurator.deactivateReserve(weth.address);
-    const { isActive } = await helpersContract.getReserveConfigurationData(weth.address);
+    const { configurator, wbch, helpersContract } = testEnv;
+    await configurator.deactivateReserve(wbch.address);
+    const { isActive } = await helpersContract.getReserveConfigurationData(wbch.address);
     expect(isActive).to.be.equal(false);
   });
 
   it('Rectivates the BCH reserve', async () => {
-    const { configurator, weth, helpersContract } = testEnv;
-    await configurator.activateReserve(weth.address);
+    const { configurator, wbch, helpersContract } = testEnv;
+    await configurator.activateReserve(wbch.address);
 
-    const { isActive } = await helpersContract.getReserveConfigurationData(weth.address);
+    const { isActive } = await helpersContract.getReserveConfigurationData(wbch.address);
     expect(isActive).to.be.equal(true);
   });
 
   it('Check the onlyAaveAdmin on deactivateReserve ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).deactivateReserve(weth.address),
+      configurator.connect(users[2].signer).deactivateReserve(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Check the onlyAaveAdmin on activateReserve ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).activateReserve(weth.address),
+      configurator.connect(users[2].signer).activateReserve(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Freezes the BCH reserve', async () => {
-    const { configurator, weth, helpersContract } = testEnv;
+    const { configurator, wbch, helpersContract } = testEnv;
 
-    await configurator.freezeReserve(weth.address);
+    await configurator.freezeReserve(wbch.address);
     const {
       decimals,
       ltv,
@@ -72,7 +72,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -86,8 +86,8 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Unfreezes the BCH reserve', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.unfreezeReserve(weth.address);
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.unfreezeReserve(wbch.address);
 
     const {
       decimals,
@@ -99,7 +99,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -113,24 +113,24 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Check the onlyAaveAdmin on freezeReserve ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).freezeReserve(weth.address),
+      configurator.connect(users[2].signer).freezeReserve(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Check the onlyAaveAdmin on unfreezeReserve ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).unfreezeReserve(weth.address),
+      configurator.connect(users[2].signer).unfreezeReserve(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Deactivates the BCH reserve for borrowing', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.disableBorrowingOnReserve(weth.address);
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.disableBorrowingOnReserve(wbch.address);
     const {
       decimals,
       ltv,
@@ -141,7 +141,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(false);
     expect(isActive).to.be.equal(true);
@@ -155,9 +155,9 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Activates the BCH reserve for borrowing', async () => {
-    const { configurator, weth, helpersContract } = testEnv;
-    await configurator.enableBorrowingOnReserve(weth.address, true);
-    const { variableBorrowIndex } = await helpersContract.getReserveData(weth.address);
+    const { configurator, wbch, helpersContract } = testEnv;
+    await configurator.enableBorrowingOnReserve(wbch.address, true);
+    const { variableBorrowIndex } = await helpersContract.getReserveData(wbch.address);
 
     const {
       decimals,
@@ -169,7 +169,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -185,24 +185,24 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Check the onlyAaveAdmin on disableBorrowingOnReserve ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).disableBorrowingOnReserve(weth.address),
+      configurator.connect(users[2].signer).disableBorrowingOnReserve(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Check the onlyAaveAdmin on enableBorrowingOnReserve ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).enableBorrowingOnReserve(weth.address, true),
+      configurator.connect(users[2].signer).enableBorrowingOnReserve(wbch.address, true),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Deactivates the BCH reserve as collateral', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.configureReserveAsCollateral(weth.address, 0, 0, 0);
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.configureReserveAsCollateral(wbch.address, 0, 0, 0);
 
     const {
       decimals,
@@ -214,7 +214,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -228,8 +228,8 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Activates the BCH reserve as collateral', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.configureReserveAsCollateral(weth.address, '8000', '8250', '10500');
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.configureReserveAsCollateral(wbch.address, '8000', '8250', '10500');
 
     const {
       decimals,
@@ -241,7 +241,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -255,18 +255,18 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Check the onlyAaveAdmin on configureReserveAsCollateral ', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
       configurator
         .connect(users[2].signer)
-        .configureReserveAsCollateral(weth.address, '7500', '8000', '10500'),
+        .configureReserveAsCollateral(wbch.address, '7500', '8000', '10500'),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Disable stable borrow rate on the BCH reserve', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.disableReserveStableRate(weth.address);
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.disableReserveStableRate(wbch.address);
     const {
       decimals,
       ltv,
@@ -277,7 +277,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -291,8 +291,8 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Enables stable borrow rate on the BCH reserve', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.enableReserveStableRate(weth.address);
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.enableReserveStableRate(wbch.address);
     const {
       decimals,
       ltv,
@@ -303,7 +303,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -317,8 +317,8 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Disable stable borrow rate to return to the original state on the BCH reserve', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.disableReserveStableRate(weth.address);
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.disableReserveStableRate(wbch.address);
     const {
       decimals,
       ltv,
@@ -329,7 +329,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -343,24 +343,24 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Check the onlyAaveAdmin on disableReserveStableRate', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).disableReserveStableRate(weth.address),
+      configurator.connect(users[2].signer).disableReserveStableRate(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Check the onlyAaveAdmin on enableReserveStableRate', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).enableReserveStableRate(weth.address),
+      configurator.connect(users[2].signer).enableReserveStableRate(wbch.address),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
   it('Changes the reserve factor of WBCH', async () => {
-    const { configurator, helpersContract, weth } = testEnv;
-    await configurator.setReserveFactor(weth.address, '1000');
+    const { configurator, helpersContract, wbch } = testEnv;
+    await configurator.setReserveFactor(wbch.address, '1000');
     const {
       decimals,
       ltv,
@@ -371,7 +371,7 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
       borrowingEnabled,
       isActive,
       isFrozen,
-    } = await helpersContract.getReserveConfigurationData(weth.address);
+    } = await helpersContract.getReserveConfigurationData(wbch.address);
 
     expect(borrowingEnabled).to.be.equal(true);
     expect(isActive).to.be.equal(true);
@@ -385,9 +385,9 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
   });
 
   it('Check the onlyLendingPoolManager on setReserveFactor', async () => {
-    const { configurator, users, weth } = testEnv;
+    const { configurator, users, wbch } = testEnv;
     await expect(
-      configurator.connect(users[2].signer).setReserveFactor(weth.address, '2000'),
+      configurator.connect(users[2].signer).setReserveFactor(wbch.address, '2000'),
       CALLER_NOT_POOL_ADMIN
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });

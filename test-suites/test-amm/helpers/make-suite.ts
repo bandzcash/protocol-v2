@@ -55,7 +55,7 @@ export interface TestEnv {
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
   helpersContract: AaveProtocolDataProvider;
-  weth: WETH9Mocked;
+  wbch: WETH9Mocked;
   aWBCH: AToken;
   dai: MintableERC20;
   aDai: AToken;
@@ -64,7 +64,7 @@ export interface TestEnv {
   uniswapLiquiditySwapAdapter: UniswapLiquiditySwapAdapter;
   uniswapRepayAdapter: UniswapRepayAdapter;
   registry: LendingPoolAddressesProviderRegistry;
-  wethGateway: WETHGateway;
+  wbchGateway: WETHGateway;
   flashLiquidationAdapter: FlashLiquidationAdapter;
 }
 
@@ -80,7 +80,7 @@ const testEnv: TestEnv = {
   configurator: {} as LendingPoolConfigurator,
   helpersContract: {} as AaveProtocolDataProvider,
   oracle: {} as PriceOracle,
-  weth: {} as WETH9Mocked,
+  wbch: {} as WETH9Mocked,
   aWBCH: {} as AToken,
   dai: {} as MintableERC20,
   aDai: {} as AToken,
@@ -90,7 +90,7 @@ const testEnv: TestEnv = {
   uniswapRepayAdapter: {} as UniswapRepayAdapter,
   flashLiquidationAdapter: {} as FlashLiquidationAdapter,
   registry: {} as LendingPoolAddressesProviderRegistry,
-  wethGateway: {} as WETHGateway,
+  wbchGateway: {} as WETHGateway,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -127,28 +127,28 @@ export async function initializeMakeSuite() {
   const allTokens = await testEnv.helpersContract.getAllATokens();
   const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmDAI')?.tokenAddress;
 
-  const aWEthAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWETH')?.tokenAddress;
+  const aWBchAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWETH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
 
   const daiAddress = reservesTokens.find((token) => token.symbol === 'DAI')?.tokenAddress;
   const bandzAddress = reservesTokens.find((token) => token.symbol === 'UniBANDZWETH')?.tokenAddress;
-  const wethAddress = reservesTokens.find((token) => token.symbol === 'WBCH')?.tokenAddress;
+  const wbchAddress = reservesTokens.find((token) => token.symbol === 'WBCH')?.tokenAddress;
 
-  if (!aDaiAddress || !aWEthAddress) {
+  if (!aDaiAddress || !aWBchAddress) {
     process.exit(1);
   }
-  if (!daiAddress || !bandzAddress || !wethAddress) {
+  if (!daiAddress || !bandzAddress || !wbchAddress) {
     process.exit(1);
   }
 
   testEnv.aDai = await getAToken(aDaiAddress);
-  testEnv.aWBCH = await getAToken(aWEthAddress);
+  testEnv.aWBCH = await getAToken(aWBchAddress);
 
   testEnv.dai = await getMintableERC20(daiAddress);
   testEnv.bandz = await getMintableERC20(bandzAddress);
-  testEnv.weth = await getWETHMocked(wethAddress);
-  testEnv.wethGateway = await getWETHGateway();
+  testEnv.wbch = await getWETHMocked(wbchAddress);
+  testEnv.wbchGateway = await getWETHGateway();
 
   testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
   testEnv.uniswapRepayAdapter = await getUniswapRepayAdapter();

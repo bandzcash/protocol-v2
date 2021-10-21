@@ -155,7 +155,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   });
 
   it('Flash loan', async () => {
-    const { dai, pool, weth, users, configurator } = testEnv;
+    const { dai, pool, wbch, users, configurator } = testEnv;
 
     const caller = users[3];
 
@@ -171,7 +171,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
         .connect(caller.signer)
         .flashLoan(
           _mockFlashLoanReceiver.address,
-          [weth.address],
+          [wbch.address],
           [flashAmount],
           [2],
           caller.address,
@@ -186,7 +186,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
 
   // USDC before
   it('Liquidation call', async () => {
-    const { users, pool, dai, oracle, weth, configurator, helpersContract } = testEnv;
+    const { users, pool, dai, oracle, wbch, configurator, helpersContract } = testEnv;
     const depositor = users[3];
     const borrower = users[4];
 
@@ -206,17 +206,17 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
 
     //user 4 deposits 1 BCH
-    const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
+    const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
     //mints WBCH to borrower
-    await weth.connect(borrower.signer).mint(amountETHtoDeposit);
+    await wbch.connect(borrower.signer).mint(amountETHtoDeposit);
 
     //approve protocol to access borrower wallet
-    await weth.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wbch.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     await pool
       .connect(borrower.signer)
-      .deposit(weth.address, amountETHtoDeposit, borrower.address, '0');
+      .deposit(wbch.address, amountETHtoDeposit, borrower.address, '0');
 
     //user 4 borrows
     const userGlobalData = await pool.getUserAccountData(borrower.address);
@@ -259,7 +259,7 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
 
     // Do liquidation
     await expect(
-      pool.liquidationCall(weth.address, dai.address, borrower.address, amountToLiquidate, true)
+      pool.liquidationCall(wbch.address, dai.address, borrower.address, amountToLiquidate, true)
     ).revertedWith(LP_IS_PAUSED);
 
     // Unpause pool
@@ -268,15 +268,15 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
 
   // USDC before
   it('SwapBorrowRateMode should fail because pool is paused', async () => {
-    const { pool, weth, dai, users, configurator } = testEnv;
+    const { pool, wbch, dai, users, configurator } = testEnv;
     const user = users[1];
     const amountWETHToDeposit = parseEther('10');
     const amountDAIToDeposit = parseEther('120');
     const amountToBorrow = parseUnits('65', 6);
 
-    await weth.connect(user.signer).mint(amountWETHToDeposit);
-    await weth.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    await pool.connect(user.signer).deposit(weth.address, amountWETHToDeposit, user.address, '0');
+    await wbch.connect(user.signer).mint(amountWETHToDeposit);
+    await wbch.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await pool.connect(user.signer).deposit(wbch.address, amountWETHToDeposit, user.address, '0');
 
     await dai.connect(user.signer).mint(amountDAIToDeposit);
     await dai.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
@@ -311,19 +311,19 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   });
 
   it('setUserUseReserveAsCollateral', async () => {
-    const { pool, weth, users, configurator } = testEnv;
+    const { pool, wbch, users, configurator } = testEnv;
     const user = users[1];
 
     const amountWETHToDeposit = parseEther('1');
-    await weth.connect(user.signer).mint(amountWETHToDeposit);
-    await weth.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    await pool.connect(user.signer).deposit(weth.address, amountWETHToDeposit, user.address, '0');
+    await wbch.connect(user.signer).mint(amountWETHToDeposit);
+    await wbch.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await pool.connect(user.signer).deposit(wbch.address, amountWETHToDeposit, user.address, '0');
 
     // Pause pool
     await configurator.connect(users[1].signer).setPoolPause(true);
 
     await expect(
-      pool.connect(user.signer).setUserUseReserveAsCollateral(weth.address, false)
+      pool.connect(user.signer).setUserUseReserveAsCollateral(wbch.address, false)
     ).revertedWith(LP_IS_PAUSED);
 
     // Unpause pool

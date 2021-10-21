@@ -29,13 +29,13 @@
 //   describe('BaseUniswapAdapter', () => {
 //     describe('getAmountsOut', () => {
 //       it('should return the estimated amountOut and prices for the asset swap', async () => {
-//         const { weth, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { wbch, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
 //         const amountIn = parseEther('1');
 //         const flashloanPremium = amountIn.mul(9).div(10000);
 //         const amountToSwap = amountIn.sub(flashloanPremium);
 
-//         const wethPrice = await oracle.getAssetPrice(weth.address);
+//         const wbchPrice = await oracle.getAssetPrice(wbch.address);
 //         const daiPrice = await oracle.getAssetPrice(dai.address);
 //         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
@@ -49,7 +49,7 @@
 //           .mul(parseEther('1'))
 //           .div(expectedDaiAmount.mul(parseEther('1')));
 //         const ethUsdValue = amountIn
-//           .mul(wethPrice)
+//           .mul(wbchPrice)
 //           .div(parseEther('1'))
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
@@ -61,14 +61,14 @@
 
 //         await mockUniswapRouter.setAmountOut(
 //           amountToSwap,
-//           weth.address,
+//           wbch.address,
 //           dai.address,
 //           expectedDaiAmount
 //         );
 
 //         const result = await uniswapLiquiditySwapAdapter.getAmountsOut(
 //           amountIn,
-//           weth.address,
+//           wbch.address,
 //           dai.address
 //         );
 
@@ -132,13 +132,13 @@
 
 //     describe('getAmountsIn', () => {
 //       it('should return the estimated required amountIn for the asset swap', async () => {
-//         const { weth, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { wbch, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
 //         const amountIn = parseEther('1');
 //         const flashloanPremium = amountIn.mul(9).div(10000);
 //         const amountToSwap = amountIn.add(flashloanPremium);
 
-//         const wethPrice = await oracle.getAssetPrice(weth.address);
+//         const wbchPrice = await oracle.getAssetPrice(wbch.address);
 //         const daiPrice = await oracle.getAssetPrice(dai.address);
 //         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
@@ -153,7 +153,7 @@
 //           .div(amountToSwap.mul(parseEther('1')));
 
 //         const ethUsdValue = amountToSwap
-//           .mul(wethPrice)
+//           .mul(wbchPrice)
 //           .div(parseEther('1'))
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
@@ -163,11 +163,11 @@
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
 
-//         await mockUniswapRouter.setAmountIn(amountOut, weth.address, dai.address, amountIn);
+//         await mockUniswapRouter.setAmountIn(amountOut, wbch.address, dai.address, amountIn);
 
 //         const result = await uniswapLiquiditySwapAdapter.getAmountsIn(
 //           amountOut,
-//           weth.address,
+//           wbch.address,
 //           dai.address
 //         );
 

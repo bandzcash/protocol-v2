@@ -522,11 +522,11 @@ export const deployWETHGateway = async (args: [tSmartBCHAddress], verify?: boole
   );
 
 export const authorizeWETHGateway = async (
-  wethGateWay: tSmartBCHAddress,
+  wbchGateWay: tSmartBCHAddress,
   lendingPool: tSmartBCHAddress
 ) =>
   await new WETHGatewayFactory(await getFirstSigner())
-    .attach(wethGateWay)
+    .attach(wbchGateWay)
     .authorizeLendingPool(lendingPool);
 
 export const deployMockStableDebtToken = async (

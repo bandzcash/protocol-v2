@@ -50,20 +50,20 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   });
 
   it('User 0 deposits 1 WBCH and user 1 tries to borrow the WBCH with the received DAI as collateral', async () => {
-    const { users, pool, weth, helpersContract } = testEnv;
+    const { users, pool, wbch, helpersContract } = testEnv;
     const userAddress = await pool.signer.getAddress();
 
-    await weth.connect(users[0].signer).mint(await convertToCurrencyDecimals(weth.address, '1'));
+    await wbch.connect(users[0].signer).mint(await convertToCurrencyDecimals(wbch.address, '1'));
 
-    await weth.connect(users[0].signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wbch.connect(users[0].signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     await pool
       .connect(users[0].signer)
-      .deposit(weth.address, ethers.utils.parseEther('1.0'), userAddress, '0');
+      .deposit(wbch.address, ethers.utils.parseEther('1.0'), userAddress, '0');
     await pool
       .connect(users[1].signer)
       .borrow(
-        weth.address,
+        wbch.address,
         ethers.utils.parseEther('0.1'),
         RateMode.Stable,
         BANDZ_REFERRAL,
@@ -71,7 +71,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
       );
 
     const userReserveData = await helpersContract.getUserReserveData(
-      weth.address,
+      wbch.address,
       users[1].address
     );
 
@@ -79,7 +79,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   });
 
   it('User 1 tries to transfer all the DAI used as collateral back to user 0 (revert expected)', async () => {
-    const { users, pool, aDai, dai, weth } = testEnv;
+    const { users, pool, aDai, dai, wbch } = testEnv;
 
     const aDAItoTransfer = await convertToCurrencyDecimals(dai.address, '1000');
 
@@ -90,7 +90,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
   });
 
   it('User 1 tries to transfer a small amount of DAI used as collateral back to user 0', async () => {
-    const { users, pool, aDai, dai, weth } = testEnv;
+    const { users, pool, aDai, dai, wbch } = testEnv;
 
     const aDAItoTransfer = await convertToCurrencyDecimals(dai.address, '100');
 

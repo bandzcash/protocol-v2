@@ -34,7 +34,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         ReserveAssets,
         ReservesConfig,
         LendingPoolCollateralManager,
-        WethGateway,
+        WbchGateway,
         IncentivesController,
       } = poolConfig as ICommonConfiguration;
 
@@ -108,7 +108,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
 
       const lendingPoolAddress = await addressesProvider.getLendingPool();
 
-      let gateWay = getParamPerNetwork(WethGateway, network);
+      let gateWay = getParamPerNetwork(WbchGateway, network);
       if (!notFalsyOrZeroAddress(gateWay)) {
         gateWay = (await getWETHGateway()).address;
       }

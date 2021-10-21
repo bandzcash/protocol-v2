@@ -40,7 +40,7 @@ task('verify:general', 'Verify contracts at SmartScan')
       LendingPoolCollateralManager,
       LendingPoolConfigurator,
       LendingPool,
-      WethGateway,
+      WbchGateway,
     } = poolConfig as ICommonConfiguration;
     const treasuryAddress = await getTreasuryAddress(poolConfig);
 
@@ -85,9 +85,9 @@ task('verify:general', 'Verify contracts at SmartScan')
       const dataProvider = await getAaveProtocolDataProvider();
       const walletProvider = await getWalletProvider();
 
-      const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
-      const wethGateway = notFalsyOrZeroAddress(wethGatewayAddress)
-        ? await getWETHGateway(wethGatewayAddress)
+      const wbchGatewayAddress = getParamPerNetwork(WbchGateway, network);
+      const wbchGateway = notFalsyOrZeroAddress(wbchGatewayAddress)
+        ? await getWETHGateway(wbchGatewayAddress)
         : await getWETHGateway();
 
       // Address Provider
@@ -130,7 +130,7 @@ task('verify:general', 'Verify contracts at SmartScan')
 
       // WETHGateway
       console.log('\n- Verifying  WETHGateway...\n');
-      await verifyContract(eContractid.WETHGateway, wethGateway, [
+      await verifyContract(eContractid.WETHGateway, wbchGateway, [
         await getWrappedNativeTokenAddress(poolConfig),
       ]);
     }

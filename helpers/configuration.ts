@@ -90,30 +90,30 @@ export const getATokenDomainSeparatorPerNetwork = (
   config: IBaseConfiguration
 ): tSmartBCHAddress => getParamPerNetwork<tSmartBCHAddress>(config.ATokenDomainSeparator, network);
 
-export const getWethAddress = async (config: IBaseConfiguration) => {
+export const getWbchAddress = async (config: IBaseConfiguration) => {
   const currentNetwork = process.env.FORK ? process.env.FORK : DRE.network.name;
-  const wethAddress = getParamPerNetwork(config.WBCH, <eNetwork>currentNetwork);
-  if (wethAddress) {
-    return wethAddress;
+  const wbchAddress = getParamPerNetwork(config.WBCH, <eNetwork>currentNetwork);
+  if (wbchAddress) {
+    return wbchAddress;
   }
   if (currentNetwork.includes('main')) {
     throw new Error('WBCH not set at mainnet configuration.');
   }
-  const weth = await deployWETHMocked();
-  return weth.address;
+  const wbch = await deployWETHMocked();
+  return wbch.address;
 };
 
 export const getWrappedNativeTokenAddress = async (config: IBaseConfiguration) => {
   const currentNetwork = process.env.MAINNET_FORK === 'true' ? 'main' : DRE.network.name;
-  const wethAddress = getParamPerNetwork(config.WrappedNativeToken, <eNetwork>currentNetwork);
-  if (wethAddress) {
-    return wethAddress;
+  const wbchAddress = getParamPerNetwork(config.WrappedNativeToken, <eNetwork>currentNetwork);
+  if (wbchAddress) {
+    return wbchAddress;
   }
   if (currentNetwork.includes('main')) {
     throw new Error('WBCH not set at mainnet configuration.');
   }
-  const weth = await deployWETHMocked();
-  return weth.address;
+  const wbch = await deployWETHMocked();
+  return wbch.address;
 };
 
 export const getLendingRateOracles = (poolConfig: IBaseConfiguration) => {
@@ -133,7 +133,7 @@ export const getQuoteCurrency = async (config: IBaseConfiguration) => {
   switch (config.OracleQuoteCurrency) {
     case 'BCH':
     case 'WBCH':
-      return getWethAddress(config);
+      return getWbchAddress(config);
     case 'USD':
       return config.ProtocolGlobalParams.UsdAddress;
     default:

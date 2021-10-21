@@ -119,7 +119,7 @@ export const CommonsConfig: ICommonConfiguration = {
     [eSmartBCHNetwork.amber]: '',
     [eSmartBCHNetwork.main]: '',
   },
-  WethGateway: {
+  WbchGateway: {
     [eSmartBCHNetwork.coverage]: '',
     [eSmartBCHNetwork.hardhat]: '',
     [eSmartBCHNetwork.buidlerevm]: '',
