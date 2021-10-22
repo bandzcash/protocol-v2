@@ -235,7 +235,7 @@
 //         const collateralPrice = await oracle.getAssetPrice(wbch.address);
 //         const principalPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
-//         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+//         const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
@@ -304,7 +304,7 @@
 //         const liquidatorWbchBalanceAfter = await wbch.balanceOf(liquidator.address);
 
 //         const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
-//         const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
+//         const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
 //         if (!tx.blockNumber) {
 //           expect(false, 'Invalid block number');
@@ -359,8 +359,8 @@
 //           'Invalid principal available liquidity'
 //         );
 
-//         expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-//           new BigNumber(ethReserveDataBefore.availableLiquidity.toString())
+//         expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+//           new BigNumber(bchReserveDataBefore.availableLiquidity.toString())
 //             .minus(expectedCollateralLiquidated)
 //             .toFixed(0),
 //           'Invalid collateral available liquidity'
@@ -387,7 +387,7 @@
 //         const liquidatorWbchBalanceBefore = await wbch.balanceOf(liquidator.address);
 
 //         const assetPrice = await oracle.getAssetPrice(wbch.address);
-//         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+//         const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
@@ -477,7 +477,7 @@
 //         const collateralPrice = await oracle.getAssetPrice(wbch.address);
 //         const principalPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
-//         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+//         const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
@@ -550,7 +550,7 @@
 //         const liquidatorWbchBalanceAfter = await wbch.balanceOf(liquidator.address);
 
 //         const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
-//         const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
+//         const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
 //         if (!tx.blockNumber) {
 //           expect(false, 'Invalid block number');
@@ -595,8 +595,8 @@
 //           'Invalid liquidity APY'
 //         );
 
-//         expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-//           new BigNumber(ethReserveDataBefore.availableLiquidity.toString())
+//         expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+//           new BigNumber(bchReserveDataBefore.availableLiquidity.toString())
 //             .minus(expectedCollateralLiquidated)
 //             .toFixed(0),
 //           'Invalid collateral available liquidity'
@@ -632,7 +632,7 @@
 //         const collateralPrice = await oracle.getAssetPrice(wbch.address);
 //         const principalPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
-//         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+//         const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,

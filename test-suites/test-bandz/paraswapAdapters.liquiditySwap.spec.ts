@@ -107,24 +107,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
@@ -133,7 +133,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -156,7 +156,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -164,7 +164,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -176,7 +176,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterFlexUsdBalance).to.be.eq(Zero);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(flashloanTotal));
-        expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
       });
 
       it('should correctly swap tokens using permit', async () => {
@@ -193,24 +193,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
@@ -240,7 +240,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -263,7 +263,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -271,7 +271,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -283,7 +283,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterFlexUsdBalance).to.be.eq(Zero);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(flashloanTotal));
-        expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
       });
 
       it('should revert if caller not lending pool', async () => {
@@ -291,24 +291,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
@@ -316,7 +316,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -336,7 +336,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         await expect(
           paraswapLiquiditySwapAdapter
             .connect(user)
-            .executeOperation([wbch.address], [amountWETHtoSwap], [0], userAddress, params)
+            .executeOperation([wbch.address], [amountWBCHtoSwap], [0], userAddress, params)
         ).to.be.revertedWith('CALLER_MUST_BE_LENDING_POOL');
       });
 
@@ -450,26 +450,26 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         const smallexpectedFlexUsdAmount = expectedFlexUsdAmount.div(2);
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
@@ -477,7 +477,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -500,7 +500,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -616,19 +616,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -643,7 +643,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap.add(flashloanPremium));
+        expect(userAEthBalanceBefore).to.be.eq(amountWBCHtoSwap.add(flashloanPremium));
 
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
@@ -681,7 +681,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -708,19 +708,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -735,7 +735,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap.add(flashloanPremium));
+        expect(userAEthBalanceBefore).to.be.eq(amountWBCHtoSwap.add(flashloanPremium));
 
         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
         const deadline = MAX_UINT_AMOUNT;
@@ -793,7 +793,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -811,19 +811,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -838,7 +838,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap.add(flashloanPremium));
+        expect(userAEthBalanceBefore).to.be.eq(amountWBCHtoSwap.add(flashloanPremium));
 
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
 
@@ -882,24 +882,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '101');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '101');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, flashloanTotal);
@@ -907,7 +907,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -930,7 +930,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -961,24 +961,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         await flexUsd.mint(adapterFlexUsdBalanceBefore);
         await flexUsd.transfer(paraswapLiquiditySwapAdapter.address, adapterFlexUsdBalanceBefore);
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
@@ -987,7 +987,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1010,7 +1010,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -1018,7 +1018,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -1030,7 +1030,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterFlexUsdBalance).to.be.eq(adapterFlexUsdBalanceBefore);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(flashloanTotal));
-        expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.lte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
       });
     });
 
@@ -1079,24 +1079,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
@@ -1105,7 +1105,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1128,7 +1128,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -1136,7 +1136,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -1149,7 +1149,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
         expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lt(
-          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap)
+          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWBCHtoSwap)
         );
       });
 
@@ -1167,24 +1167,24 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
-        const flashloanPremium = amountWETHtoSwap.mul(9).div(10000);
-        const flashloanTotal = amountWETHtoSwap.add(flashloanPremium);
+        const flashloanPremium = amountWBCHtoSwap.mul(9).div(10000);
+        const flashloanTotal = amountWBCHtoSwap.add(flashloanPremium);
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
@@ -1214,7 +1214,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1237,7 +1237,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .flashLoan(
               paraswapLiquiditySwapAdapter.address,
               [wbch.address],
-              [amountWETHtoSwap],
+              [amountWBCHtoSwap],
               [0],
               userAddress,
               params,
@@ -1245,7 +1245,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -1258,7 +1258,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
         expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(flashloanTotal));
         expect(userAEthBalance).to.be.lt(
-          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap)
+          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWBCHtoSwap)
         );
       });
 
@@ -1276,19 +1276,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap.add(1),
-          amountWETHtoSwap.mul(10001).div(10000),
+          amountWBCHtoSwap.add(1),
+          amountWBCHtoSwap.mul(10001).div(10000),
           expectedFlexUsdAmount
         );
 
@@ -1363,19 +1363,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap.add(1),
-          amountWETHtoSwap.mul(10001).div(10000),
+          amountWBCHtoSwap.add(1),
+          amountWBCHtoSwap.mul(10001).div(10000),
           expectedFlexUsdAmount
         );
 
@@ -1483,30 +1483,30 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1516,7 +1516,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -1531,7 +1531,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -1541,7 +1541,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterWbchBalance).to.be.eq(Zero);
         expect(adapterFlexUsdBalance).to.be.eq(Zero);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
-        expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWBCHtoSwap));
       });
 
       it('should correctly swap tokens using permit', async () => {
@@ -1550,19 +1550,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -1581,7 +1581,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           paraswapLiquiditySwapAdapter.address,
           nonce,
           deadline,
-          amountWETHtoSwap.toString()
+          amountWBCHtoSwap.toString()
         );
 
         const ownerPrivateKey = require('../../test-wallets.js').accounts[1].secretKey;
@@ -1594,7 +1594,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1604,13 +1604,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
               mockAugustus.address,
               {
-                amount: amountWETHtoSwap,
+                amount: amountWBCHtoSwap,
                 deadline,
                 v,
                 r,
@@ -1619,7 +1619,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -1629,7 +1629,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterWbchBalance).to.be.eq(Zero);
         expect(adapterFlexUsdBalance).to.be.eq(Zero);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
-        expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWBCHtoSwap));
       });
 
       it('should revert when trying to swap more than balance', async () => {
@@ -1637,29 +1637,29 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = (await convertToCurrencyDecimals(wbch.address, '100')).add(1);
+        const amountWBCHtoSwap = (await convertToCurrencyDecimals(wbch.address, '100')).add(1);
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1669,7 +1669,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -1690,31 +1690,31 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
         await aWBCH
           .connect(user)
-          .approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap.sub(1));
+          .approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap.sub(1));
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1724,7 +1724,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -1744,31 +1744,31 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const { users, wbch, oracle, flexUsd, aWBCH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         const smallexpectedFlexUsdAmount = expectedFlexUsdAmount.div(2);
 
         // User will swap liquidity aEth to aFlexUsd
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1778,7 +1778,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               smallexpectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -1799,29 +1799,29 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -1829,7 +1829,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           paraswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
             wbch.address,
             flexUsd.address,
-            amountWETHtoSwap,
+            amountWBCHtoSwap,
             expectedFlexUsdAmount,
             0,
             mockAugustusCalldata,
@@ -1849,30 +1849,30 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const { users, wbch, oracle, flexUsd, aWBCH, paraswapLiquiditySwapAdapter } = testEnv;
         const user = users[0].signer;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         // Add 1 to expected amount so it will fail
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount.add(1),
         ]);
 
@@ -1882,7 +1882,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -1903,30 +1903,30 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
         const actualFlexUsdAmount = expectedFlexUsdAmount.sub(1);
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           actualFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           actualFlexUsdAmount,
         ]);
 
@@ -1936,7 +1936,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -1957,15 +1957,15 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
-        const augustusSwapAmount = amountWETHtoSwap.sub(1);
+        const augustusSwapAmount = amountWBCHtoSwap.sub(1);
 
         await mockAugustus.expectSwap(
           wbch.address,
@@ -1976,7 +1976,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         );
 
         // User will swap liquidity aEth to aFlexUsd
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
@@ -1991,7 +1991,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -2013,19 +2013,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -2034,7 +2034,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap);
+        expect(userAEthBalanceBefore).to.be.eq(amountWBCHtoSwap);
 
         const bigAmountToSwap = parseEther('11');
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, bigAmountToSwap);
@@ -2067,7 +2067,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -2086,19 +2086,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -2107,7 +2107,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap);
+        expect(userAEthBalanceBefore).to.be.eq(amountWBCHtoSwap);
 
         const bigAmountToSwap = parseEther('11');
 
@@ -2161,7 +2161,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -2179,19 +2179,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -2200,7 +2200,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        expect(userAEthBalanceBefore).to.be.eq(amountWETHtoSwap);
+        expect(userAEthBalanceBefore).to.be.eq(amountWBCHtoSwap);
 
         const smallAmountToSwap = parseEther('10').sub(1);
         await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, smallAmountToSwap);
@@ -2248,30 +2248,30 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         await flexUsd.mint(adapterFlexUsdBalanceBefore);
         await flexUsd.transfer(paraswapLiquiditySwapAdapter.address, adapterFlexUsdBalanceBefore);
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -2281,7 +2281,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -2296,7 +2296,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -2306,7 +2306,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterWbchBalance).to.be.eq(adapterWbchBalanceBefore);
         expect(adapterFlexUsdBalance).to.be.eq(adapterFlexUsdBalanceBefore);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
-        expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.eq(userAEthBalanceBefore.sub(amountWBCHtoSwap));
       });
     });
 
@@ -2347,30 +2347,30 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
         // User will swap liquidity aEth to aFlexUsd
         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
-        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWETHtoSwap);
+        await aWBCH.connect(user).approve(paraswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
 
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -2380,7 +2380,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
@@ -2395,7 +2395,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -2405,9 +2405,9 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterWbchBalance).to.be.eq(Zero);
         expect(adapterFlexUsdBalance).to.be.eq(Zero);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
-        expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(amountWBCHtoSwap));
         expect(userAEthBalance).to.be.lt(
-          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap)
+          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWBCHtoSwap)
         );
       });
 
@@ -2417,19 +2417,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount
         );
 
@@ -2448,7 +2448,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
           paraswapLiquiditySwapAdapter.address,
           nonce,
           deadline,
-          amountWETHtoSwap.toString()
+          amountWBCHtoSwap.toString()
         );
 
         const ownerPrivateKey = require('../../test-wallets.js').accounts[1].secretKey;
@@ -2461,7 +2461,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const mockAugustusCalldata = mockAugustus.interface.encodeFunctionData('swap', [
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap,
+          amountWBCHtoSwap,
           expectedFlexUsdAmount,
         ]);
 
@@ -2471,13 +2471,13 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             .swapAndDeposit(
               wbch.address,
               flexUsd.address,
-              amountWETHtoSwap,
+              amountWBCHtoSwap,
               expectedFlexUsdAmount,
               0,
               mockAugustusCalldata,
               mockAugustus.address,
               {
-                amount: amountWETHtoSwap,
+                amount: amountWBCHtoSwap,
                 deadline,
                 v,
                 r,
@@ -2486,7 +2486,7 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
             )
         )
           .to.emit(paraswapLiquiditySwapAdapter, 'Swapped')
-          .withArgs(wbch.address, flexUsd.address, amountWETHtoSwap, expectedFlexUsdAmount);
+          .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap, expectedFlexUsdAmount);
 
         const adapterWbchBalance = await wbch.balanceOf(paraswapLiquiditySwapAdapter.address);
         const adapterFlexUsdBalance = await flexUsd.balanceOf(paraswapLiquiditySwapAdapter.address);
@@ -2496,9 +2496,9 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         expect(adapterWbchBalance).to.be.eq(Zero);
         expect(adapterFlexUsdBalance).to.be.eq(Zero);
         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
-        expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(amountWETHtoSwap));
+        expect(userAEthBalance).to.be.gt(userAEthBalanceBefore.sub(amountWBCHtoSwap));
         expect(userAEthBalance).to.be.lt(
-          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWETHtoSwap)
+          userAEthBalanceBefore.mul(10001).div(10000).sub(amountWBCHtoSwap)
         );
       });
 
@@ -2508,19 +2508,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap.add(1),
-          amountWETHtoSwap.mul(10001).div(10000),
+          amountWBCHtoSwap.add(1),
+          amountWBCHtoSwap.mul(10001).div(10000),
           expectedFlexUsdAmount
         );
 
@@ -2576,19 +2576,19 @@ makeSuite('ParaSwap adapters', (testEnv: TestEnv) => {
         const user = users[0].signer;
         const userAddress = users[0].address;
 
-        const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+        const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
           flexUsd.address,
-          new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+          new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
         );
 
         await mockAugustus.expectSwap(
           wbch.address,
           flexUsd.address,
-          amountWETHtoSwap.add(1),
-          amountWETHtoSwap.mul(10001).div(10000),
+          amountWBCHtoSwap.add(1),
+          amountWBCHtoSwap.mul(10001).div(10000),
           expectedFlexUsdAmount
         );
 

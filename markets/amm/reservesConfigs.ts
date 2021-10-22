@@ -6,7 +6,7 @@ import {
 } from './rateStrategies';
 
 
-export const strategyWETH: IReserveParams = {
+export const strategyWBCH: IReserveParams = {
   strategy: rateStrategyBaseOne,
   baseLTVAsCollateral: '8000',
   liquidationThreshold: '8250',
@@ -30,7 +30,7 @@ export const strategyFlexUSD: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyFlexUSDWETH: IReserveParams = {
+export const strategyFlexUSDWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -42,7 +42,7 @@ export const strategyFlexUSDWETH: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyBANDZWETH: IReserveParams = {
+export const strategyBANDZWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',
@@ -54,7 +54,7 @@ export const strategyBANDZWETH: IReserveParams = {
   reserveFactor: '500'
 };
 
-// export const strategyYFIWETH: IReserveParams = {
+// export const strategyYFIWBCH: IReserveParams = {
 //   strategy: rateStrategyAmmBase,
 //   baseLTVAsCollateral: '5000',
 //   liquidationThreshold: '6000',
@@ -66,7 +66,7 @@ export const strategyBANDZWETH: IReserveParams = {
 //   reserveFactor: '1500'
 // };
 
-export const strategyBALWETH: IReserveParams = {
+export const strategyBALWBCH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',

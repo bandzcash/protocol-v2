@@ -128,7 +128,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     await flexUsd.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     const flexUsdReserveDataBefore = await getReserveData(helpersContract, flexUsd.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+    const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const userReserveDataBefore = await getUserData(
       pool,
@@ -157,7 +157,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
+    const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
     const collateralPrice = (await oracle.getAssetPrice(wbch.address)).toString();
     const principalPrice = (await oracle.getAssetPrice(flexUsd.address)).toString();
@@ -219,8 +219,8 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
       'Invalid liquidity APY'
     );
 
-    expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(ethReserveDataBefore.availableLiquidity.toString()).toFixed(0),
+    expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(bchReserveDataBefore.availableLiquidity.toString()).toFixed(0),
       'Invalid collateral available liquidity'
     );
 
@@ -301,7 +301,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     );
 
     const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+    const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const amountToLiquidate = new BigNumber(userReserveDataBefore.currentVariableDebt.toString())
       .multipliedBy(0.5)
@@ -323,7 +323,7 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
     const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
+    const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
     const collateralPrice = (await oracle.getAssetPrice(wbch.address)).toString();
     const principalPrice = (await oracle.getAssetPrice(flexUsd.address)).toString();
@@ -372,8 +372,8 @@ makeSuite('LendingPool liquidation - liquidator receiving aToken', (testEnv) => 
       'Invalid liquidity APY'
     );
 
-    expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(ethReserveDataBefore.availableLiquidity.toString()).toFixed(0),
+    expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(bchReserveDataBefore.availableLiquidity.toString()).toFixed(0),
       'Invalid collateral available liquidity'
     );
   });

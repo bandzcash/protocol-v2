@@ -4,11 +4,11 @@ import { IAmmConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 import { CommonsConfig } from './commons';
 import {
   strategyFlexUSD,
-  strategyWETH,
-  strategyFlexUSDWETH,
-  strategyBANDZWETH,
-  // strategyYFIWETH,
-  strategyBALWETH,
+  strategyWBCH,
+  strategyFlexUSDWBCH,
+  strategyBANDZWBCH,
+  // strategyYFIWBCH,
+  strategyBALWBCH,
 } from './reservesConfigs';
 
 // ----------------
@@ -20,7 +20,7 @@ export const AmmConfig: IAmmConfiguration = {
   MarketId: 'Bandz AMM market',
   ProviderId: 2,
   ReservesConfig: {
-    WBCH: strategyWETH,
+    WBCH: strategyWBCH,
     FLEXUSD: strategyFlexUSD,
   },
   ReserveAssets: {

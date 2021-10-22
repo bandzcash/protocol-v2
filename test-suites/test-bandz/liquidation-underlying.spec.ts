@@ -136,7 +136,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     await flexUsd.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+    const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const userReserveDataBefore = await getUserData(
       pool,
@@ -161,7 +161,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
 
     const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
+    const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
     const collateralPrice = await oracle.getAssetPrice(wbch.address);
     const principalPrice = await oracle.getAssetPrice(flexUsd.address);
@@ -221,8 +221,8 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       'Invalid principal available liquidity'
     );
 
-    expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(ethReserveDataBefore.availableLiquidity.toString())
+    expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(bchReserveDataBefore.availableLiquidity.toString())
         .minus(expectedCollateralLiquidated)
         .toFixed(0),
       'Invalid collateral available liquidity'
@@ -303,7 +303,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   //   );
 
   //   const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
-  //   const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
+  //   const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
   //   const amountToLiquidate = DRE.ethers.BigNumber.from(
   //     userReserveDataBefore.currentStableDebt.toString()
@@ -323,7 +323,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   //   const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
   //   const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
-  //   const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
+  //   const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
   //   const collateralPrice = await oracle.getAssetPrice(wbch.address);
   //   const principalPrice = await oracle.getAssetPrice(flexUsd.address);
@@ -375,8 +375,8 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   //     'Invalid principal available liquidity'
   //   );
 
-  //   expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-  //     new BigNumber(ethReserveDataBefore.availableLiquidity.toString())
+  //   expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+  //     new BigNumber(bchReserveDataBefore.availableLiquidity.toString())
   //       .minus(expectedCollateralLiquidated)
   //       .toFixed(0),
   //     'Invalid collateral available liquidity'

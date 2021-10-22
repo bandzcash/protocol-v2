@@ -127,12 +127,12 @@ export async function initializeMakeSuite() {
   const allTokens = await testEnv.helpersContract.getAllATokens();
   const aflexUsdAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmFLEXUSD')?.tokenAddress;
 
-  const aWBchAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWETH')?.tokenAddress;
+  const aWBchAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWBCH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
 
   const flexUsdAddress = reservesTokens.find((token) => token.symbol === 'FLEXUSD')?.tokenAddress;
-  const bandzAddress = reservesTokens.find((token) => token.symbol === 'UniBANDZWETH')?.tokenAddress;
+  const bandzAddress = reservesTokens.find((token) => token.symbol === 'UniBANDZWBCH')?.tokenAddress;
   const wbchAddress = reservesTokens.find((token) => token.symbol === 'WBCH')?.tokenAddress;
 
   if (!aflexUsdAddress || !aWBchAddress) {

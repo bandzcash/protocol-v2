@@ -33,7 +33,7 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 FLEXUSD, user 1 deposits 2 WETH as collateral, borrows 100 FLEXUSD at variable rate and swaps to stable after one year, fails because stable borrowing is disabled (revert expected)",
+      "description": "User 0 deposits 1000 FLEXUSD, user 1 deposits 2 WBCH as collateral, borrows 100 FLEXUSD at variable rate and swaps to stable after one year, fails because stable borrowing is disabled (revert expected)",
       "actions": [
         {
           "name": "mint",
@@ -64,7 +64,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "2",
             "user": "1"
           },
@@ -73,7 +73,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "user": "1"
           },
           "expected": "success"
@@ -81,7 +81,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "WETH",
+            "reserve": "WBCH",
             "amount": "2",
             "user": "1"
           },

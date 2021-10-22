@@ -112,12 +112,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -134,7 +134,7 @@
 
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 //         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
@@ -206,12 +206,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -228,7 +228,7 @@
 
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
@@ -312,18 +312,18 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
 //         await pool.connect(user).borrow(flexUsd.address, expectedFlexUsdAmount, 1, 0, userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 
 //         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, liquidityToSwap);
@@ -358,21 +358,21 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         await wbch.connect(user).mint(amountWETHtoSwap);
-//         await wbch.connect(user).transfer(uniswapRepayAdapter.address, amountWETHtoSwap);
+//         await wbch.connect(user).mint(amountWBCHtoSwap);
+//         await wbch.connect(user).transfer(uniswapRepayAdapter.address, amountWBCHtoSwap);
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
 //         await pool.connect(user).borrow(flexUsd.address, expectedFlexUsdAmount, 2, 0, userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 
 //         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, liquidityToSwap);
@@ -409,18 +409,18 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         await wbch.connect(user).mint(amountWETHtoSwap);
-//         await wbch.connect(user).transfer(uniswapRepayAdapter.address, amountWETHtoSwap);
+//         await wbch.connect(user).mint(amountWBCHtoSwap);
+//         await wbch.connect(user).transfer(uniswapRepayAdapter.address, amountWBCHtoSwap);
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 
 //         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, liquidityToSwap);
@@ -457,18 +457,18 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
 //         await pool.connect(user).borrow(flexUsd.address, expectedFlexUsdAmount, 1, 0, userAddress);
 
-//         const bigMaxAmountToSwap = amountWETHtoSwap.mul(2);
+//         const bigMaxAmountToSwap = amountWBCHtoSwap.mul(2);
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, bigMaxAmountToSwap);
 
 //         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, bigMaxAmountToSwap);
@@ -525,12 +525,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -547,7 +547,7 @@
 
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 //         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 //         const userWbchBalanceBefore = await wbch.balanceOf(userAddress);
@@ -628,12 +628,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -651,7 +651,7 @@
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
 //         // Add a % to repay on top of the debt
-//         const liquidityToSwap = new BigNumber(amountWETHtoSwap.toString())
+//         const liquidityToSwap = new BigNumber(amountWBCHtoSwap.toString())
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
@@ -663,8 +663,8 @@
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
-//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWETHtoSwap);
-//         await mockUniswapRouter.setDefaultMockValue(amountWETHtoSwap);
+//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWBCHtoSwap);
+//         await mockUniswapRouter.setDefaultMockValue(amountWBCHtoSwap);
 
 //         const params = buildRepayAdapterParams(
 //           wbch.address,
@@ -719,12 +719,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -744,7 +744,7 @@
 //         );
 
 //         // Add a % to repay on top of the debt
-//         const liquidityToSwap = new BigNumber(amountWETHtoSwap.toString())
+//         const liquidityToSwap = new BigNumber(amountWBCHtoSwap.toString())
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
@@ -756,8 +756,8 @@
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
-//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWETHtoSwap);
-//         await mockUniswapRouter.setDefaultMockValue(amountWETHtoSwap);
+//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWBCHtoSwap);
+//         await mockUniswapRouter.setDefaultMockValue(amountWBCHtoSwap);
 
 //         const params = buildRepayAdapterParams(
 //           wbch.address,
@@ -902,12 +902,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -924,7 +924,7 @@
 
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 //         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
@@ -975,12 +975,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -997,7 +997,7 @@
 
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         await mockUniswapRouter.setAmountToSwap(wbch.address, liquidityToSwap);
@@ -1059,15 +1059,15 @@
 //         const { users, wbch, aWBCH, oracle, flexUsd, uniswapRepayAdapter } = testEnv;
 //         const user = users[0].signer;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 
 //         await mockUniswapRouter.setAmountToSwap(wbch.address, liquidityToSwap);
@@ -1098,18 +1098,18 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
 //         await pool.connect(user).borrow(flexUsd.address, expectedFlexUsdAmount, 1, 0, userAddress);
 
-//         const bigMaxAmountToSwap = amountWETHtoSwap.mul(2);
+//         const bigMaxAmountToSwap = amountWBCHtoSwap.mul(2);
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, bigMaxAmountToSwap);
 
 //         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, bigMaxAmountToSwap);
@@ -1149,12 +1149,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -1171,7 +1171,7 @@
 
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
-//         const liquidityToSwap = amountWETHtoSwap;
+//         const liquidityToSwap = amountWBCHtoSwap;
 //         await aWBCH.connect(user).approve(uniswapRepayAdapter.address, liquidityToSwap);
 //         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 //         const userWbchBalanceBefore = await wbch.balanceOf(userAddress);
@@ -1231,12 +1231,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -1254,7 +1254,7 @@
 //         const userFlexUsdStableDebtAmountBefore = await flexUsdStableDebtContract.balanceOf(userAddress);
 
 //         // Add a % to repay on top of the debt
-//         const liquidityToSwap = new BigNumber(amountWETHtoSwap.toString())
+//         const liquidityToSwap = new BigNumber(amountWBCHtoSwap.toString())
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
@@ -1266,8 +1266,8 @@
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
-//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWETHtoSwap);
-//         await mockUniswapRouter.setDefaultMockValue(amountWETHtoSwap);
+//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWBCHtoSwap);
+//         await mockUniswapRouter.setDefaultMockValue(amountWBCHtoSwap);
 
 //         await uniswapRepayAdapter.connect(user).swapAndRepay(
 //           wbch.address,
@@ -1314,12 +1314,12 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
 //         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
 //           flexUsd.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         // Open user Debt
@@ -1339,7 +1339,7 @@
 //         );
 
 //         // Add a % to repay on top of the debt
-//         const liquidityToSwap = new BigNumber(amountWETHtoSwap.toString())
+//         const liquidityToSwap = new BigNumber(amountWBCHtoSwap.toString())
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
@@ -1351,8 +1351,8 @@
 //           .multipliedBy(1.1)
 //           .toFixed(0);
 
-//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWETHtoSwap);
-//         await mockUniswapRouter.setDefaultMockValue(amountWETHtoSwap);
+//         await mockUniswapRouter.connect(user).setAmountToSwap(wbch.address, amountWBCHtoSwap);
+//         await mockUniswapRouter.setDefaultMockValue(amountWBCHtoSwap);
 
 //         await uniswapRepayAdapter.connect(user).swapAndRepay(
 //           wbch.address,

@@ -270,13 +270,13 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
   it('SwapBorrowRateMode should fail because pool is paused', async () => {
     const { pool, wbch, flexUsd, users, configurator } = testEnv;
     const user = users[1];
-    const amountWETHToDeposit = parseEther('10');
+    const amountWBCHToDeposit = parseEther('10');
     const amountFlexUSDToDeposit = parseEther('120');
     const amountToBorrow = parseUnits('65', 6);
 
-    await wbch.connect(user.signer).mint(amountWETHToDeposit);
+    await wbch.connect(user.signer).mint(amountWBCHToDeposit);
     await wbch.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    await pool.connect(user.signer).deposit(wbch.address, amountWETHToDeposit, user.address, '0');
+    await pool.connect(user.signer).deposit(wbch.address, amountWBCHToDeposit, user.address, '0');
 
     await flexUsd.connect(user.signer).mint(amountFlexUSDToDeposit);
     await flexUsd.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
@@ -314,10 +314,10 @@ makeSuite('Pausable Pool', (testEnv: TestEnv) => {
     const { pool, wbch, users, configurator } = testEnv;
     const user = users[1];
 
-    const amountWETHToDeposit = parseEther('1');
-    await wbch.connect(user.signer).mint(amountWETHToDeposit);
+    const amountWBCHToDeposit = parseEther('1');
+    await wbch.connect(user.signer).mint(amountWBCHToDeposit);
     await wbch.connect(user.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    await pool.connect(user.signer).deposit(wbch.address, amountWETHToDeposit, user.address, '0');
+    await pool.connect(user.signer).deposit(wbch.address, amountWBCHToDeposit, user.address, '0');
 
     // Pause pool
     await configurator.connect(users[1].signer).setPoolPause(true);
