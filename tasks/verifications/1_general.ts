@@ -19,7 +19,7 @@ import {
   getLendingPoolImpl,
   getProxy,
   getWalletProvider,
-  getWETHGateway,
+  getWBCHGateway,
 } from '../../helpers/contracts-getters';
 import { verifyContract, getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
@@ -87,8 +87,8 @@ task('verify:general', 'Verify contracts at SmartScan')
 
       const wbchGatewayAddress = getParamPerNetwork(WbchGateway, network);
       const wbchGateway = notFalsyOrZeroAddress(wbchGatewayAddress)
-        ? await getWETHGateway(wbchGatewayAddress)
-        : await getWETHGateway();
+        ? await getWBCHGateway(wbchGatewayAddress)
+        : await getWBCHGateway();
 
       // Address Provider
       console.log('\n- Verifying address provider...\n');

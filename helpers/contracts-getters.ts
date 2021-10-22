@@ -278,7 +278,7 @@ export const getATokensAndRatesHelper = async (address?: tSmartBCHAddress) =>
     await getFirstSigner()
   );
 
-export const getWETHGateway = async (address?: tSmartBCHAddress) =>
+export const getWBCHGateway = async (address?: tSmartBCHAddress) =>
   await WETHGatewayFactory.connect(
     address ||
       (
@@ -287,7 +287,7 @@ export const getWETHGateway = async (address?: tSmartBCHAddress) =>
     await getFirstSigner()
   );
 
-export const getWETHMocked = async (address?: tSmartBCHAddress) =>
+export const getWBCHMocked = async (address?: tSmartBCHAddress) =>
   await WETH9MockedFactory.connect(
     address || (await getDb().get(`${eContractid.WETHMocked}.${DRE.network.name}`).value()).address,
     await getFirstSigner()

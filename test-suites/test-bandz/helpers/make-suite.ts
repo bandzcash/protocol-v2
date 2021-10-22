@@ -9,8 +9,8 @@ import {
   getLendingPoolConfiguratorProxy,
   getPriceOracle,
   getLendingPoolAddressesProviderRegistry,
-  getWETHMocked,
-  getWETHGateway,
+  getWBCHMocked,
+  getWBCHGateway,
   getUniswapLiquiditySwapAdapter,
   getUniswapRepayAdapter,
   getFlashLiquidationAdapter,
@@ -152,8 +152,8 @@ export async function initializeMakeSuite() {
 
   testEnv.flexUsd = await getMintableERC20(flexUsdAddress);
   testEnv.bandz = await getMintableERC20(bandzAddress);
-  testEnv.wbch = await getWETHMocked(wbchAddress);
-  testEnv.wbchGateway = await getWETHGateway();
+  testEnv.wbch = await getWBCHMocked(wbchAddress);
+  testEnv.wbchGateway = await getWBCHGateway();
 
   testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
   testEnv.uniswapRepayAdapter = await getUniswapRepayAdapter();

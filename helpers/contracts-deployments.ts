@@ -513,7 +513,7 @@ export const deployATokensAndRatesHelper = async (
     verify
   );
 
-export const deployWETHGateway = async (args: [tSmartBCHAddress], verify?: boolean) =>
+export const deployWBCHGateway = async (args: [tSmartBCHAddress], verify?: boolean) =>
   withSaveAndVerify(
     await new WETHGatewayFactory(await getFirstSigner()).deploy(...args),
     eContractid.WETHGateway,
@@ -521,7 +521,7 @@ export const deployWETHGateway = async (args: [tSmartBCHAddress], verify?: boole
     verify
   );
 
-export const authorizeWETHGateway = async (
+export const authorizeWBCHGateway = async (
   wbchGateWay: tSmartBCHAddress,
   lendingPool: tSmartBCHAddress
 ) =>
@@ -545,7 +545,7 @@ export const deployMockStableDebtToken = async (
   return instance;
 };
 
-export const deployWETHMocked = async (verify?: boolean) =>
+export const deployWBCHMocked = async (verify?: boolean) =>
   withSaveAndVerify(
     await new WETH9MockedFactory(await getFirstSigner()).deploy(),
     eContractid.WETHMocked,

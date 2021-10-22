@@ -20,8 +20,8 @@ import {
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployATokensAndRatesHelper,
-  deployWETHGateway,
-  deployWETHMocked,
+  deployWBCHGateway,
+  deployWBCHMocked,
   deployMockUniswapRouter,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
@@ -29,7 +29,7 @@ import {
   deployMockParaSwapAugustus,
   deployMockParaSwapAugustusRegistry,
   deployParaSwapLiquiditySwapAdapter,
-  authorizeWETHGateway,
+  authorizeWBCHGateway,
   deployATokenImplementations,
   deployBandzOracle,
 } from '../../helpers/contracts-deployments';
@@ -72,7 +72,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
     if (tokenSymbol === 'WBCH') {
-      tokens[tokenSymbol] = await deployWETHMocked();
+      tokens[tokenSymbol] = await deployWBCHMocked();
       await registerContractInJsonDb(tokenSymbol.toUpperCase(), tokens[tokenSymbol]);
       continue;
     }
@@ -268,8 +268,8 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider();
 
-  const gateWay = await deployWETHGateway([mockTokens.WBCH.address]);
-  await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
+  const gateWay = await deployWBCHGateway([mockTokens.WBCH.address]);
+  await authorizeWBCHGateway(gateWay.address, lendingPoolAddress);
 
   console.timeEnd('setup');
 };

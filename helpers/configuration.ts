@@ -14,7 +14,7 @@ import { CommonsConfig } from '../markets/bandz/commons';
 import { DRE, filterMapBy } from './misc-utils';
 import { tSmartBCHAddress } from './types';
 import { getParamPerNetwork } from './contracts-helpers';
-import { deployWETHMocked } from './contracts-deployments';
+import { deployWBCHMocked } from './contracts-deployments';
 
 export enum ConfigNames {
   Commons = 'Commons',
@@ -99,7 +99,7 @@ export const getWbchAddress = async (config: IBaseConfiguration) => {
   if (currentNetwork.includes('main')) {
     throw new Error('WBCH not set at mainnet configuration.');
   }
-  const wbch = await deployWETHMocked();
+  const wbch = await deployWBCHMocked();
   return wbch.address;
 };
 
@@ -112,7 +112,7 @@ export const getWrappedNativeTokenAddress = async (config: IBaseConfiguration) =
   if (currentNetwork.includes('main')) {
     throw new Error('WBCH not set at mainnet configuration.');
   }
-  const wbch = await deployWETHMocked();
+  const wbch = await deployWBCHMocked();
   return wbch.address;
 };
 
