@@ -33,7 +33,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       ZERO_ADDRESS,
       ZERO_ADDRESS,
       'Bandz AMM Market FLEXUSD updated',
-      'aAmmFlexUSD',
+      'aAmmFLEXUSD',
       '0x10'
     ]);
 
