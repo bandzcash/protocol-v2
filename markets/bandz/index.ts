@@ -30,12 +30,12 @@ export const BandzConfig: IBandzConfiguration = {
     [eSmartBCHNetwork.coverage]: {},
     [eSmartBCHNetwork.amber]: {
       BANDZ: '',
-      FLEXUSD: '0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108',
+      // FLEXUSD: '0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108',
       WBCH: '0x17F4FCF5b6E0A95D4eE331c8529041896A073F9b',
     },
     [eSmartBCHNetwork.main]: {
       BANDZ: '0x9f0F1e5F79Dd17f0297CAde7EfB13ebabF564758',
-      FLEXUSD: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      FLEXUSD: '0x7b2B3C5308ab5b2a1d9a94d20D35CCDf61e05b72',
       WBCH: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
       xMIST: '0xC41C680c60309d4646379eD62020c534eB67b6f4',
     },

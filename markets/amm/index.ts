@@ -29,7 +29,7 @@ export const AmmConfig: IAmmConfiguration = {
     [eSmartBCHNetwork.coverage]: {},
     [eSmartBCHNetwork.amber]: {},
     [eSmartBCHNetwork.main]: {
-      FLEXUSD: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      FLEXUSD: '0x7b2B3C5308ab5b2a1d9a94d20D35CCDf61e05b72',
       WBCH: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
     },
   },
