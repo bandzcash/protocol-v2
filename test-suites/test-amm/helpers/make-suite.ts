@@ -57,8 +57,8 @@ export interface TestEnv {
   helpersContract: AaveProtocolDataProvider;
   wbch: WETH9Mocked;
   aWBCH: AToken;
-  dai: MintableERC20;
-  aDai: AToken;
+  flexUsd: MintableERC20;
+  aFlexUsd: AToken;
   bandz: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
   uniswapLiquiditySwapAdapter: UniswapLiquiditySwapAdapter;
@@ -82,8 +82,8 @@ const testEnv: TestEnv = {
   oracle: {} as PriceOracle,
   wbch: {} as WETH9Mocked,
   aWBCH: {} as AToken,
-  dai: {} as MintableERC20,
-  aDai: {} as AToken,
+  flexUsd: {} as MintableERC20,
+  aFlexUsd: {} as AToken,
   bandz: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
   uniswapLiquiditySwapAdapter: {} as UniswapLiquiditySwapAdapter,
@@ -125,27 +125,27 @@ export async function initializeMakeSuite() {
   testEnv.helpersContract = await getAaveProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllATokens();
-  const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmDAI')?.tokenAddress;
+  const aflexUsdAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmFlexUSD')?.tokenAddress;
 
   const aWBchAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWETH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
 
-  const daiAddress = reservesTokens.find((token) => token.symbol === 'DAI')?.tokenAddress;
+  const flexUsdAddress = reservesTokens.find((token) => token.symbol === 'FLEXUSD')?.tokenAddress;
   const bandzAddress = reservesTokens.find((token) => token.symbol === 'UniBANDZWETH')?.tokenAddress;
   const wbchAddress = reservesTokens.find((token) => token.symbol === 'WBCH')?.tokenAddress;
 
-  if (!aDaiAddress || !aWBchAddress) {
+  if (!aflexUsdAddress || !aWBchAddress) {
     process.exit(1);
   }
-  if (!daiAddress || !bandzAddress || !wbchAddress) {
+  if (!flexUsdAddress || !bandzAddress || !wbchAddress) {
     process.exit(1);
   }
 
-  testEnv.aDai = await getAToken(aDaiAddress);
+  testEnv.aFlexUsd = await getAToken(aflexUsdAddress);
   testEnv.aWBCH = await getAToken(aWBchAddress);
 
-  testEnv.dai = await getMintableERC20(daiAddress);
+  testEnv.flexUsd = await getMintableERC20(flexUsdAddress);
   testEnv.bandz = await getMintableERC20(bandzAddress);
   testEnv.wbch = await getWETHMocked(wbchAddress);
   testEnv.wbchGateway = await getWETHGateway();

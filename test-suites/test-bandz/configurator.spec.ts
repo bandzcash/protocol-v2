@@ -366,20 +366,20 @@ makeSuite('LendingPoolConfigurator', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Reverts when trying to disable the DAI reserve with liquidity on it', async () => {
-    const { dai, pool, configurator } = testEnv;
+  it('Reverts when trying to disable the FLEXUSD reserve with liquidity on it', async () => {
+    const { flexUsd, pool, configurator } = testEnv;
     const userAddress = await pool.signer.getAddress();
-    await dai.mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    await flexUsd.mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
     //approve protocol to access depositor wallet
-    await dai.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
-    const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    await flexUsd.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
-    //user 1 deposits 1000 DAI
-    await pool.deposit(dai.address, amountDAItoDeposit, userAddress, '0');
+    //user 1 deposits 1000 FLEXUSD
+    await pool.deposit(flexUsd.address, amountFlexUSDtoDeposit, userAddress, '0');
 
     await expect(
-      configurator.deactivateReserve(dai.address),
+      configurator.deactivateReserve(flexUsd.address),
       LPC_RESERVE_LIQUIDITY_NOT_0
     ).to.be.revertedWith(LPC_RESERVE_LIQUIDITY_NOT_0);
   });

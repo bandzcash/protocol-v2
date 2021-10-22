@@ -15,37 +15,37 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
     VL_TRANSFER_NOT_ALLOWED,
   } = ProtocolErrors;
 
-  it('User 0 deposits 1000 DAI, transfers to user 1', async () => {
-    const { users, pool, dai, aDai } = testEnv;
+  it('User 0 deposits 1000 FLEXUSD, transfers to user 1', async () => {
+    const { users, pool, flexUsd, aFlexUsd } = testEnv;
 
-    await dai.connect(users[0].signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    await flexUsd.connect(users[0].signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
-    await dai.connect(users[0].signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(users[0].signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //user 1 deposits 1000 DAI
-    const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    //user 1 deposits 1000 FLEXUSD
+    const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
     await pool
       .connect(users[0].signer)
-      .deposit(dai.address, amountDAItoDeposit, users[0].address, '0');
+      .deposit(flexUsd.address, amountFlexUSDtoDeposit, users[0].address, '0');
 
-    await aDai.connect(users[0].signer).transfer(users[1].address, amountDAItoDeposit);
+    await aFlexUsd.connect(users[0].signer).transfer(users[1].address, amountFlexUSDtoDeposit);
 
-    const name = await aDai.name();
+    const name = await aFlexUsd.name();
 
-    expect(name).to.be.equal('Bandz AMM Market DAI');
+    expect(name).to.be.equal('Bandz AMM Market FLEXUSD');
 
-    const fromBalance = await aDai.balanceOf(users[0].address);
-    const toBalance = await aDai.balanceOf(users[1].address);
+    const fromBalance = await aFlexUsd.balanceOf(users[0].address);
+    const toBalance = await aFlexUsd.balanceOf(users[1].address);
 
     expect(fromBalance.toString()).to.be.equal('0', INVALID_FROM_BALANCE_AFTER_TRANSFER);
     expect(toBalance.toString()).to.be.equal(
-      amountDAItoDeposit.toString(),
+      amountFlexUSDtoDeposit.toString(),
       INVALID_TO_BALANCE_AFTER_TRANSFER
     );
   });
 
-  it('User 0 deposits 1 WBCH and user 1 tries to borrow the WBCH variable with the received DAI as collateral', async () => {
+  it('User 0 deposits 1 WBCH and user 1 tries to borrow the WBCH variable with the received FLEXUSD as collateral', async () => {
     const { users, pool, wbch, helpersContract } = testEnv;
     const userAddress = await pool.signer.getAddress();
 
@@ -74,26 +74,26 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
     expect(userReserveData.currentVariableDebt.toString()).to.be.eq(ethers.utils.parseEther('0.1'));
   });
 
-  it('User 1 tries to transfer all the DAI used as collateral back to user 0 (revert expected)', async () => {
-    const { users, pool, aDai, dai, wbch } = testEnv;
+  it('User 1 tries to transfer all the FLEXUSD used as collateral back to user 0 (revert expected)', async () => {
+    const { users, pool, aFlexUsd, flexUsd, wbch } = testEnv;
 
-    const aDAItoTransfer = await convertToCurrencyDecimals(dai.address, '1000');
+    const aFlexUSDtoTransfer = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
     await expect(
-      aDai.connect(users[1].signer).transfer(users[0].address, aDAItoTransfer),
+      aFlexUsd.connect(users[1].signer).transfer(users[0].address, aFlexUSDtoTransfer),
       VL_TRANSFER_NOT_ALLOWED
     ).to.be.revertedWith(VL_TRANSFER_NOT_ALLOWED);
   });
 
-  it('User 1 tries to transfer a small amount of DAI used as collateral back to user 0', async () => {
-    const { users, pool, aDai, dai, wbch } = testEnv;
+  it('User 1 tries to transfer a small amount of FLEXUSD used as collateral back to user 0', async () => {
+    const { users, pool, aFlexUsd, flexUsd, wbch } = testEnv;
 
-    const aDAItoTransfer = await convertToCurrencyDecimals(dai.address, '100');
+    const aFlexUSDtoTransfer = await convertToCurrencyDecimals(flexUsd.address, '100');
 
-    await aDai.connect(users[1].signer).transfer(users[0].address, aDAItoTransfer);
+    await aFlexUsd.connect(users[1].signer).transfer(users[0].address, aFlexUSDtoTransfer);
 
-    const user0Balance = await aDai.balanceOf(users[0].address);
+    const user0Balance = await aFlexUsd.balanceOf(users[0].address);
 
-    expect(user0Balance.toString()).to.be.eq(aDAItoTransfer.toString());
+    expect(user0Balance.toString()).to.be.eq(aFlexUSDtoTransfer.toString());
   });
 });

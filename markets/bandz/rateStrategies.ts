@@ -13,7 +13,7 @@ export const rateStrategyStableOne: IInterestRateStrategyParams = {
   stableRateSlope2: '0',
 };
 
-// DAI TUSD
+// FLEXUSD
 export const rateStrategyStableTwo: IInterestRateStrategyParams = {
   name: "rateStrategyStableTwo",
   optimalUtilizationRate: new BigNumber(0.8).multipliedBy(oneRay).toFixed(),

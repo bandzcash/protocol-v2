@@ -3,12 +3,12 @@
   "description": "withdraw function.",
   "stories": [
     {
-      "description": "Users 0 deposits 1000 DAI, user 1 Deposit 1000 DAI (USDC before) and 1 WBCH, borrows 100 DAI. User 1 tries to withdraw all the DAI",
+      "description": "Users 0 deposits 1000 FLEXUSD, user 1 Deposit 1000 FLEXUSD (USDC before) and 1 WBCH, borrows 100 FLEXUSD. User 1 tries to withdraw all the FLEXUSD",
       "actions": [
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -17,7 +17,7 @@
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "1"
           },
@@ -26,7 +26,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "1"
           },
           "expected": "success"
@@ -34,7 +34,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "1"
           },
@@ -69,7 +69,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "user": "1",
             "borrowRateMode": "stable"
@@ -79,7 +79,7 @@
         {
           "name": "withdraw",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "1"
           },

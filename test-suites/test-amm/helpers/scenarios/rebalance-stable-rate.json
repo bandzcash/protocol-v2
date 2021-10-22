@@ -8,7 +8,7 @@
         {
           "name": "rebalanceStableBorrowRate",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "target": "1"
           },
@@ -18,12 +18,12 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI (USDC before), user 1 deposits 7 WETH, borrows 250 DAI at a variable rate, user 0 rebalances user 1 (revert expected)",
+      "description": "User 0 deposits 1000 FLEXUSD (USDC before), user 1 deposits 7 WETH, borrows 250 FLEXUSD at a variable rate, user 0 rebalances user 1 (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -32,7 +32,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0"
           },
           "expected": "success"
@@ -40,7 +40,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -75,7 +75,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "250",
             "borrowRateMode": "variable",
             "user": "1"
@@ -85,7 +85,7 @@
         {
           "name": "rebalanceStableBorrowRate",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "target": "1"
           },
@@ -95,12 +95,12 @@
       ]
     },
     {
-      "description": "User 1 borrows another 200 DAI (USDC before) at variable, user 0 tries to rebalance but the conditions are not met (revert expected)",
+      "description": "User 1 borrows another 200 FLEXUSD (USDC before) at variable, user 0 tries to rebalance but the conditions are not met (revert expected)",
       "actions": [
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "200",
             "borrowRateMode": "variable",
             "user": "1"
@@ -110,7 +110,7 @@
         {
           "name": "rebalanceStableBorrowRate",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "target": "1"
           },
@@ -120,12 +120,12 @@
       ]
     },
     {
-      "description": "User 1 borrows another 200 DAI (USDC before) at variable, user 0 tries to rebalance but the conditions are not met (revert expected)",
+      "description": "User 1 borrows another 200 FLEXUSD (USDC before) at variable, user 0 tries to rebalance but the conditions are not met (revert expected)",
       "actions": [
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "200",
             "borrowRateMode": "variable",
             "user": "1"
@@ -135,7 +135,7 @@
         {
           "name": "rebalanceStableBorrowRate",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "target": "1"
           },
@@ -145,12 +145,12 @@
       ]
     },
     {
-      "description": "User 1 borrows another 100 DAI (USDC before) at variable, user 0 tries to rebalance but the conditions are not met (revert expected)",
+      "description": "User 1 borrows another 100 FLEXUSD (USDC before) at variable, user 0 tries to rebalance but the conditions are not met (revert expected)",
       "actions": [
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "280",
             "borrowRateMode": "variable",
             "user": "1"
@@ -160,7 +160,7 @@
         {
           "name": "rebalanceStableBorrowRate",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "target": "1"
           },

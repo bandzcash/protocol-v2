@@ -181,14 +181,14 @@ await network.provider.request({ method: "hardhat_impersonateAccount",  params: 
 
 const signer = await ethers.provider.getSigner("0xb1adceddb2941033a090dd166a462fe1c2029484")
 
-// SEP20 token DAI Mainnet instance
-const DAI = await contractGetters.getIErc20Detailed("0x6B175474E89094C44Da98b954EedeAC495271d0F");
+// SEP20 token FLEXUSD Mainnet instance
+const flexUSD = await contractGetters.getIErc20Detailed("0x6B175474E89094C44Da98b954EedeAC495271d0F");
 
-// Approve 100 DAI to LendingPool address
-await DAI.connect(signer).approve(lendingPool.address, ethers.utils.parseUnits('100'));
+// Approve 100 FLEXUSD to LendingPool address
+await flexUSD.connect(signer).approve(lendingPool.address, ethers.utils.parseUnits('100'));
 
-// Deposit 100 DAI
-await lendingPool.connect(signer).deposit(DAI.address, ethers.utils.parseUnits('100'), await signer.getAddress(), '0');
+// Deposit 100 FLEXUSD
+await lendingPool.connect(signer).deposit(flexUSD.address, ethers.utils.parseUnits('100'), await signer.getAddress(), '0');
 
 ```
 
@@ -217,12 +217,12 @@ const signer = await contractGetters.getFirstSigner();
 // Lending pool instance
 const lendingPool = await contractGetters.getLendingPool("0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9");
 
-// SEP20 token DAI Mainnet instance
-const DAI = await contractGetters.getIErc20Detailed("0x6B175474E89094C44Da98b954EedeAC495271d0F");
+// SEP20 token FLEXUSD Mainnet instance
+const flexUSD = await contractGetters.getIErc20Detailed("0x6B175474E89094C44Da98b954EedeAC495271d0F");
 
-// Approve 100 DAI to LendingPool address
-await DAI.connect(signer).approve(lendingPool.address, ethers.utils.parseUnits('100'));
+// Approve 100 FLEXUSD to LendingPool address
+await flexUSD.connect(signer).approve(lendingPool.address, ethers.utils.parseUnits('100'));
 
-// Deposit 100 DAI
-await lendingPool.connect(signer).deposit(DAI.address, ethers.utils.parseUnits('100'), await signer.getAddress(), '0');
+// Deposit 100 FLEXUSD
+await lendingPool.connect(signer).deposit(flexUSD.address, ethers.utils.parseUnits('100'), await signer.getAddress(), '0');
 ```

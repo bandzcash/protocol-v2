@@ -3,12 +3,12 @@
   "description": "Test cases for the rebalanceStableBorrowRate() function.",
   "stories": [
     {
-      "description": "User 1 borrows the remaining DAI (USDC before) (usage ratio = 100%) at variable. User 0 rebalances user 1",
+      "description": "User 1 borrows the remaining FLEXUSD (USDC before) (usage ratio = 100%) at variable. User 0 rebalances user 1",
       "actions": [
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "20",
             "borrowRateMode": "variable",
             "user": "1"
@@ -18,7 +18,7 @@
         {
           "name": "rebalanceStableBorrowRate",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "target": "1"
           },

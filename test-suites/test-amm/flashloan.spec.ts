@@ -163,18 +163,18 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.reverted;
   });
 
-  it('Caller deposits 1000 DAI as collateral, Takes WBCH flashloan with mode = 2, does not return the funds. A variable loan for caller is created', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+  it('Caller deposits 1000 FLEXUSD as collateral, Takes WBCH flashloan with mode = 2, does not return the funds. A variable loan for caller is created', async () => {
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[1];
 
-    await dai.connect(caller.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    await flexUsd.connect(caller.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
-    await dai.connect(caller.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(caller.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const amountToDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    const amountToDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
-    await pool.connect(caller.signer).deposit(dai.address, amountToDeposit, caller.address, '0');
+    await pool.connect(caller.signer).deposit(flexUsd.address, amountToDeposit, caller.address, '0');
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
 
@@ -235,32 +235,32 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     ).to.be.reverted;
   });
 
-  it('Deposits DAI into the reserve', async () => {
-    const { dai, pool } = testEnv;
+  it('Deposits FLEXUSD into the reserve', async () => {
+    const { flexUsd, pool } = testEnv;
     const userAddress = await pool.signer.getAddress();
 
-    await dai.mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    await flexUsd.mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
-    await dai.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const amountToDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    const amountToDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
-    await pool.deposit(dai.address, amountToDeposit, userAddress, '0');
+    await pool.deposit(flexUsd.address, amountToDeposit, userAddress, '0');
   });
 
   // USDC before
-  it('Takes out a 500 DAI flashloan, returns the funds correctly', async () => {
-    const { dai, pool, helpersContract, deployer: depositor } = testEnv;
+  it('Takes out a 500 FLEXUSD flashloan, returns the funds correctly', async () => {
+    const { flexUsd, pool, helpersContract, deployer: depositor } = testEnv;
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(false);
 
-    const reserveDataBefore = await helpersContract.getReserveData(dai.address);
+    const reserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
 
-    const flashloanAmount = await convertToCurrencyDecimals(dai.address, '500');
+    const flashloanAmount = await convertToCurrencyDecimals(flexUsd.address, '500');
 
     await pool.flashLoan(
       _mockFlashLoanReceiver.address,
-      [dai.address],
+      [flexUsd.address],
       [flashloanAmount],
       [0],
       _mockFlashLoanReceiver.address,
@@ -268,10 +268,10 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
       '0'
     );
 
-    const reserveDataAfter = helpersContract.getReserveData(dai.address);
+    const reserveDataAfter = helpersContract.getReserveData(flexUsd.address);
 
-    const reserveData = await helpersContract.getReserveData(dai.address);
-    const userData = await helpersContract.getUserReserveData(dai.address, depositor.address);
+    const reserveData = await helpersContract.getReserveData(flexUsd.address);
+    const userData = await helpersContract.getUserReserveData(flexUsd.address, depositor.address);
 
     const totalLiquidity = reserveData.availableLiquidity
       .add(reserveData.totalStableDebt)
@@ -281,7 +281,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
     const currentLiquidityIndex = reserveData.liquidityIndex.toString();
     const currentUserBalance = userData.currentATokenBalance.toString();
 
-    const expectedLiquidity = await convertToCurrencyDecimals(dai.address, '1000.450');
+    const expectedLiquidity = await convertToCurrencyDecimals(flexUsd.address, '1000.450');
 
     expect(totalLiquidity).to.be.equal(expectedLiquidity, 'Invalid total liquidity');
     expect(currentLiqudityRate).to.be.equal('0', 'Invalid liquidity rate');
@@ -293,11 +293,11 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   // USDC before
-  it('Takes out a 500 DAI flashloan with mode = 0, does not return the funds. (revert expected)', async () => {
-    const { dai, pool, users } = testEnv;
+  it('Takes out a 500 FLEXUSD flashloan with mode = 0, does not return the funds. (revert expected)', async () => {
+    const { flexUsd, pool, users } = testEnv;
     const caller = users[2];
 
-    const flashloanAmount = await convertToCurrencyDecimals(dai.address, '500');
+    const flashloanAmount = await convertToCurrencyDecimals(flexUsd.address, '500');
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
 
@@ -306,7 +306,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
         .connect(caller.signer)
         .flashLoan(
           _mockFlashLoanReceiver.address,
-          [dai.address],
+          [flexUsd.address],
           [flashloanAmount],
           [2],
           caller.address,
@@ -317,8 +317,8 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   // USDC before
-  it('Caller deposits 5 WBCH as collateral, Takes a DAI flashloan with mode = 2, does not return the funds. A loan for caller is created', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+  it('Caller deposits 5 WBCH as collateral, Takes a FLEXUSD flashloan with mode = 2, does not return the funds. A loan for caller is created', async () => {
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[2];
 
@@ -332,13 +332,13 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
 
     await _mockFlashLoanReceiver.setFailExecutionTransfer(true);
 
-    const flashloanAmount = await convertToCurrencyDecimals(dai.address, '500');
+    const flashloanAmount = await convertToCurrencyDecimals(flexUsd.address, '500');
 
     await pool
       .connect(caller.signer)
       .flashLoan(
         _mockFlashLoanReceiver.address,
-        [dai.address],
+        [flexUsd.address],
         [flashloanAmount],
         [2],
         caller.address,
@@ -346,27 +346,27 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
         '0'
       );
     const { variableDebtTokenAddress } = await helpersContract.getReserveTokensAddresses(
-      dai.address
+      flexUsd.address
     );
 
-    const daiDebtToken = await getVariableDebtToken(variableDebtTokenAddress);
+    const flexUsdDebtToken = await getVariableDebtToken(variableDebtTokenAddress);
 
-    const callerDebt = await daiDebtToken.balanceOf(caller.address);
+    const callerDebt = await flexUsdDebtToken.balanceOf(caller.address);
 
     expect(callerDebt.toString()).to.be.equal('500000000', 'Invalid user debt');
   });
 
-  it('Caller deposits 1000 DAI as collateral, Takes a WBCH flashloan with mode = 0, does not approve the transfer of the funds', async () => {
-    const { dai, pool, wbch, users } = testEnv;
+  it('Caller deposits 1000 FLEXUSD as collateral, Takes a WBCH flashloan with mode = 0, does not approve the transfer of the funds', async () => {
+    const { flexUsd, pool, wbch, users } = testEnv;
     const caller = users[3];
 
-    await dai.connect(caller.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    await flexUsd.connect(caller.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
-    await dai.connect(caller.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(caller.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const amountToDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    const amountToDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
-    await pool.connect(caller.signer).deposit(dai.address, amountToDeposit, caller.address, '0');
+    await pool.connect(caller.signer).deposit(flexUsd.address, amountToDeposit, caller.address, '0');
 
     const flashAmount = ethers.utils.parseEther('0.8');
 
@@ -389,7 +389,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Caller takes a WBCH flashloan with mode = 1, should revert since stable borrowing is disabled', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[3];
 
@@ -421,7 +421,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Caller takes a WBCH flashloan with mode = 2', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[3];
 
@@ -453,21 +453,21 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Caller takes a WBCH flashloan with mode = 1 onBehalfOf user without allowance, should revert since stable borrowing is disabled', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[5];
     const onBehalfOf = users[4];
 
-    // Deposit 1000 dai for onBehalfOf user
-    await dai.connect(onBehalfOf.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    // Deposit 1000 flexUsd for onBehalfOf user
+    await flexUsd.connect(onBehalfOf.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
-    await dai.connect(onBehalfOf.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(onBehalfOf.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const amountToDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    const amountToDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
     await pool
       .connect(onBehalfOf.signer)
-      .deposit(dai.address, amountToDeposit, onBehalfOf.address, '0');
+      .deposit(flexUsd.address, amountToDeposit, onBehalfOf.address, '0');
 
     const flashAmount = ethers.utils.parseEther('0.8');
 
@@ -489,21 +489,21 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Caller takes a WBCH flashloan with mode = 2 onBehalfOf user without allowance, should revert since allowance is 0', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[5];
     const onBehalfOf = users[4];
 
-    // Deposit 1000 dai for onBehalfOf user
-    await dai.connect(onBehalfOf.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    // Deposit 1000 flexUsd for onBehalfOf user
+    await flexUsd.connect(onBehalfOf.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
-    await dai.connect(onBehalfOf.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(onBehalfOf.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const amountToDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    const amountToDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
     await pool
       .connect(onBehalfOf.signer)
-      .deposit(dai.address, amountToDeposit, onBehalfOf.address, '0');
+      .deposit(flexUsd.address, amountToDeposit, onBehalfOf.address, '0');
 
     const flashAmount = ethers.utils.parseEther('0.8');
 
@@ -525,7 +525,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Caller takes a WBCH flashloan with mode = 1 onBehalfOf user with allowance. Should revert since stable borrowing is disabled.', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[5];
     const onBehalfOf = users[4];
@@ -568,7 +568,7 @@ makeSuite('LendingPool FlashLoan function', (testEnv: TestEnv) => {
   });
 
   it('Caller takes a WBCH flashloan with mode = 2 onBehalfOf user with allowance. A loan for onBehalfOf is created.', async () => {
-    const { dai, pool, wbch, users, helpersContract } = testEnv;
+    const { flexUsd, pool, wbch, users, helpersContract } = testEnv;
 
     const caller = users[5];
     const onBehalfOf = users[4];

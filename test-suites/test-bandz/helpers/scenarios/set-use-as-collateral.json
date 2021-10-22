@@ -3,12 +3,12 @@
   "description": "Test cases for the setUserUseReserveAsCollateral() function.",
   "stories": [
     {
-      "description": "User 0 Deposits 1000 DAI, disables DAI as collateral",
+      "description": "User 0 Deposits 1000 FLEXUSD, disables FLEXUSD as collateral",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -17,7 +17,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0"
           },
           "expected": "success"
@@ -25,7 +25,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -34,7 +34,7 @@
         {
           "name": "setUseAsCollateral",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0",
             "useAsCollateral": "false"
           },
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "description": "User 1 Deposits 2 WBCH, disables WBCH as collateral, borrows 400 DAI (revert expected)",
+      "description": "User 1 Deposits 2 WBCH, disables WBCH as collateral, borrows 400 FLEXUSD (revert expected)",
       "actions": [
         {
           "name": "mint",
@@ -83,7 +83,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "400",
             "borrowRateMode": "variable",
             "user": "1"
@@ -94,7 +94,7 @@
       ]
     },
     {
-      "description": "User 1 enables WBCH as collateral, borrows 400 DAI",
+      "description": "User 1 enables WBCH as collateral, borrows 400 FLEXUSD",
       "actions": [
         {
           "name": "setUseAsCollateral",
@@ -108,7 +108,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "400",
             "borrowRateMode": "variable",
             "user": "1"
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "description": "User 1 Deposits 640 more BANDZ (enough to cover the DAI debt), disables WBCH as collateral",
+      "description": "User 1 Deposits 640 more BANDZ (enough to cover the FLEXUSD debt), disables WBCH as collateral",
       "actions": [
         {
           "name": "mint",

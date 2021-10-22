@@ -18,7 +18,7 @@ export const strategyWETH: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyDAI: IReserveParams = {
+export const strategyFlexUSD: IReserveParams = {
   strategy: rateStrategyStable,
   baseLTVAsCollateral: '7500',
   liquidationThreshold: '8000',
@@ -30,7 +30,7 @@ export const strategyDAI: IReserveParams = {
   reserveFactor: '1000'
 };
 
-export const strategyDAIWETH: IReserveParams = {
+export const strategyFlexUSDWETH: IReserveParams = {
   strategy: rateStrategyAmmBase,
   baseLTVAsCollateral: '6000',
   liquidationThreshold: '7000',

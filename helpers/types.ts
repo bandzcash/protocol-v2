@@ -177,9 +177,9 @@ export enum ProtocolErrors {
 }
 
 export type tSmartBCHAddress = string;
-export type tStringTokenBigUnits = string; // 1 BCH, or 10e18 DAI
+export type tStringTokenBigUnits = string; // 1 BCH, or 10e18 FLEXUSD
 export type tBigNumberTokenBigUnits = BigNumber;
-export type tStringTokenSmallUnits = string; // 1 wei, or 1 basic unit of DAI
+export type tStringTokenSmallUnits = string; // 1 wei, or 1 basic unit of FLEXUSD
 export type tBigNumberTokenSmallUnits = BigNumber;
 
 export interface iAssetCommon<T> {
@@ -187,7 +187,7 @@ export interface iAssetCommon<T> {
 }
 export interface iAssetBase<T> {
   WBCH: T;
-  DAI: T;
+  FLEXUSD: T;
   BANDZ: T;
   USD: T;
   xMIST: T;
@@ -197,9 +197,12 @@ export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'BCH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iBandzPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'BANDZ' | 'WBCH' | 'xMIST'>;
+export type iBandzPoolAssets<T> = Pick<
+  iAssetsWithoutUSD<T>,
+  'FLEXUSD' | 'BANDZ' | 'WBCH' | 'xMIST'
+>;
 
-export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'DAI' | 'WBCH'>;
+export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'FLEXUSD' | 'WBCH'>;
 
 export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
 
@@ -208,7 +211,7 @@ export type iAavePoolTokens<T> = Omit<iBandzPoolAssets<T>, 'BCH'>;
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
-  DAI = 'DAI',
+  FLEXUSD = 'FLEXUSD',
   BANDZ = 'BANDZ',
   WBCH = 'WBCH',
   USD = 'USD',

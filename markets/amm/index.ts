@@ -3,9 +3,9 @@ import { IAmmConfiguration, eSmartBCHNetwork } from '../../helpers/types';
 
 import { CommonsConfig } from './commons';
 import {
-  strategyDAI,
+  strategyFlexUSD,
   strategyWETH,
-  strategyDAIWETH,
+  strategyFlexUSDWETH,
   strategyBANDZWETH,
   // strategyYFIWETH,
   strategyBALWETH,
@@ -21,7 +21,7 @@ export const AmmConfig: IAmmConfiguration = {
   ProviderId: 2,
   ReservesConfig: {
     WBCH: strategyWETH,
-    DAI: strategyDAI,
+    FLEXUSD: strategyFlexUSD,
   },
   ReserveAssets: {
     [eSmartBCHNetwork.buidlerevm]: {},
@@ -29,7 +29,7 @@ export const AmmConfig: IAmmConfiguration = {
     [eSmartBCHNetwork.coverage]: {},
     [eSmartBCHNetwork.amber]: {},
     [eSmartBCHNetwork.main]: {
-      DAI: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+      FLEXUSD: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
       WBCH: '0x3743eC0673453E5009310C727Ba4eaF7b3a1cc04',
     },
   },

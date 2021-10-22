@@ -45,7 +45,7 @@ export const CommonsConfig: ICommonConfiguration = {
     WBCH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    DAI: {
+    FLEXUSD: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
   },
@@ -157,7 +157,7 @@ export const CommonsConfig: ICommonConfiguration = {
   //   [eSmartBCHNetwork.buidlerevm]: {},
   //   [eSmartBCHNetwork.amber]: {},
   //   [eSmartBCHNetwork.main]: {
-  //     DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
+  //     FLEXUSD: '0x773616E4d11A78F511299002da57A0a94577F1f4',
   //     USD: '0x9326BFA02ADD2366b30bacB125260Af641031331',
   //   },
   // },

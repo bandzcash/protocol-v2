@@ -3,12 +3,12 @@
   "description": "Test cases for the borrow function, variable mode.",
   "stories": [
     {
-      "description": "User 2 deposits 1 DAI to account for rounding errors",
+      "description": "User 2 deposits 1 FLEXUSD to account for rounding errors",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1",
             "user": "2"
           },
@@ -17,7 +17,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "2"
           },
           "expected": "success"
@@ -25,7 +25,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1",
             "user": "2"
           },
@@ -34,12 +34,12 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI, user 1 deposits 1 WBCH as collateral and borrows 100 DAI at variable rate",
+      "description": "User 0 deposits 1000 FLEXUSD, user 1 deposits 1 WBCH as collateral and borrows 100 FLEXUSD at variable rate",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -48,7 +48,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0"
           },
           "expected": "success"
@@ -56,7 +56,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -91,7 +91,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "1",
@@ -102,12 +102,12 @@
       ]
     },
     {
-      "description": "User 1 tries to borrow the rest of the DAI liquidity (revert expected)",
+      "description": "User 1 tries to borrow the rest of the FLEXUSD liquidity (revert expected)",
       "actions": [
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "900",
             "borrowRateMode": "variable",
             "user": "1"
@@ -118,12 +118,12 @@
       ]
     },
     {
-      "description": "User 1 tries to repay 0 DAI (revert expected)",
+      "description": "User 1 tries to repay 0 FLEXUSD (revert expected)",
       "actions": [
         {
           "name": "repay",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "0",
             "user": "1",
             "onBehalfOf": "1"
@@ -134,12 +134,12 @@
       ]
     },
     {
-      "description": "User 1 repays a small amount of DAI, enough to cover a small part of the interest",
+      "description": "User 1 repays a small amount of FLEXUSD, enough to cover a small part of the interest",
       "actions": [
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "1"
           },
           "expected": "success"
@@ -147,7 +147,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1.25",
             "user": "1",
             "onBehalfOf": "1",
@@ -158,13 +158,13 @@
       ]
     },
     {
-      "description": "User 1 repays the DAI borrow after one year",
+      "description": "User 1 repays the FLEXUSD borrow after one year",
       "actions": [
         {
           "name": "mint",
-          "description": "Mint 10 DAI to cover the interest",
+          "description": "Mint 10 FLEXUSD to cover the interest",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "10",
             "user": "1"
           },
@@ -173,7 +173,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "1",
             "onBehalfOf": "1",
@@ -184,12 +184,12 @@
       ]
     },
     {
-      "description": "User 0 withdraws the deposited DAI plus interest",
+      "description": "User 0 withdraws the deposited FLEXUSD plus interest",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "0"
           },
@@ -344,12 +344,12 @@
       ]
     },
     {
-      "description": "User 2 deposits 1 DAI (USDC before) to account for rounding errors",
+      "description": "User 2 deposits 1 FLEXUSD (USDC before) to account for rounding errors",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1",
             "user": "2"
           },
@@ -358,7 +358,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "2"
           },
           "expected": "success"
@@ -366,7 +366,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1",
             "user": "2"
           },
@@ -375,12 +375,12 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI (USDC before), user 1 deposits 1 WBCH as collateral and borrows 100 DAI at variable rate",
+      "description": "User 0 deposits 1000 FLEXUSD (USDC before), user 1 deposits 1 WBCH as collateral and borrows 100 FLEXUSD at variable rate",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -389,7 +389,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0"
           },
           "expected": "success"
@@ -397,7 +397,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -432,7 +432,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "1",
@@ -443,12 +443,12 @@
       ]
     },
     {
-      "description": "User 1 tries to borrow the rest of the DAI (USDC before) liquidity (revert expected)",
+      "description": "User 1 tries to borrow the rest of the FLEXUSD (USDC before) liquidity (revert expected)",
       "actions": [
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "900",
             "borrowRateMode": "variable",
             "user": "1"
@@ -459,13 +459,13 @@
       ]
     },
     {
-      "description": "User 1 repays the DAI (USDC before) borrow after one year",
+      "description": "User 1 repays the FLEXUSD (USDC before) borrow after one year",
       "actions": [
         {
           "name": "mint",
-          "description": "Mint 10 DAI to cover the interest",
+          "description": "Mint 10 FLEXUSD to cover the interest",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "10",
             "user": "1"
           },
@@ -474,7 +474,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "1"
           },
           "expected": "success"
@@ -482,7 +482,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "1",
             "onBehalfOf": "1",
@@ -493,12 +493,12 @@
       ]
     },
     {
-      "description": "User 0 withdraws the deposited DAI (USDC before) plus interest",
+      "description": "User 0 withdraws the deposited FLEXUSD (USDC before) plus interest",
       "actions": [
         {
           "name": "withdraw",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "0"
           },
@@ -521,12 +521,12 @@
       ]
     },
     {
-      "description": "User 1 deposits 1000 DAI, user 3 tries to borrow 1000 DAI without any collateral (revert expected)",
+      "description": "User 1 deposits 1000 FLEXUSD, user 3 tries to borrow 1000 FLEXUSD without any collateral (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "1"
           },
@@ -535,7 +535,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "1"
           },
           "expected": "success"
@@ -543,7 +543,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "1"
           },
@@ -552,7 +552,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "borrowRateMode": "variable",
             "user": "3"
@@ -563,7 +563,7 @@
       ]
     },
     {
-      "description": "User 3 deposits 0.1 WBCH collateral to borrow 100 DAI; 0.1 WBCH is not enough to borrow 100 DAI (revert expected)",
+      "description": "User 3 deposits 0.1 WBCH collateral to borrow 100 FLEXUSD; 0.1 WBCH is not enough to borrow 100 FLEXUSD (revert expected)",
       "actions": [
         {
           "name": "mint",
@@ -594,7 +594,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "3"
@@ -619,12 +619,12 @@
       ]
     },
     {
-      "description": "User 1 deposits 1000 DAI (USDC before), user 3 tries to borrow 1000 DAI without any collateral (revert expected)",
+      "description": "User 1 deposits 1000 FLEXUSD (USDC before), user 3 tries to borrow 1000 FLEXUSD without any collateral (revert expected)",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "1"
           },
@@ -633,7 +633,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "1"
           },
           "expected": "success"
@@ -641,7 +641,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "1"
           },
@@ -650,7 +650,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "borrowRateMode": "variable",
             "user": "3"
@@ -661,7 +661,7 @@
       ]
     },
     {
-      "description": "User 3 deposits 0.1 WBCH collateral to borrow 100 DAI (USDC before); 0.1 WBCH is not enough to borrow 100 DAI (revert expected)",
+      "description": "User 3 deposits 0.1 WBCH collateral to borrow 100 FLEXUSD (USDC before); 0.1 WBCH is not enough to borrow 100 FLEXUSD (revert expected)",
       "actions": [
         {
           "name": "mint",
@@ -692,7 +692,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "3"
@@ -717,12 +717,12 @@
       ]
     },
     {
-      "description": "User 0 deposits 1000 DAI, user 6 deposits 2 WBCH and borrow 100 DAI at variable rate first, then 100 DAI at stable rate, repays everything. User 0 withdraws",
+      "description": "User 0 deposits 1000 FLEXUSD, user 6 deposits 2 WBCH and borrow 100 FLEXUSD at variable rate first, then 100 FLEXUSD at stable rate, repays everything. User 0 withdraws",
       "actions": [
         {
           "name": "mint",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -731,7 +731,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "0"
           },
           "expected": "success"
@@ -739,7 +739,7 @@
         {
           "name": "deposit",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "1000",
             "user": "0"
           },
@@ -774,7 +774,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "borrowRateMode": "variable",
             "user": "6",
@@ -785,7 +785,7 @@
         {
           "name": "borrow",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "100",
             "borrowRateMode": "stable",
             "user": "6",
@@ -795,9 +795,9 @@
         },
         {
           "name": "mint",
-          "description": "Mint 50 DAI to cover the interest",
+          "description": "Mint 50 FLEXUSD to cover the interest",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "50",
             "user": "6"
           },
@@ -806,7 +806,7 @@
         {
           "name": "approve",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "user": "6"
           },
           "expected": "success"
@@ -814,7 +814,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "6",
             "onBehalfOf": "6",
@@ -825,7 +825,7 @@
         {
           "name": "repay",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "6",
             "onBehalfOf": "6",
@@ -836,7 +836,7 @@
         {
           "name": "withdraw",
           "args": {
-            "reserve": "DAI",
+            "reserve": "FLEXUSD",
             "amount": "-1",
             "user": "0"
           },

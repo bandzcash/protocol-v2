@@ -29,32 +29,32 @@
 //   describe('BaseUniswapAdapter', () => {
 //     describe('getAmountsOut', () => {
 //       it('should return the estimated amountOut and prices for the asset swap', async () => {
-//         const { wbch, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { wbch, flexUsd, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
 //         const amountIn = parseEther('1');
 //         const flashloanPremium = amountIn.mul(9).div(10000);
 //         const amountToSwap = amountIn.sub(flashloanPremium);
 
 //         const wbchPrice = await oracle.getAssetPrice(wbch.address);
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountToSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountToSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         const outPerInPrice = amountToSwap
 //           .mul(parseEther('1'))
 //           .mul(parseEther('1'))
-//           .div(expectedDaiAmount.mul(parseEther('1')));
+//           .div(expectedFlexUsdAmount.mul(parseEther('1')));
 //         const ethUsdValue = amountIn
 //           .mul(wbchPrice)
 //           .div(parseEther('1'))
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
-//         const daiUsdValue = expectedDaiAmount
-//           .mul(daiPrice)
+//         const flexUsdUsdValue = expectedFlexUsdAmount
+//           .mul(flexUsdPrice)
 //           .div(parseEther('1'))
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
@@ -62,20 +62,20 @@
 //         await mockUniswapRouter.setAmountOut(
 //           amountToSwap,
 //           wbch.address,
-//           dai.address,
-//           expectedDaiAmount
+//           flexUsd.address,
+//           expectedFlexUsdAmount
 //         );
 
 //         const result = await uniswapLiquiditySwapAdapter.getAmountsOut(
 //           amountIn,
 //           wbch.address,
-//           dai.address
+//           flexUsd.address
 //         );
 
-//         expect(result['0']).to.be.eq(expectedDaiAmount);
+//         expect(result['0']).to.be.eq(expectedFlexUsdAmount);
 //         expect(result['1']).to.be.eq(outPerInPrice);
 //         expect(result['2']).to.be.eq(ethUsdValue);
-//         expect(result['3']).to.be.eq(daiUsdValue);
+//         expect(result['3']).to.be.eq(flexUsdUsdValue);
 //       });
 //       it('should work correctly with different decimals', async () => {
 //         const { bandz, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;
@@ -132,19 +132,19 @@
 
 //     describe('getAmountsIn', () => {
 //       it('should return the estimated required amountIn for the asset swap', async () => {
-//         const { wbch, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { wbch, flexUsd, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 
 //         const amountIn = parseEther('1');
 //         const flashloanPremium = amountIn.mul(9).div(10000);
 //         const amountToSwap = amountIn.add(flashloanPremium);
 
 //         const wbchPrice = await oracle.getAssetPrice(wbch.address);
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 //         const usdPrice = await oracle.getAssetPrice(USD_ADDRESS);
 
 //         const amountOut = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountIn.toString()).div(daiPrice.toString()).toFixed(0)
+//           flexUsd.address,
+//           new BigNumber(amountIn.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         const inPerOutPrice = amountOut
@@ -157,24 +157,24 @@
 //           .div(parseEther('1'))
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
-//         const daiUsdValue = amountOut
-//           .mul(daiPrice)
+//         const flexUsdUsdValue = amountOut
+//           .mul(flexUsdPrice)
 //           .div(parseEther('1'))
 //           .mul(usdPrice)
 //           .div(parseEther('1'));
 
-//         await mockUniswapRouter.setAmountIn(amountOut, wbch.address, dai.address, amountIn);
+//         await mockUniswapRouter.setAmountIn(amountOut, wbch.address, flexUsd.address, amountIn);
 
 //         const result = await uniswapLiquiditySwapAdapter.getAmountsIn(
 //           amountOut,
 //           wbch.address,
-//           dai.address
+//           flexUsd.address
 //         );
 
 //         expect(result['0']).to.be.eq(amountToSwap);
 //         expect(result['1']).to.be.eq(inPerOutPrice);
 //         expect(result['2']).to.be.eq(ethUsdValue);
-//         expect(result['3']).to.be.eq(daiUsdValue);
+//         expect(result['3']).to.be.eq(flexUsdUsdValue);
 //       });
 //       it('should work correctly with different decimals', async () => {
 //         const { bandz, usdc, uniswapLiquiditySwapAdapter, oracle } = testEnv;

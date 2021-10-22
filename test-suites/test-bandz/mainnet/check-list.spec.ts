@@ -15,7 +15,7 @@ const UNISWAP_ROUTER = '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D';
 makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   const zero = BigNumber.from('0');
   const depositSize = parseEther('5');
-  const daiSize = parseEther('10000');
+  const flexUsdSize = parseEther('10000');
   it('Deposit WBCH', async () => {
     const { users, wbchGateway, aWBCH, pool } = testEnv;
 
@@ -99,7 +99,7 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Borrow stable WBCH and Full Repay with BCH', async () => {
-    const { users, wbchGateway, aWBCH, dai, aDai, wbch, pool, helpersContract } = testEnv;
+    const { users, wbchGateway, aWBCH, flexUsd, aFlexUsd, wbch, pool, helpersContract } = testEnv;
     const borrowSize = parseEther('1');
     const repaySize = borrowSize.add(borrowSize.mul(5).div(100));
     const user = users[1];
@@ -110,15 +110,15 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
 
     const stableDebtToken = await getStableDebtToken(stableDebtTokenAddress);
 
-    // Deposit 10000 DAI
-    await dai.connect(user.signer).mint(daiSize);
-    await dai.connect(user.signer).approve(pool.address, daiSize);
-    await pool.connect(user.signer).deposit(dai.address, daiSize, user.address, '0');
+    // Deposit 10000 FLEXUSD
+    await flexUsd.connect(user.signer).mint(flexUsdSize);
+    await flexUsd.connect(user.signer).approve(pool.address, flexUsdSize);
+    await pool.connect(user.signer).deposit(flexUsd.address, flexUsdSize, user.address, '0');
 
-    const aTokensBalance = await aDai.balanceOf(user.address);
+    const aTokensBalance = await aFlexUsd.balanceOf(user.address);
 
     expect(aTokensBalance).to.be.gt(zero);
-    expect(aTokensBalance).to.be.gte(daiSize);
+    expect(aTokensBalance).to.be.gte(flexUsdSize);
 
     // Borrow WBCH with WBCH as collateral
     await waitForTx(
@@ -297,36 +297,36 @@ makeSuite('Mainnet Check list', (testEnv: TestEnv) => {
   });
 
   it('Owner can do emergency token recovery', async () => {
-    const { users, wbch, dai, wbchGateway, deployer } = testEnv;
+    const { users, wbch, flexUsd, wbchGateway, deployer } = testEnv;
     const user = users[0];
     const amount = parseEther('1');
 
     const uniswapRouter = IUniswapV2Router02Factory.connect(UNISWAP_ROUTER, user.signer);
     await uniswapRouter.swapETHForExactTokens(
-      amount, // 1 DAI
-      [wbch.address, dai.address], // Uniswap paths WBCH - DAI
+      amount, // 1 FLEXUSD
+      [wbch.address, flexUsd.address], // Uniswap paths WBCH - FLEXUSD
       user.address,
       (await DRE.ethers.provider.getBlock('latest')).timestamp + 300,
       {
-        value: amount, // 1 Ether, we get refund of the unneeded Ether to buy 1 DAI
+        value: amount, // 1 Ether, we get refund of the unneeded Ether to buy 1 FLEXUSD
       }
     );
-    const daiBalanceAfterMint = await dai.balanceOf(user.address);
+    const flexUsdBalanceAfterMint = await flexUsd.balanceOf(user.address);
 
-    await dai.connect(user.signer).transfer(wbchGateway.address, amount);
-    const daiBalanceAfterBadTransfer = await dai.balanceOf(user.address);
-    expect(daiBalanceAfterBadTransfer).to.be.eq(
-      daiBalanceAfterMint.sub(amount),
+    await flexUsd.connect(user.signer).transfer(wbchGateway.address, amount);
+    const flexUsdBalanceAfterBadTransfer = await flexUsd.balanceOf(user.address);
+    expect(flexUsdBalanceAfterBadTransfer).to.be.eq(
+      flexUsdBalanceAfterMint.sub(amount),
       'User should have lost the funds here.'
     );
 
     await wbchGateway
       .connect(deployer.signer)
-      .emergencyTokenTransfer(dai.address, user.address, amount);
-    const daiBalanceAfterRecovery = await dai.balanceOf(user.address);
+      .emergencyTokenTransfer(flexUsd.address, user.address, amount);
+    const flexUsdBalanceAfterRecovery = await flexUsd.balanceOf(user.address);
 
-    expect(daiBalanceAfterRecovery).to.be.eq(
-      daiBalanceAfterMint,
+    expect(flexUsdBalanceAfterRecovery).to.be.eq(
+      flexUsdBalanceAfterMint,
       'User should recover the funds due emergency token transfer'
     );
   });

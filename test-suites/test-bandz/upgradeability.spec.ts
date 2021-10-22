@@ -26,32 +26,32 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
   let newVariableTokenAddress: string;
 
   before('deploying instances', async () => {
-    const { dai, pool } = testEnv;
+    const { flexUsd, pool } = testEnv;
     const aTokenInstance = await deployMockAToken([
       pool.address,
-      dai.address,
+      flexUsd.address,
       ZERO_ADDRESS,
       ZERO_ADDRESS,
-      'Bandz Interest bearing DAI updated',
-      'aDAI',
+      'Bandz Interest bearing FLEXUSD updated',
+      'aFLEXUSD',
       '0x10',
     ]);
 
     const stableDebtTokenInstance = await deployMockStableDebtToken([
       pool.address,
-      dai.address,
+      flexUsd.address,
       ZERO_ADDRESS,
-      'Bandz stable debt bearing DAI updated',
-      'stableDebtDAI',
+      'Bandz stable debt bearing FLEXUSD updated',
+      'stableDebtFlexUSD',
       '0x10',
     ]);
 
     const variableDebtTokenInstance = await deployMockVariableDebtToken([
       pool.address,
-      dai.address,
+      flexUsd.address,
       ZERO_ADDRESS,
-      'Bandz variable debt bearing DAI updated',
-      'variableDebtDAI',
+      'Bandz variable debt bearing FLEXUSD updated',
+      'variableDebtFlexUSD',
       '0x10',
     ]);
 
@@ -60,8 +60,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     newStableTokenAddress = stableDebtTokenInstance.address;
   });
 
-  it('Tries to update the DAI Atoken implementation with a different address than the lendingPoolManager', async () => {
-    const { dai, configurator, users } = testEnv;
+  it('Tries to update the FLEXUSD Atoken implementation with a different address than the lendingPoolManager', async () => {
+    const { flexUsd, configurator, users } = testEnv;
 
     const name = await (await getAToken(newATokenAddress)).name();
     const symbol = await (await getAToken(newATokenAddress)).symbol();
@@ -75,7 +75,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: string;
       params: string;
     } = {
-      asset: dai.address,
+      asset: flexUsd.address,
       treasury: ZERO_ADDRESS,
       incentivesController: ZERO_ADDRESS,
       name: name,
@@ -88,8 +88,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Upgrades the DAI Atoken implementation ', async () => {
-    const { dai, configurator, aDai } = testEnv;
+  it('Upgrades the FLEXUSD Atoken implementation ', async () => {
+    const { flexUsd, configurator, aFlexUsd } = testEnv;
 
     const name = await (await getAToken(newATokenAddress)).name();
     const symbol = await (await getAToken(newATokenAddress)).symbol();
@@ -103,7 +103,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: string;
       params: string;
     } = {
-      asset: dai.address,
+      asset: flexUsd.address,
       treasury: ZERO_ADDRESS,
       incentivesController: ZERO_ADDRESS,
       name: name,
@@ -113,13 +113,13 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     };
     await configurator.updateAToken(updateATokenInputParams);
 
-    const tokenName = await aDai.name();
+    const tokenName = await aFlexUsd.name();
 
-    expect(tokenName).to.be.eq('Bandz Interest bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Bandz Interest bearing FLEXUSD updated', 'Invalid token name');
   });
 
-  it('Tries to update the DAI Stable debt token implementation with a different address than the lendingPoolManager', async () => {
-    const { dai, configurator, users } = testEnv;
+  it('Tries to update the FLEXUSD Stable debt token implementation with a different address than the lendingPoolManager', async () => {
+    const { flexUsd, configurator, users } = testEnv;
 
     const name = await (await getStableDebtToken(newStableTokenAddress)).name();
     const symbol = await (await getStableDebtToken(newStableTokenAddress)).symbol();
@@ -132,7 +132,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: string;
       params: string;
     } = {
-      asset: dai.address,
+      asset: flexUsd.address,
       incentivesController: ZERO_ADDRESS,
       name: name,
       symbol: symbol,
@@ -145,8 +145,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Upgrades the DAI stable debt token implementation ', async () => {
-    const { dai, configurator, pool, helpersContract } = testEnv;
+  it('Upgrades the FLEXUSD stable debt token implementation ', async () => {
+    const { flexUsd, configurator, pool, helpersContract } = testEnv;
 
     const name = await (await getStableDebtToken(newStableTokenAddress)).name();
     const symbol = await (await getStableDebtToken(newStableTokenAddress)).symbol();
@@ -159,7 +159,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: string;
       params: string;
     } = {
-      asset: dai.address,
+      asset: flexUsd.address,
       incentivesController: ZERO_ADDRESS,
       name: name,
       symbol: symbol,
@@ -169,17 +169,19 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
 
     await configurator.updateStableDebtToken(updateDebtTokenInput);
 
-    const { stableDebtTokenAddress } = await helpersContract.getReserveTokensAddresses(dai.address);
+    const { stableDebtTokenAddress } = await helpersContract.getReserveTokensAddresses(
+      flexUsd.address
+    );
 
     const debtToken = await getMockStableDebtToken(stableDebtTokenAddress);
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Bandz stable debt bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Bandz stable debt bearing FLEXUSD updated', 'Invalid token name');
   });
 
-  it('Tries to update the DAI variable debt token implementation with a different address than the lendingPoolManager', async () => {
-    const { dai, configurator, users } = testEnv;
+  it('Tries to update the FLEXUSD variable debt token implementation with a different address than the lendingPoolManager', async () => {
+    const { flexUsd, configurator, users } = testEnv;
 
     const name = await (await getVariableDebtToken(newVariableTokenAddress)).name();
     const symbol = await (await getVariableDebtToken(newVariableTokenAddress)).symbol();
@@ -192,7 +194,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: string;
       params: string;
     } = {
-      asset: dai.address,
+      asset: flexUsd.address,
       incentivesController: ZERO_ADDRESS,
       name: name,
       symbol: symbol,
@@ -205,8 +207,8 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     ).to.be.revertedWith(CALLER_NOT_POOL_ADMIN);
   });
 
-  it('Upgrades the DAI variable debt token implementation ', async () => {
-    const { dai, configurator, pool, helpersContract } = testEnv;
+  it('Upgrades the FLEXUSD variable debt token implementation ', async () => {
+    const { flexUsd, configurator, pool, helpersContract } = testEnv;
 
     const name = await (await getVariableDebtToken(newVariableTokenAddress)).name();
     const symbol = await (await getVariableDebtToken(newVariableTokenAddress)).symbol();
@@ -219,7 +221,7 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
       implementation: string;
       params: string;
     } = {
-      asset: dai.address,
+      asset: flexUsd.address,
       incentivesController: ZERO_ADDRESS,
       name: name,
       symbol: symbol,
@@ -231,13 +233,13 @@ makeSuite('Upgradeability', (testEnv: TestEnv) => {
     await configurator.updateVariableDebtToken(updateDebtTokenInput);
 
     const { variableDebtTokenAddress } = await helpersContract.getReserveTokensAddresses(
-      dai.address
+      flexUsd.address
     );
 
     const debtToken = await getMockVariableDebtToken(variableDebtTokenAddress);
 
     const tokenName = await debtToken.name();
 
-    expect(tokenName).to.be.eq('Bandz variable debt bearing DAI updated', 'Invalid token name');
+    expect(tokenName).to.be.eq('Bandz variable debt bearing FLEXUSD updated', 'Invalid token name');
   });
 });

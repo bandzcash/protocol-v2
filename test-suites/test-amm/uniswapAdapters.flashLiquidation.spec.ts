@@ -25,22 +25,22 @@
 //   });
 
 //   const depositAndHFBelowOne = async () => {
-//     const { dai, wbch, users, pool, oracle } = testEnv;
+//     const { flexUsd, wbch, users, pool, oracle } = testEnv;
 //     const depositor = users[0];
 //     const borrower = users[1];
 
-//     //mints DAI to depositor
-//     await dai.connect(depositor.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+//     //mints FLEXUSD to depositor
+//     await flexUsd.connect(depositor.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
 //     //approve protocol to access depositor wallet
-//     await dai.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+//     await flexUsd.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-//     //user 1 deposits 1000 DAI
-//     const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+//     //user 1 deposits 1000 FLEXUSD
+//     const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
 //     await pool
 //       .connect(depositor.signer)
-//       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
+//       .deposit(flexUsd.address, amountFlexUSDtoDeposit, depositor.address, '0');
 //     //user 2 deposits 1 BCH
 //     const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
@@ -57,19 +57,19 @@
 //     //user 2 borrows
 
 //     const userGlobalDataBefore = await pool.getUserAccountData(borrower.address);
-//     const daiPrice = await oracle.getAssetPrice(dai.address);
+//     const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
-//     const amountDAIToBorrow = await convertToCurrencyDecimals(
-//       dai.address,
+//     const amountFlexUSDToBorrow = await convertToCurrencyDecimals(
+//       flexUsd.address,
 //       new BigNumber(userGlobalDataBefore.availableBorrowsETH.toString())
-//         .div(daiPrice.toString())
+//         .div(flexUsdPrice.toString())
 //         .multipliedBy(0.95)
 //         .toFixed(0)
 //     );
 
 //     await pool
 //       .connect(borrower.signer)
-//       .borrow(dai.address, amountDAIToBorrow, RateMode.Stable, '0', borrower.address);
+//       .borrow(flexUsd.address, amountFlexUSDToBorrow, RateMode.Stable, '0', borrower.address);
 
 //     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
@@ -79,8 +79,8 @@
 //     );
 
 //     await oracle.setAssetPrice(
-//       dai.address,
-//       new BigNumber(daiPrice.toString()).multipliedBy(1.18).toFixed(0)
+//       flexUsd.address,
+//       new BigNumber(flexUsdPrice.toString()).multipliedBy(1.18).toFixed(0)
 //     );
 
 //     const userGlobalData = await pool.getUserAccountData(borrower.address);
@@ -92,22 +92,22 @@
 //   };
 
 //   const depositSameAssetAndHFBelowOne = async () => {
-//     const { dai, wbch, users, pool, oracle } = testEnv;
+//     const { flexUsd, wbch, users, pool, oracle } = testEnv;
 //     const depositor = users[0];
 //     const borrower = users[1];
 
-//     //mints DAI to depositor
-//     await dai.connect(depositor.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+//     //mints FLEXUSD to depositor
+//     await flexUsd.connect(depositor.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
 //     //approve protocol to access depositor wallet
-//     await dai.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+//     await flexUsd.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-//     //user 1 deposits 1000 DAI
-//     const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+//     //user 1 deposits 1000 FLEXUSD
+//     const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
 //     await pool
 //       .connect(depositor.signer)
-//       .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
+//       .deposit(flexUsd.address, amountFlexUSDtoDeposit, depositor.address, '0');
 //     //user 2 deposits 1 BCH
 //     const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
@@ -124,19 +124,19 @@
 //     //user 2 borrows
 
 //     const userGlobalDataBefore = await pool.getUserAccountData(borrower.address);
-//     const daiPrice = await oracle.getAssetPrice(dai.address);
+//     const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
-//     const amountDAIToBorrow = await convertToCurrencyDecimals(
-//       dai.address,
+//     const amountFlexUSDToBorrow = await convertToCurrencyDecimals(
+//       flexUsd.address,
 //       new BigNumber(userGlobalDataBefore.availableBorrowsETH.toString())
-//         .div(daiPrice.toString())
+//         .div(flexUsdPrice.toString())
 //         .multipliedBy(0.8)
 //         .toFixed(0)
 //     );
 //     await waitForTx(
 //       await pool
 //         .connect(borrower.signer)
-//         .borrow(dai.address, amountDAIToBorrow, RateMode.Stable, '0', borrower.address)
+//         .borrow(flexUsd.address, amountFlexUSDToBorrow, RateMode.Stable, '0', borrower.address)
 //     );
 
 //     const userGlobalDataBefore2 = await pool.getUserAccountData(borrower.address);
@@ -157,8 +157,8 @@
 //     );
 
 //     await oracle.setAssetPrice(
-//       dai.address,
-//       new BigNumber(daiPrice.toString()).multipliedBy(1.18).toFixed(0)
+//       flexUsd.address,
+//       new BigNumber(flexUsdPrice.toString()).multipliedBy(1.18).toFixed(0)
 //     );
 
 //     const userGlobalData = await pool.getUserAccountData(borrower.address);
@@ -214,7 +214,7 @@
 //         await increaseTime(100);
 
 //         const {
-//           dai,
+//           flexUsd,
 //           wbch,
 //           users,
 //           pool,
@@ -229,17 +229,17 @@
 
 //         const liquidatorWbchBalanceBefore = await wbch.balanceOf(liquidator.address);
 
-//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for FLEXUSD at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(wbch.address, expectedSwap)).wait();
 
 //         const collateralPrice = await oracle.getAssetPrice(wbch.address);
-//         const principalPrice = await oracle.getAssetPrice(dai.address);
-//         const daiReserveDataBefore = await helpersContract.getReserveData(dai.address);
+//         const principalPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
 //         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 
@@ -247,7 +247,7 @@
 //           await helpersContract.getReserveConfigurationData(wbch.address)
 //         ).decimals.toString();
 //         const principalDecimals = (
-//           await helpersContract.getReserveConfigurationData(dai.address)
+//           await helpersContract.getReserveConfigurationData(flexUsd.address)
 //         ).decimals.toString();
 //         const amountToLiquidate = userReserveDataBefore.currentStableDebt.div(2).toFixed(0);
 
@@ -272,7 +272,7 @@
 
 //         const params = buildFlashLiquidationAdapterParams(
 //           wbch.address,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address,
 //           amountToLiquidate,
 //           false
@@ -281,7 +281,7 @@
 //           .connect(liquidator.signer)
 //           .flashLoan(
 //             flashLiquidationAdapter.address,
-//             [dai.address],
+//             [flexUsd.address],
 //             [amountToLiquidate],
 //             [0],
 //             borrower.address,
@@ -298,12 +298,12 @@
 //         const userReserveDataAfter = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 //         const liquidatorWbchBalanceAfter = await wbch.balanceOf(liquidator.address);
 
-//         const daiReserveDataAfter = await helpersContract.getReserveData(dai.address);
+//         const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
 //         const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
 //         if (!tx.blockNumber) {
@@ -324,7 +324,7 @@
 //         const collateralAssetContractBalance = await wbch.balanceOf(
 //           flashLiquidationAdapter.address
 //         );
-//         const borrowAssetContractBalance = await dai.balanceOf(flashLiquidationAdapter.address);
+//         const borrowAssetContractBalance = await flexUsd.balanceOf(flashLiquidationAdapter.address);
 
 //         expect(collateralAssetContractBalance).to.be.equal(
 //           '0',
@@ -341,19 +341,19 @@
 //         );
 
 //         //the liquidity index of the principal reserve needs to be bigger than the index before
-//         expect(daiReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
-//           daiReserveDataBefore.liquidityIndex.toString(),
+//         expect(flexUsdReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
+//           flexUsdReserveDataBefore.liquidityIndex.toString(),
 //           'Invalid liquidity index'
 //         );
 
 //         //the principal APY after a liquidation needs to be lower than the APY before
-//         expect(daiReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
-//           daiReserveDataBefore.liquidityRate.toString(),
+//         expect(flexUsdReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
+//           flexUsdReserveDataBefore.liquidityRate.toString(),
 //           'Invalid liquidity APY'
 //         );
 
-//         expect(daiReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-//           new BigNumber(daiReserveDataBefore.availableLiquidity.toString())
+//         expect(flexUsdReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+//           new BigNumber(flexUsdReserveDataBefore.availableLiquidity.toString())
 //             .plus(flashLoanDebt)
 //             .toFixed(0),
 //           'Invalid principal available liquidity'
@@ -461,7 +461,7 @@
 //         await increaseTime(100);
 
 //         const {
-//           dai,
+//           flexUsd,
 //           wbch,
 //           users,
 //           pool,
@@ -475,13 +475,13 @@
 //         const liquidatorWbchBalanceBefore = await wbch.balanceOf(liquidator.address);
 
 //         const collateralPrice = await oracle.getAssetPrice(wbch.address);
-//         const principalPrice = await oracle.getAssetPrice(dai.address);
-//         const daiReserveDataBefore = await helpersContract.getReserveData(dai.address);
+//         const principalPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
 //         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 
@@ -489,7 +489,7 @@
 //           await helpersContract.getReserveConfigurationData(wbch.address)
 //         ).decimals.toString();
 //         const principalDecimals = (
-//           await helpersContract.getReserveConfigurationData(dai.address)
+//           await helpersContract.getReserveConfigurationData(flexUsd.address)
 //         ).decimals.toString();
 //         const amountToLiquidate = userReserveDataBefore.currentStableDebt.div(2).toFixed(0);
 
@@ -508,7 +508,7 @@
 //           .multipliedBy(1.0009)
 //           .toFixed(0);
 
-//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for FLEXUSD at Uniswap mock
 //         await (
 //           await mockUniswapRouter.setAmountToSwap(
 //             wbch.address,
@@ -518,7 +518,7 @@
 
 //         const params = buildFlashLiquidationAdapterParams(
 //           wbch.address,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address,
 //           amountToLiquidate,
 //           false
@@ -527,7 +527,7 @@
 //           .connect(liquidator.signer)
 //           .flashLoan(
 //             flashLiquidationAdapter.address,
-//             [dai.address],
+//             [flexUsd.address],
 //             [flashLoanDebt],
 //             [0],
 //             borrower.address,
@@ -544,12 +544,12 @@
 //         const userReserveDataAfter = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 //         const liquidatorWbchBalanceAfter = await wbch.balanceOf(liquidator.address);
 
-//         const daiReserveDataAfter = await helpersContract.getReserveData(dai.address);
+//         const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
 //         const ethReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
 //         if (!tx.blockNumber) {
@@ -567,7 +567,7 @@
 //           txTimestamp
 //         );
 
-//         const collateralAssetContractBalance = await dai.balanceOf(flashLiquidationAdapter.address);
+//         const collateralAssetContractBalance = await flexUsd.balanceOf(flashLiquidationAdapter.address);
 //         const borrowAssetContractBalance = await wbch.balanceOf(flashLiquidationAdapter.address);
 
 //         expect(collateralAssetContractBalance).to.be.equal(
@@ -584,14 +584,14 @@
 //         );
 
 //         //the liquidity index of the principal reserve needs to be bigger than the index before
-//         expect(daiReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
-//           daiReserveDataBefore.liquidityIndex.toString(),
+//         expect(flexUsdReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
+//           flexUsdReserveDataBefore.liquidityIndex.toString(),
 //           'Invalid liquidity index'
 //         );
 
 //         //the principal APY after a liquidation needs to be lower than the APY before
-//         expect(daiReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
-//           daiReserveDataBefore.liquidityRate.toString(),
+//         expect(flexUsdReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
+//           flexUsdReserveDataBefore.liquidityRate.toString(),
 //           'Invalid liquidity APY'
 //         );
 
@@ -616,7 +616,7 @@
 //         await increaseTime(100);
 
 //         const {
-//           dai,
+//           flexUsd,
 //           wbch,
 //           users,
 //           pool,
@@ -630,13 +630,13 @@
 //         const liquidatorWbchBalanceBefore = await wbch.balanceOf(liquidator.address);
 
 //         const collateralPrice = await oracle.getAssetPrice(wbch.address);
-//         const principalPrice = await oracle.getAssetPrice(dai.address);
-//         const daiReserveDataBefore = await helpersContract.getReserveData(dai.address);
+//         const principalPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
 //         const ethReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 
@@ -644,7 +644,7 @@
 //           await helpersContract.getReserveConfigurationData(wbch.address)
 //         ).decimals.toString();
 //         const principalDecimals = (
-//           await helpersContract.getReserveConfigurationData(dai.address)
+//           await helpersContract.getReserveConfigurationData(flexUsd.address)
 //         ).decimals.toString();
 //         const amountToLiquidate = userReserveDataBefore.currentStableDebt.div(2).toFixed(0);
 //         const extraAmount = new BigNumber(amountToLiquidate).times('1.15').toFixed(0);
@@ -664,7 +664,7 @@
 //           .multipliedBy(1.0009)
 //           .toFixed(0);
 
-//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for FLEXUSD at Uniswap mock
 //         await (
 //           await mockUniswapRouter.setAmountToSwap(
 //             wbch.address,
@@ -674,7 +674,7 @@
 
 //         const params = buildFlashLiquidationAdapterParams(
 //           wbch.address,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address,
 //           MAX_UINT_AMOUNT,
 //           false
@@ -683,7 +683,7 @@
 //           .connect(liquidator.signer)
 //           .flashLoan(
 //             flashLiquidationAdapter.address,
-//             [dai.address],
+//             [flexUsd.address],
 //             [extraAmount],
 //             [0],
 //             borrower.address,
@@ -697,8 +697,8 @@
 //         // Expect LiquidationCall event
 //         await expect(Promise.resolve(tx)).to.emit(pool, 'LiquidationCall');
 
-//         const collateralAssetContractBalance = await dai.balanceOf(flashLiquidationAdapter.address);
-//         const borrowAssetContractBalance = await dai.balanceOf(flashLiquidationAdapter.address);
+//         const collateralAssetContractBalance = await flexUsd.balanceOf(flashLiquidationAdapter.address);
+//         const borrowAssetContractBalance = await flexUsd.balanceOf(flashLiquidationAdapter.address);
 
 //         expect(collateralAssetContractBalance).to.be.equal(
 //           '0',
@@ -715,19 +715,19 @@
 //       it('Revert if debt asset is different than requested flash loan token', async () => {
 //         await depositAndHFBelowOne();
 
-//         const { dai, wbch, users, pool, helpersContract, flashLiquidationAdapter } = testEnv;
+//         const { flexUsd, wbch, users, pool, helpersContract, flashLiquidationAdapter } = testEnv;
 
 //         const liquidator = users[3];
 //         const borrower = users[1];
 //         const expectedSwap = ethers.utils.parseEther('0.4');
 
-//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for FLEXUSD at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(wbch.address, expectedSwap)).wait();
 
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 
@@ -746,7 +746,7 @@
 //             .connect(liquidator.signer)
 //             .flashLoan(
 //               flashLiquidationAdapter.address,
-//               [dai.address],
+//               [flexUsd.address],
 //               [amountToLiquidate],
 //               [0],
 //               borrower.address,
@@ -759,19 +759,19 @@
 //       it('Revert if debt asset amount to liquidate is greater than requested flash loan', async () => {
 //         await depositAndHFBelowOne();
 
-//         const { dai, wbch, users, pool, helpersContract, flashLiquidationAdapter } = testEnv;
+//         const { flexUsd, wbch, users, pool, helpersContract, flashLiquidationAdapter } = testEnv;
 
 //         const liquidator = users[3];
 //         const borrower = users[1];
 //         const expectedSwap = ethers.utils.parseEther('0.4');
 
-//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for FLEXUSD at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(wbch.address, expectedSwap)).wait();
 
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 
@@ -780,18 +780,18 @@
 //         // Correct params
 //         const params = buildFlashLiquidationAdapterParams(
 //           wbch.address,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address,
 //           amountToLiquidate.toString(),
 //           false
 //         );
-//         // Bad flash loan params: requested DAI amount below amountToLiquidate
+//         // Bad flash loan params: requested FLEXUSD amount below amountToLiquidate
 //         await expect(
 //           pool
 //             .connect(liquidator.signer)
 //             .flashLoan(
 //               flashLiquidationAdapter.address,
-//               [dai.address],
+//               [flexUsd.address],
 //               [amountToLiquidate.div(2).toString()],
 //               [0],
 //               borrower.address,
@@ -804,19 +804,19 @@
 //       it('Revert if requested multiple assets', async () => {
 //         await depositAndHFBelowOne();
 
-//         const { dai, wbch, users, pool, helpersContract, flashLiquidationAdapter } = testEnv;
+//         const { flexUsd, wbch, users, pool, helpersContract, flashLiquidationAdapter } = testEnv;
 
 //         const liquidator = users[3];
 //         const borrower = users[1];
 //         const expectedSwap = ethers.utils.parseEther('0.4');
 
-//         // Set how much BCH will be sold and swapped for DAI at Uniswap mock
+//         // Set how much BCH will be sold and swapped for FLEXUSD at Uniswap mock
 //         await (await mockUniswapRouter.setAmountToSwap(wbch.address, expectedSwap)).wait();
 
 //         const userReserveDataBefore = await getUserData(
 //           pool,
 //           helpersContract,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address
 //         );
 
@@ -825,7 +825,7 @@
 //         // Correct params
 //         const params = buildFlashLiquidationAdapterParams(
 //           wbch.address,
-//           dai.address,
+//           flexUsd.address,
 //           borrower.address,
 //           amountToLiquidate.toString(),
 //           false
@@ -836,7 +836,7 @@
 //             .connect(liquidator.signer)
 //             .flashLoan(
 //               flashLiquidationAdapter.address,
-//               [dai.address, wbch.address],
+//               [flexUsd.address, wbch.address],
 //               [10, 10],
 //               [0],
 //               borrower.address,

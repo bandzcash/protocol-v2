@@ -42,7 +42,7 @@ export const CommonsConfig: ICommonConfiguration = {
     WBCH: {
       borrowRate: oneRay.multipliedBy(0.03).toFixed(),
     },
-    DAI: {
+    FLEXUSD: {
       borrowRate: oneRay.multipliedBy(0.039).toFixed(),
     },
     BANDZ: {
@@ -152,12 +152,12 @@ export const CommonsConfig: ICommonConfiguration = {
   //   [eSmartBCHNetwork.buidlerevm]: {},
   //   [eSmartBCHNetwork.amber]: {
   //     BANDZ: ZERO_ADDRESS,
-  //     DAI: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
+  //     FLEXUSD: '0x64b8e49baded7bfb2fd5a9235b2440c0ee02971b',
   //     USD: '0x8468b2bDCE073A157E560AA4D9CcF6dB1DB98507',
   //   },
   //   [eSmartBCHNetwork.main]: {
   //     BANDZ: '0x6Df09E975c830ECae5bd4eD9d90f3A95a4f88012',
-  //     DAI: '0x773616E4d11A78F511299002da57A0a94577F1f4',
+  //     FLEXUSD: '0x773616E4d11A78F511299002da57A0a94577F1f4',
   //     USD: '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419',
   //     xMIST: '0x9b26214bEC078E68a394AaEbfbffF406Ce14893F',
   //   },

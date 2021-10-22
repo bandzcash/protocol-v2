@@ -26,7 +26,7 @@
 //   let _aTokenInstances: iATokenBase<ATokenInstance>
 //   let _tokenInstances: iAssetsWithoutETH<MintableERC20Instance>
 
-//   let _daiAddress: string
+//   let _flexUsdAddress: string
 
 //   let _depositorAddress: string
 //   let _borrowerAddress: string
@@ -60,7 +60,7 @@
 //     _lendingPoolCoreInstance = instances[1]
 //     _aTokenInstances = instances[2]
 //     _tokenInstances = instances[3]
-//     _daiAddress = _tokenInstances.DAI.address
+//     _flexUsdAddress = _tokenInstances.FLEXUSD.address
 //     _depositorAddress = await getFirstDepositorAddressOnTests()
 //     _borrowerAddress = await getFirstBorrowerAddressOnTests()
 
@@ -69,50 +69,50 @@
 //   })
 
 //   it("BORROW - Test user cannot borrow using the same currency as collateral", async () => {
-//     const {aDAI: aDaiInstance} = _aTokenInstances
-//     const {DAI: daiInstance} = _tokenInstances
+//     const {aFLEXUSD: aFlexUsdInstance} = _aTokenInstances
+//     const {FLEXUSD: flexUsdInstance} = _tokenInstances
 
-//     //mints DAI to depositor
-//     await daiInstance.mint(await convertToCurrencyDecimals(daiInstance.address, "1000"), {
+//     //mints FLEXUSD to depositor
+//     await flexUsdInstance.mint(await convertToCurrencyDecimals(flexUsdInstance.address, "1000"), {
 //       from: _depositorAddress,
 //     })
 
-//     //mints DAI to borrower
-//     await daiInstance.mint(await convertToCurrencyDecimals(daiInstance.address, "1000"), {
+//     //mints FLEXUSD to borrower
+//     await flexUsdInstance.mint(await convertToCurrencyDecimals(flexUsdInstance.address, "1000"), {
 //       from: _borrowerAddress,
 //     })
 
 //     //approve protocol to access depositor wallet
-//     await daiInstance.approve(_lendingPoolCoreInstance.address, APPROVAL_AMOUNT_LENDING_POOL_CORE, {
+//     await flexUsdInstance.approve(_lendingPoolCoreInstance.address, APPROVAL_AMOUNT_LENDING_POOL_CORE, {
 //       from: _depositorAddress,
 //     })
 
 //     //approve protocol to access borrower wallet
-//     await daiInstance.approve(_lendingPoolCoreInstance.address, APPROVAL_AMOUNT_LENDING_POOL_CORE, {
+//     await flexUsdInstance.approve(_lendingPoolCoreInstance.address, APPROVAL_AMOUNT_LENDING_POOL_CORE, {
 //       from: _borrowerAddress,
 //     })
 
-//     const amountDAItoDeposit = await convertToCurrencyDecimals(_daiAddress, "1000")
+//     const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(_flexUsdAddress, "1000")
 
-//     //user 1 deposits 1000 DAI
-//     const txResult = await _lendingPoolInstance.deposit(_daiAddress, amountDAItoDeposit, "0", {
+//     //user 1 deposits 1000 FLEXUSD
+//     const txResult = await _lendingPoolInstance.deposit(_flexUsdAddress, amountFlexUSDtoDeposit, "0", {
 //       from: _depositorAddress,
 //     })
 
-//     //user 2 deposits 1000 DAI, tries to borrow. Needs to be reverted as you can't borrow at a stable rate with the same collateral as the currency.
-//     const amountDAIToDepositBorrower = await convertToCurrencyDecimals(_daiAddress, "1000")
-//     await _lendingPoolInstance.deposit(_daiAddress, amountDAIToDepositBorrower, "0", {
+//     //user 2 deposits 1000 FLEXUSD, tries to borrow. Needs to be reverted as you can't borrow at a stable rate with the same collateral as the currency.
+//     const amountFlexUSDToDepositBorrower = await convertToCurrencyDecimals(_flexUsdAddress, "1000")
+//     await _lendingPoolInstance.deposit(_flexUsdAddress, amountFlexUSDToDepositBorrower, "0", {
 //       from: _borrowerAddress,
 //     })
 
-//     const data: any = await _lendingPoolInstance.getReserveData(_daiAddress)
+//     const data: any = await _lendingPoolInstance.getReserveData(_flexUsdAddress)
 
 //     //user 2 tries to borrow
-//     const amountDAIToBorrow = await convertToCurrencyDecimals(_daiAddress, "250")
+//     const amountFlexUSDToBorrow = await convertToCurrencyDecimals(_flexUsdAddress, "250")
 
 //     //user 2 tries to borrow
 //     await expectRevert(
-//       _lendingPoolInstance.borrow(_daiAddress, amountDAIToBorrow, RateMode.Stable, "0", {
+//       _lendingPoolInstance.borrow(_flexUsdAddress, amountFlexUSDToBorrow, RateMode.Stable, "0", {
 //         from: _borrowerAddress,
 //       }),
 //       "User cannot borrow the selected amount with a stable rate",
@@ -120,29 +120,29 @@
 //   })
 
 //   it("BORROW - Test user cannot borrow more than 25% of the liquidity available", async () => {
-//     const {aDAI: aDaiInstance} = _aTokenInstances
-//     const {DAI: daiInstance} = _tokenInstances
+//     const {aFLEXUSD: aFlexUsdInstance} = _aTokenInstances
+//     const {FLEXUSD: flexUsdInstance} = _tokenInstances
 
-//     //redeem the DAI previously deposited
-//     const amountADAIToRedeem = await convertToCurrencyDecimals(aDaiInstance.address, "1000")
-//     await aDaiInstance.redeem(amountADAIToRedeem, {
+//     //redeem the FLEXUSD previously deposited
+//     const amountAFlexUSDToRedeem = await convertToCurrencyDecimals(aFlexUsdInstance.address, "1000")
+//     await aFlexUsdInstance.redeem(amountAFlexUSDToRedeem, {
 //       from: _borrowerAddress,
 //     })
 
-//     //user 2 deposits 5 BCH tries to borrow. needs to be reverted as you can't borrow more than 25% of the available reserve (250 DAI)
+//     //user 2 deposits 5 BCH tries to borrow. needs to be reverted as you can't borrow more than 25% of the available reserve (250 FLEXUSD)
 //     const amountETHToDeposit = await convertToCurrencyDecimals(ETHEREUM_ADDRESS, "5")
 //     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, amountETHToDeposit, "0", {
 //       from: _borrowerAddress,
 //       value: amountETHToDeposit,
 //     })
 
-//     const data: any = await _lendingPoolInstance.getReserveData(_daiAddress)
+//     const data: any = await _lendingPoolInstance.getReserveData(_flexUsdAddress)
 
-//     const amountDAIToBorrow = await convertToCurrencyDecimals(_daiAddress, "500")
+//     const amountFlexUSDToBorrow = await convertToCurrencyDecimals(_flexUsdAddress, "500")
 
 //     //user 2 tries to borrow
 //     await expectRevert(
-//       _lendingPoolInstance.borrow(_daiAddress, amountDAIToBorrow, RateMode.Stable, "0", {
+//       _lendingPoolInstance.borrow(_flexUsdAddress, amountFlexUSDToBorrow, RateMode.Stable, "0", {
 //         from: _borrowerAddress,
 //       }),
 //       "User is trying to borrow too much liquidity at a stable rate",
@@ -150,21 +150,21 @@
 //   })
 
 //   it("BORROW - Test user can still borrow  a currency that he previously deposited as a collateral but he transferred/redeemed", async () => {
-//     const {aDAI: aDaiInstance} = _aTokenInstances
-//     const {DAI: daiInstance} = _tokenInstances
+//     const {aFLEXUSD: aFlexUsdInstance} = _aTokenInstances
+//     const {FLEXUSD: flexUsdInstance} = _tokenInstances
 
 //     const user = users[2]
 
-//     //user deposits 1000 DAI
-//     await daiInstance.mint(await convertToCurrencyDecimals(daiInstance.address, "1000"), {
+//     //user deposits 1000 FLEXUSD
+//     await flexUsdInstance.mint(await convertToCurrencyDecimals(flexUsdInstance.address, "1000"), {
 //       from: user,
 //     })
-//     await daiInstance.approve(_lendingPoolCoreInstance.address, APPROVAL_AMOUNT_LENDING_POOL_CORE, {
+//     await flexUsdInstance.approve(_lendingPoolCoreInstance.address, APPROVAL_AMOUNT_LENDING_POOL_CORE, {
 //       from: user,
 //     })
 
-//     const amountDAIToDeposit = await convertToCurrencyDecimals(daiInstance.address, "1000")
-//     await _lendingPoolInstance.deposit(daiInstance.address, amountDAIToDeposit, "0", {
+//     const amountFlexUSDToDeposit = await convertToCurrencyDecimals(flexUsdInstance.address, "1000")
+//     await _lendingPoolInstance.deposit(flexUsdInstance.address, amountFlexUSDToDeposit, "0", {
 //       from: user,
 //     })
 
@@ -175,24 +175,24 @@
 //       value: amountETHToDeposit,
 //     })
 
-//     //user transfers to another address all the overlying aDAI
+//     //user transfers to another address all the overlying aFLEXUSD
 
-//     const aDAIBalance = await aDaiInstance.balanceOf(user)
+//     const aFlexUSDBalance = await aFlexUsdInstance.balanceOf(user)
 
-//     await aDaiInstance.transfer(users[3], aDAIBalance, {
+//     await aFlexUsdInstance.transfer(users[3], aFlexUSDBalance, {
 //       from: user,
 //     })
 
 //     //check the underlying balance is 0
-//     const userData: any = await _lendingPoolInstance.getUserReserveData(daiInstance.address, user)
+//     const userData: any = await _lendingPoolInstance.getUserReserveData(flexUsdInstance.address, user)
 
 //     expect(userData.currentATokenBalance.toString()).to.be.equal("0")
 
-//     //user tries to borrow the DAI at a stable rate using the BCH as collateral
-//     const amountDAIToBorrow = await convertToCurrencyDecimals(_daiAddress, "100")
+//     //user tries to borrow the FLEXUSD at a stable rate using the BCH as collateral
+//     const amountFlexUSDToBorrow = await convertToCurrencyDecimals(_flexUsdAddress, "100")
 
 //     //user tries to borrow. No revert expected
-//     await _lendingPoolInstance.borrow(_daiAddress, amountDAIToBorrow, RateMode.Stable, "0", {
+//     await _lendingPoolInstance.borrow(_flexUsdAddress, amountFlexUSDToBorrow, RateMode.Stable, "0", {
 //       from: user,
 //     })
 //   })

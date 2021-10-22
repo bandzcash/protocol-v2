@@ -12,7 +12,7 @@ import {
   rateStrategyVolatileFour,
 } from './rateStrategies';
 
-export const strategyDAI: IReserveParams = {
+export const strategyFlexUSD: IReserveParams = {
   strategy: rateStrategyStableTwo,
   baseLTVAsCollateral: '7500',
   liquidationThreshold: '8000',

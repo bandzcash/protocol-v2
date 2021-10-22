@@ -153,9 +153,9 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     ALL_ASSETS_INITIAL_PRICES,
     {
       WBCH: mockTokens.WBCH.address,
-      DAI: mockTokens.DAI.address,
+      FLEXUSD: mockTokens.FLEXUSD.address,
       BANDZ: mockTokens.BANDZ.address,
-      // DAI: mockTokens.LpDAI.address,
+      // FLEXUSD: mockTokens.LpFlexUSD.address,
       // USDT: mockTokens.LpUSDT.address,
       // WBTC: mockTokens.LpWBTC.address,
       // WBCH: mockTokens.LpWBCH.address,
@@ -245,6 +245,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await waitForTx(
     await addressesProvider.setLendingPoolCollateralManager(collateralManager.address)
   );
+
   await deployMockFlashLoanReceiver(addressesProvider.address);
 
   const mockUniswapRouter = await deployMockUniswapRouter();
