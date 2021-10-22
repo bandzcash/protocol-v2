@@ -6,11 +6,10 @@ import { WAD } from './constants';
 import { Wallet, ContractTransaction } from 'ethers';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import { BuidlerRuntimeEnvironment } from '@nomiclabs/buidler/types';
-import { tEthereumAddress } from './types';
+import { tSmartBCHAddress } from './types';
 import { isAddress } from 'ethers/lib/utils';
 import { isZeroAddress } from 'ethereumjs-util';
-import { SignerWithAddress } from '../test-suites/test-aave/helpers/make-suite';
-import { usingTenderly } from './tenderly-utils';
+import { SignerWithAddress } from '../test-suites/test-bandz/helpers/make-suite';
 
 export const toWad = (value: string | number) => new BigNumber(value).times(WAD).toFixed();
 
@@ -111,20 +110,18 @@ export const printContracts = () => {
   console.log(contractsPrint.join('\n'), '\n');
 };
 
-export const notFalsyOrZeroAddress = (address: tEthereumAddress | null | undefined): boolean => {
+export const notFalsyOrZeroAddress = (address: tSmartBCHAddress | null | undefined): boolean => {
   if (!address) {
     return false;
   }
   return isAddress(address) && !isZeroAddress(address);
 };
 
-export const impersonateAddress = async (address: tEthereumAddress): Promise<SignerWithAddress> => {
-  if (!usingTenderly()) {
-    await (DRE as HardhatRuntimeEnvironment).network.provider.request({
-      method: 'hardhat_impersonateAccount',
-      params: [address],
-    });
-  }
+export const impersonateAddress = async (address: tSmartBCHAddress): Promise<SignerWithAddress> => {
+  await (DRE as HardhatRuntimeEnvironment).network.provider.request({
+    method: 'hardhat_impersonateAccount',
+    params: [address],
+  });
   const signer = await DRE.ethers.provider.getSigner(address);
 
   return {
@@ -140,9 +137,6 @@ export const omit = <T, U extends keyof T>(obj: T, keys: U[]): Omit<T, U> =>
   );
 
 export const impersonateAccountsHardhat = async (accounts: string[]) => {
-  if (process.env.TENDERLY === 'true') {
-    return;
-  }
   // eslint-disable-next-line no-restricted-syntax
   for (const account of accounts) {
     // eslint-disable-next-line no-await-in-loop

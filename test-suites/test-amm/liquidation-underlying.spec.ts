@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import { DRE, increaseTime } from '../../helpers/misc-utils';
-import { APPROVAL_AMOUNT_LENDING_POOL, oneEther } from '../../helpers/constants';
+import { APPROVAL_AMOUNT_LENDING_POOL, oneBch } from '../../helpers/constants';
 import { convertToCurrencyDecimals } from '../../helpers/contracts-helpers';
 import { makeSuite } from './helpers/make-suite';
 import { ProtocolErrors, RateMode } from '../../helpers/types';
@@ -27,71 +27,71 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   });
 
   it("It's not possible to liquidate on a non-active collateral or a non active principal", async () => {
-    const { configurator, weth, pool, users, dai } = testEnv;
+    const { configurator, wbch, pool, users, flexUsd } = testEnv;
     const user = users[1];
-    await configurator.deactivateReserve(weth.address);
+    await configurator.deactivateReserve(wbch.address);
 
     await expect(
-      pool.liquidationCall(weth.address, dai.address, user.address, parseEther('1000'), false)
+      pool.liquidationCall(wbch.address, flexUsd.address, user.address, parseEther('1000'), false)
     ).to.be.revertedWith('2');
 
-    await configurator.activateReserve(weth.address);
+    await configurator.activateReserve(wbch.address);
 
-    await configurator.deactivateReserve(dai.address);
+    await configurator.deactivateReserve(flexUsd.address);
 
     await expect(
-      pool.liquidationCall(weth.address, dai.address, user.address, parseEther('1000'), false)
+      pool.liquidationCall(wbch.address, flexUsd.address, user.address, parseEther('1000'), false)
     ).to.be.revertedWith('2');
 
-    await configurator.activateReserve(dai.address);
+    await configurator.activateReserve(flexUsd.address);
   });
 
-  it('Deposits WETH, borrows DAI', async () => {
-    const { dai, weth, users, pool, oracle } = testEnv;
+  it('Deposits WBCH, borrows FLEXUSD', async () => {
+    const { flexUsd, wbch, users, pool, oracle } = testEnv;
     const depositor = users[0];
     const borrower = users[1];
 
-    //mints DAI to depositor
-    await dai.connect(depositor.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    //mints FLEXUSD to depositor
+    await flexUsd.connect(depositor.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
     //approve protocol to access depositor wallet
-    await dai.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //user 1 deposits 1000 DAI
-    const amountDAItoDeposit = await convertToCurrencyDecimals(dai.address, '1000');
+    //user 1 deposits 1000 FLEXUSD
+    const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
     await pool
       .connect(depositor.signer)
-      .deposit(dai.address, amountDAItoDeposit, depositor.address, '0');
-    //user 2 deposits 1 ETH
-    const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
+      .deposit(flexUsd.address, amountFlexUSDtoDeposit, depositor.address, '0');
+    //user 2 deposits 1 BCH
+    const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
-    //mints WETH to borrower
-    await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
+    //mints WBCH to borrower
+    await wbch.connect(borrower.signer).mint(await convertToCurrencyDecimals(wbch.address, '1000'));
 
     //approve protocol to access the borrower wallet
-    await weth.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wbch.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     await pool
       .connect(borrower.signer)
-      .deposit(weth.address, amountETHtoDeposit, borrower.address, '0');
+      .deposit(wbch.address, amountETHtoDeposit, borrower.address, '0');
 
     //user 2 borrows
 
     const userGlobalData = await pool.getUserAccountData(borrower.address);
-    const daiPrice = await oracle.getAssetPrice(dai.address);
+    const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
-    const amountDAIToBorrow = await convertToCurrencyDecimals(
-      dai.address,
+    const amountFlexUSDToBorrow = await convertToCurrencyDecimals(
+      flexUsd.address,
       new BigNumber(userGlobalData.availableBorrowsETH.toString())
-        .div(daiPrice.toString())
+        .div(flexUsdPrice.toString())
         .multipliedBy(0.95)
         .toFixed(0)
     );
 
     await pool
       .connect(borrower.signer)
-      .borrow(dai.address, amountDAIToBorrow, RateMode.Variable, '0', borrower.address);
+      .borrow(flexUsd.address, amountFlexUSDToBorrow, RateMode.Variable, '0', borrower.address);
 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
@@ -102,43 +102,43 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
   });
 
   it('Drop the health factor below 1', async () => {
-    const { dai, weth, users, pool, oracle } = testEnv;
+    const { flexUsd, wbch, users, pool, oracle } = testEnv;
     const borrower = users[1];
 
-    const daiPrice = await oracle.getAssetPrice(dai.address);
+    const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
     await oracle.setAssetPrice(
-      dai.address,
-      new BigNumber(daiPrice.toString()).multipliedBy(1.18).toFixed(0)
+      flexUsd.address,
+      new BigNumber(flexUsdPrice.toString()).multipliedBy(1.18).toFixed(0)
     );
 
     const userGlobalData = await pool.getUserAccountData(borrower.address);
 
     expect(userGlobalData.healthFactor.toString()).to.be.bignumber.lt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       INVALID_HF
     );
   });
 
   it('Liquidates the borrow', async () => {
-    const { dai, weth, users, pool, oracle, helpersContract } = testEnv;
+    const { flexUsd, wbch, users, pool, oracle, helpersContract } = testEnv;
     const liquidator = users[3];
     const borrower = users[1];
 
-    //mints dai to the liquidator
-    await dai.connect(liquidator.signer).mint(await convertToCurrencyDecimals(dai.address, '1000'));
+    //mints flexUsd to the liquidator
+    await flexUsd.connect(liquidator.signer).mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
     //approve protocol to access the liquidator wallet
-    await dai.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    const daiReserveBefore = await getReserveData(helpersContract, dai.address);
-    const daiReserveDataBefore = await helpersContract.getReserveData(dai.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(weth.address);
+    const flexUsdReserveBefore = await getReserveData(helpersContract, flexUsd.address);
+    const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
+    const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const userReserveDataBefore = await getUserData(
       pool,
       helpersContract,
-      dai.address,
+      flexUsd.address,
       borrower.address
     );
 
@@ -148,26 +148,26 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
 
     const tx = await pool
       .connect(liquidator.signer)
-      .liquidationCall(weth.address, dai.address, borrower.address, amountToLiquidate, false);
+      .liquidationCall(wbch.address, flexUsd.address, borrower.address, amountToLiquidate, false);
 
     const userReserveDataAfter = await getUserData(
       pool,
       helpersContract,
-      dai.address,
+      flexUsd.address,
       borrower.address
     );
 
-    const daiReserveDataAfter = await helpersContract.getReserveData(dai.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(weth.address);
+    const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
+    const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
-    const collateralPrice = await oracle.getAssetPrice(weth.address);
-    const principalPrice = await oracle.getAssetPrice(dai.address);
+    const collateralPrice = await oracle.getAssetPrice(wbch.address);
+    const principalPrice = await oracle.getAssetPrice(flexUsd.address);
 
     const collateralDecimals = (
-      await helpersContract.getReserveConfigurationData(weth.address)
+      await helpersContract.getReserveConfigurationData(wbch.address)
     ).decimals.toString();
     const principalDecimals = (
-      await helpersContract.getReserveConfigurationData(dai.address)
+      await helpersContract.getReserveConfigurationData(flexUsd.address)
     ).decimals.toString();
 
     const expectedCollateralLiquidated = new BigNumber(principalPrice.toString())
@@ -188,7 +188,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
     const reserve = await getReserveData
     const variableDebtBeforeTx = calcExpectedVariableDebtTokenBalance(
-      daiReserveBefore,
+      flexUsdReserveBefore,
       userReserveDataBefore,
       txTimestamp
     );
@@ -199,106 +199,107 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
 
     //the liquidity index of the principal reserve needs to be bigger than the index before
-    expect(daiReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
-      daiReserveDataBefore.liquidityIndex.toString(),
+    expect(flexUsdReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
+      flexUsdReserveDataBefore.liquidityIndex.toString(),
       'Invalid liquidity index'
     );
 
     //the principal APY after a liquidation needs to be lower than the APY before
-    expect(daiReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
-      daiReserveDataBefore.liquidityRate.toString(),
+    expect(flexUsdReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
+      flexUsdReserveDataBefore.liquidityRate.toString(),
       'Invalid liquidity APY'
     );
 
-    expect(daiReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(daiReserveDataBefore.availableLiquidity.toString())
+    expect(flexUsdReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(flexUsdReserveDataBefore.availableLiquidity.toString())
         .plus(amountToLiquidate)
         .toFixed(0),
       'Invalid principal available liquidity'
     );
 
-    expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(ethReserveDataBefore.availableLiquidity.toString())
+    expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(bchReserveDataBefore.availableLiquidity.toString())
         .minus(expectedCollateralLiquidated)
         .toFixed(0),
       'Invalid collateral available liquidity'
     );
   });
 
-  it('User 3 deposits 1000 USDC, user 4 1 WETH, user 4 borrows - drops HF, liquidates the borrow', async () => {
-    const { usdc, users, pool, oracle, weth, helpersContract } = testEnv;
+  // USDC before
+  it('User 3 deposits 1000 FLEXUSD, user 4 1 WBCH, user 4 borrows - drops HF, liquidates the borrow', async () => {
+    const { flexUsd, users, pool, oracle, wbch, helpersContract } = testEnv;
 
     const depositor = users[3];
     const borrower = users[4];
     const liquidator = users[5];
 
-    //mints USDC to depositor
-    await usdc
+    //mints FLEXUSD to depositor
+    await flexUsd
       .connect(depositor.signer)
-      .mint(await convertToCurrencyDecimals(usdc.address, '1000'));
+      .mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
     //approve protocol to access depositor wallet
-    await usdc.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(depositor.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //depositor deposits 1000 USDC
-    const amountUSDCtoDeposit = await convertToCurrencyDecimals(usdc.address, '1000');
+    //depositor deposits 1000 FLEXUSD
+    const amountFlexUSDtoDeposit = await convertToCurrencyDecimals(flexUsd.address, '1000');
 
     await pool
       .connect(depositor.signer)
-      .deposit(usdc.address, amountUSDCtoDeposit, depositor.address, '0');
+      .deposit(flexUsd.address, amountFlexUSDtoDeposit, depositor.address, '0');
 
-    //borrower deposits 1 ETH
-    const amountETHtoDeposit = await convertToCurrencyDecimals(weth.address, '1');
+    //borrower deposits 1 BCH
+    const amountETHtoDeposit = await convertToCurrencyDecimals(wbch.address, '1');
 
-    //mints WETH to borrower
-    await weth.connect(borrower.signer).mint(await convertToCurrencyDecimals(weth.address, '1000'));
+    //mints WBCH to borrower
+    await wbch.connect(borrower.signer).mint(await convertToCurrencyDecimals(wbch.address, '1000'));
 
     //approve protocol to access the borrower wallet
-    await weth.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await wbch.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     await pool
       .connect(borrower.signer)
-      .deposit(weth.address, amountETHtoDeposit, borrower.address, '0');
+      .deposit(wbch.address, amountETHtoDeposit, borrower.address, '0');
 
     //borrower borrows
     const userGlobalData = await pool.getUserAccountData(borrower.address);
 
-    const usdcPrice = await oracle.getAssetPrice(usdc.address);
+    const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
-    const amountUSDCToBorrow = await convertToCurrencyDecimals(
-      usdc.address,
+    const amountFlexUSDToBorrow = await convertToCurrencyDecimals(
+      flexUsd.address,
       new BigNumber(userGlobalData.availableBorrowsETH.toString())
-        .div(usdcPrice.toString())
+        .div(flexUsdPrice.toString())
         .multipliedBy(0.9502)
         .toFixed(0)
     );
 
     await pool
       .connect(borrower.signer)
-      .borrow(usdc.address, amountUSDCToBorrow, RateMode.Variable, '0', borrower.address);
+      .borrow(flexUsd.address, amountFlexUSDToBorrow, RateMode.Variable, '0', borrower.address);
 
     //drops HF below 1
     await oracle.setAssetPrice(
-      usdc.address,
-      new BigNumber(usdcPrice.toString()).multipliedBy(1.12).toFixed(0)
+      flexUsd.address,
+      new BigNumber(flexUsdPrice.toString()).multipliedBy(1.12).toFixed(0)
     );
 
-    //mints dai to the liquidator
+    //mints flexUsd to the liquidator
 
-    await usdc
+    await flexUsd
       .connect(liquidator.signer)
-      .mint(await convertToCurrencyDecimals(usdc.address, '1000'));
+      .mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
     //approve protocol to access depositor wallet
-    await usdc.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     const userReserveDataBefore = await helpersContract.getUserReserveData(
-      usdc.address,
+      flexUsd.address,
       borrower.address
     );
 
-    const usdcReserveDataBefore = await helpersContract.getReserveData(usdc.address);
-    const ethReserveDataBefore = await helpersContract.getReserveData(weth.address);
+    const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
+    const bchReserveDataBefore = await helpersContract.getReserveData(wbch.address);
 
     const amountToLiquidate = DRE.ethers.BigNumber.from(
       userReserveDataBefore.currentVariableDebt.toString()
@@ -308,26 +309,26 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
 
     await pool
       .connect(liquidator.signer)
-      .liquidationCall(weth.address, usdc.address, borrower.address, amountToLiquidate, false);
+      .liquidationCall(wbch.address, flexUsd.address, borrower.address, amountToLiquidate, false);
 
     const userReserveDataAfter = await helpersContract.getUserReserveData(
-      usdc.address,
+      flexUsd.address,
       borrower.address
     );
 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
-    const usdcReserveDataAfter = await helpersContract.getReserveData(usdc.address);
-    const ethReserveDataAfter = await helpersContract.getReserveData(weth.address);
+    const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
+    const bchReserveDataAfter = await helpersContract.getReserveData(wbch.address);
 
-    const collateralPrice = await oracle.getAssetPrice(weth.address);
-    const principalPrice = await oracle.getAssetPrice(usdc.address);
+    const collateralPrice = await oracle.getAssetPrice(wbch.address);
+    const principalPrice = await oracle.getAssetPrice(flexUsd.address);
 
     const collateralDecimals = (
-      await helpersContract.getReserveConfigurationData(weth.address)
+      await helpersContract.getReserveConfigurationData(wbch.address)
     ).decimals.toString();
     const principalDecimals = (
-      await helpersContract.getReserveConfigurationData(usdc.address)
+      await helpersContract.getReserveConfigurationData(flexUsd.address)
     ).decimals.toString();
 
     const expectedCollateralLiquidated = new BigNumber(principalPrice.toString())
@@ -340,7 +341,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       .decimalPlaces(0, BigNumber.ROUND_DOWN);
 
     expect(userGlobalDataAfter.healthFactor.toString()).to.be.bignumber.gt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       'Invalid health factor'
     );
 
@@ -352,106 +353,107 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
     );
 
     //the liquidity index of the principal reserve needs to be bigger than the index before
-    expect(usdcReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
-      usdcReserveDataBefore.liquidityIndex.toString(),
+    expect(flexUsdReserveDataAfter.liquidityIndex.toString()).to.be.bignumber.gte(
+      flexUsdReserveDataBefore.liquidityIndex.toString(),
       'Invalid liquidity index'
     );
 
     //the principal APY after a liquidation needs to be lower than the APY before
-    expect(usdcReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
-      usdcReserveDataBefore.liquidityRate.toString(),
+    expect(flexUsdReserveDataAfter.liquidityRate.toString()).to.be.bignumber.lt(
+      flexUsdReserveDataBefore.liquidityRate.toString(),
       'Invalid liquidity APY'
     );
 
-    expect(usdcReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(usdcReserveDataBefore.availableLiquidity.toString())
+    expect(flexUsdReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(flexUsdReserveDataBefore.availableLiquidity.toString())
         .plus(amountToLiquidate)
         .toFixed(0),
       'Invalid principal available liquidity'
     );
 
-    expect(ethReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(ethReserveDataBefore.availableLiquidity.toString())
+    expect(bchReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(bchReserveDataBefore.availableLiquidity.toString())
         .minus(expectedCollateralLiquidated)
         .toFixed(0),
       'Invalid collateral available liquidity'
     );
   });
 
-  it('User 4 deposits 10 AAVE - drops HF, liquidates the AAVE, which results on a lower amount being liquidated', async () => {
-    const { aave, usdc, users, pool, oracle, helpersContract } = testEnv;
+  // USDC before
+  it('User 4 deposits 10 BANDZ - drops HF, liquidates the BANDZ, which results on a lower amount being liquidated', async () => {
+    const { bandz, flexUsd, users, pool, oracle, helpersContract } = testEnv;
 
     const depositor = users[3];
     const borrower = users[4];
     const liquidator = users[5];
 
-    //mints AAVE to borrower
-    await aave.connect(borrower.signer).mint(await convertToCurrencyDecimals(aave.address, '10'));
+    //mints BANDZ to borrower
+    await bandz.connect(borrower.signer).mint(await convertToCurrencyDecimals(bandz.address, '10'));
 
     //approve protocol to access the borrower wallet
-    await aave.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await bandz.connect(borrower.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
-    //borrower deposits 10 AAVE
-    const amountToDeposit = await convertToCurrencyDecimals(aave.address, '10');
+    //borrower deposits 10 BANDZ
+    const amountToDeposit = await convertToCurrencyDecimals(bandz.address, '10');
 
     await pool
       .connect(borrower.signer)
-      .deposit(aave.address, amountToDeposit, borrower.address, '0');
-    const usdcPrice = await oracle.getAssetPrice(usdc.address);
+      .deposit(bandz.address, amountToDeposit, borrower.address, '0');
+    const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
     //drops HF below 1
     await oracle.setAssetPrice(
-      usdc.address,
-      new BigNumber(usdcPrice.toString()).multipliedBy(1.14).toFixed(0)
+      flexUsd.address,
+      new BigNumber(flexUsdPrice.toString()).multipliedBy(1.14).toFixed(0)
     );
 
-    //mints usdc to the liquidator
-    await usdc
+    //mints flexUsd to the liquidator
+    await flexUsd
       .connect(liquidator.signer)
-      .mint(await convertToCurrencyDecimals(usdc.address, '1000'));
+      .mint(await convertToCurrencyDecimals(flexUsd.address, '1000'));
 
     //approve protocol to access depositor wallet
-    await usdc.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
+    await flexUsd.connect(liquidator.signer).approve(pool.address, APPROVAL_AMOUNT_LENDING_POOL);
 
     const userReserveDataBefore = await helpersContract.getUserReserveData(
-      usdc.address,
+      flexUsd.address,
       borrower.address
     );
 
-    const usdcReserveDataBefore = await helpersContract.getReserveData(usdc.address);
-    const aaveReserveDataBefore = await helpersContract.getReserveData(aave.address);
+    const flexUsdReserveDataBefore = await helpersContract.getReserveData(flexUsd.address);
+    const bandzReserveDataBefore = await helpersContract.getReserveData(bandz.address);
 
     const amountToLiquidate = new BigNumber(userReserveDataBefore.currentVariableDebt.toString())
       .div(2)
       .decimalPlaces(0, BigNumber.ROUND_DOWN)
       .toFixed(0);
 
-    const collateralPrice = await oracle.getAssetPrice(aave.address);
-    const principalPrice = await oracle.getAssetPrice(usdc.address);
+    const collateralPrice = await oracle.getAssetPrice(bandz.address);
+    const principalPrice = await oracle.getAssetPrice(flexUsd.address);
 
     await pool
       .connect(liquidator.signer)
-      .liquidationCall(aave.address, usdc.address, borrower.address, amountToLiquidate, false);
+      .liquidationCall(bandz.address, flexUsd.address, borrower.address, amountToLiquidate, false);
 
     const userReserveDataAfter = await helpersContract.getUserReserveData(
-      usdc.address,
+      flexUsd.address,
       borrower.address
     );
 
     const userGlobalDataAfter = await pool.getUserAccountData(borrower.address);
 
-    const usdcReserveDataAfter = await helpersContract.getReserveData(usdc.address);
-    const aaveReserveDataAfter = await helpersContract.getReserveData(aave.address);
+    const flexUsdReserveDataAfter = await helpersContract.getReserveData(flexUsd.address);
+    const bandzReserveDataAfter = await helpersContract.getReserveData(bandz.address);
 
-    const aaveConfiguration = await helpersContract.getReserveConfigurationData(aave.address);
-    const collateralDecimals = aaveConfiguration.decimals.toString();
-    const liquidationBonus = aaveConfiguration.liquidationBonus.toString();
+    const bandzConfiguration = await helpersContract.getReserveConfigurationData(bandz.address);
+    const collateralDecimals = bandzConfiguration.decimals.toString();
+    const liquidationBonus = bandzConfiguration.liquidationBonus.toString();
 
     const principalDecimals = (
-      await helpersContract.getReserveConfigurationData(usdc.address)
+      await helpersContract.getReserveConfigurationData(flexUsd.address)
     ).decimals.toString();
 
-    const expectedCollateralLiquidated = oneEther.multipliedBy('10');
+    const expectedCollateralLiquidated = oneBch.multipliedBy('10');
 
     const expectedPrincipal = new BigNumber(collateralPrice.toString())
       .times(expectedCollateralLiquidated)
@@ -464,7 +466,7 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       .decimalPlaces(0, BigNumber.ROUND_DOWN);
 
     expect(userGlobalDataAfter.healthFactor.toString()).to.be.bignumber.gt(
-      oneEther.toFixed(0),
+      oneBch.toFixed(0),
       'Invalid health factor'
     );
 
@@ -475,15 +477,15 @@ makeSuite('LendingPool liquidation - liquidator receiving the underlying asset',
       'Invalid user borrow balance after liquidation'
     );
 
-    expect(usdcReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(usdcReserveDataBefore.availableLiquidity.toString())
+    expect(flexUsdReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(flexUsdReserveDataBefore.availableLiquidity.toString())
         .plus(expectedPrincipal)
         .toFixed(0),
       'Invalid principal available liquidity'
     );
 
-    expect(aaveReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
-      new BigNumber(aaveReserveDataBefore.availableLiquidity.toString())
+    expect(bandzReserveDataAfter.availableLiquidity.toString()).to.be.bignumber.almostEqual(
+      new BigNumber(bandzReserveDataBefore.availableLiquidity.toString())
         .minus(expectedCollateralLiquidated)
         .toFixed(0),
       'Invalid collateral available liquidity'

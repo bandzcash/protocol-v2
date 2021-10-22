@@ -1,0 +1,30 @@
+{
+  "title": "LendingPool: Rebalance stable rate",
+  "description": "Test cases for the rebalanceStableBorrowRate() function.",
+  "stories": [
+    {
+      "description": "User 1 borrows the remaining FLEXUSD (USDC before) (usage ratio = 100%) at variable. User 0 rebalances user 1, fails since there are no stable borrows (revert expected)",
+      "actions": [
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "20",
+            "borrowRateMode": "variable",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "rebalanceStableBorrowRate",
+          "args": {
+            "reserve": "FLEXUSD",
+            "user": "0",
+            "target": "1"
+          },
+          "expected": "revert"
+        }
+      ]
+    }
+  ]
+}

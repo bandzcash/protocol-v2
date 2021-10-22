@@ -20,18 +20,18 @@ import {
   deployLendingRateOracle,
   deployStableAndVariableTokensHelper,
   deployATokensAndRatesHelper,
-  deployWETHGateway,
-  deployWETHMocked,
+  deployWBCHGateway,
+  deployWBCHMocked,
   deployMockUniswapRouter,
   deployUniswapLiquiditySwapAdapter,
   deployUniswapRepayAdapter,
   deployFlashLiquidationAdapter,
-  authorizeWETHGateway,
+  authorizeWBCHGateway,
   deployATokenImplementations,
-  deployAaveOracle,
+  deployBandzOracle,
 } from '../../helpers/contracts-deployments';
 import { Signer } from 'ethers';
-import { TokenContractId, eContractid, tEthereumAddress, AavePools } from '../../helpers/types';
+import { TokenContractId, eContractid, tSmartBCHAddress, BandzPools } from '../../helpers/types';
 import { MintableERC20 } from '../../types/MintableERC20';
 import {
   ConfigNames,
@@ -49,7 +49,7 @@ import {
 import { DRE, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
 import AmmConfig from '../../markets/amm';
-import { oneEther, ZERO_ADDRESS } from '../../helpers/constants';
+import { oneBch, ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getLendingPool,
   getLendingPoolConfiguratorProxy,
@@ -66,12 +66,12 @@ const LENDING_RATE_ORACLE_RATES_COMMON = AmmConfig.LendingRateOracleRatesCommon;
 const deployAllMockTokens = async (deployer: Signer) => {
   const tokens: { [symbol: string]: MockContract | MintableERC20 | WETH9Mocked } = {};
 
-  const ammConfigData = getReservesConfigByPool(AavePools.amm);
+  const ammConfigData = getReservesConfigByPool(BandzPools.amm);
 
   for (const tokenSymbol of Object.keys(TokenContractId)) {
-    if (tokenSymbol === 'WETH') {
-      tokens[tokenSymbol] = await deployWETHMocked();
-      await registerContractInJsonDb('WETH', tokens[tokenSymbol]);
+    if (tokenSymbol === 'WBCH') {
+      tokens[tokenSymbol] = await deployWBCHMocked();
+      await registerContractInJsonDb('WBCH', tokens[tokenSymbol]);
       continue;
     }
     let decimals = 18;
@@ -95,7 +95,7 @@ const deployAllMockTokens = async (deployer: Signer) => {
 
 const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   console.time('setup');
-  const aaveAdmin = await deployer.getAddress();
+  const bandzAdmin = await deployer.getAddress();
   const config = loadPoolConfig(ConfigNames.Amm);
   const {
     ATokenNamePrefix,
@@ -108,7 +108,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const mockTokens = await deployAllMockTokens(deployer);
 
   const addressesProvider = await deployLendingPoolAddressesProvider(AmmConfig.MarketId);
-  await waitForTx(await addressesProvider.setPoolAdmin(aaveAdmin));
+  await waitForTx(await addressesProvider.setPoolAdmin(bandzAdmin));
 
   //setting users[1] as emergency admin, which is in position 2 in the DRE addresses list
   const addressList = await getEthersSignersAddresses();
@@ -154,51 +154,15 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   await setInitialAssetPricesInOracle(
     ALL_ASSETS_INITIAL_PRICES,
     {
-      WETH: mockTokens.WETH.address,
-      DAI: mockTokens.DAI.address,
-      TUSD: mockTokens.TUSD.address,
-      USDC: mockTokens.USDC.address,
-      USDT: mockTokens.USDT.address,
-      SUSD: mockTokens.SUSD.address,
-      AAVE: mockTokens.AAVE.address,
-      BAT: mockTokens.BAT.address,
-      MKR: mockTokens.MKR.address,
-      LINK: mockTokens.LINK.address,
-      KNC: mockTokens.KNC.address,
-      WBTC: mockTokens.WBTC.address,
-      MANA: mockTokens.MANA.address,
-      ZRX: mockTokens.ZRX.address,
-      SNX: mockTokens.SNX.address,
-      BUSD: mockTokens.BUSD.address,
-      YFI: mockTokens.BUSD.address,
-      REN: mockTokens.REN.address,
-      UNI: mockTokens.UNI.address,
-      ENJ: mockTokens.ENJ.address,
-      // DAI: mockTokens.LpDAI.address,
-      // USDC: mockTokens.LpUSDC.address,
+      WBCH: mockTokens.WBCH.address,
+      FLEXUSD: mockTokens.FLEXUSD.address,
+      BANDZ: mockTokens.BANDZ.address,
+      // FLEXUSD: mockTokens.LpFlexUSD.address,
       // USDT: mockTokens.LpUSDT.address,
       // WBTC: mockTokens.LpWBTC.address,
-      // WETH: mockTokens.LpWETH.address,
-      UniDAIWETH: mockTokens.UniDAIWETH.address,
-      UniWBTCWETH: mockTokens.UniWBTCWETH.address,
-      UniAAVEWETH: mockTokens.UniAAVEWETH.address,
-      UniBATWETH: mockTokens.UniBATWETH.address,
-      UniDAIUSDC: mockTokens.UniDAIUSDC.address,
-      UniCRVWETH: mockTokens.UniCRVWETH.address,
-      UniLINKWETH: mockTokens.UniLINKWETH.address,
-      UniMKRWETH: mockTokens.UniMKRWETH.address,
-      UniRENWETH: mockTokens.UniRENWETH.address,
-      UniSNXWETH: mockTokens.UniSNXWETH.address,
-      UniUNIWETH: mockTokens.UniUNIWETH.address,
-      UniUSDCWETH: mockTokens.UniUSDCWETH.address,
-      UniWBTCUSDC: mockTokens.UniWBTCUSDC.address,
-      UniYFIWETH: mockTokens.UniYFIWETH.address,
-      BptWBTCWETH: mockTokens.BptWBTCWETH.address,
-      BptBALWETH: mockTokens.BptBALWETH.address,
-      WMATIC: mockTokens.WMATIC.address,
+      // WBCH: mockTokens.LpWBCH.address,
       USD: USD_ADDRESS,
-      STAKE: mockTokens.STAKE.address,
-      xSUSHI: ZERO_ADDRESS,
+      xMIST: ZERO_ADDRESS,
     },
     fallbackOracle
   );
@@ -206,14 +170,14 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const mockAggregators = await deployAllMockAggregators(MOCK_CHAINLINK_AGGREGATORS_PRICES);
 
   const allTokenAddresses = Object.entries(mockTokens).reduce(
-    (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, tokenContract]) => ({
+    (accum: { [tokenSymbol: string]: tSmartBCHAddress }, [tokenSymbol, tokenContract]) => ({
       ...accum,
       [tokenSymbol]: tokenContract.address,
     }),
     {}
   );
   const allAggregatorsAddresses = Object.entries(mockAggregators).reduce(
-    (accum: { [tokenSymbol: string]: tEthereumAddress }, [tokenSymbol, aggregator]) => ({
+    (accum: { [tokenSymbol: string]: tSmartBCHAddress }, [tokenSymbol, aggregator]) => ({
       ...accum,
       [tokenSymbol]: aggregator.address,
     }),
@@ -226,12 +190,12 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     config.OracleQuoteCurrency
   );
 
-  await deployAaveOracle([
+  await deployBandzOracle([
     tokens,
     aggregators,
     fallbackOracle.address,
-    mockTokens.WETH.address,
-    oneEther.toString(),
+    mockTokens.WBCH.address,
+    oneBch.toString(),
   ]);
   await waitForTx(await addressesProvider.setPriceOracle(fallbackOracle.address));
 
@@ -246,7 +210,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
     LENDING_RATE_ORACLE_RATES_COMMON,
     allReservesAddresses,
     lendingRateOracle,
-    aaveAdmin
+    bandzAdmin
   );
   await deployATokenImplementations(ConfigNames.Amm, ReservesConfig);
 
@@ -285,7 +249,7 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
   const adapterParams: [string, string, string] = [
     addressesProvider.address,
     mockUniswapRouter.address,
-    mockTokens.WETH.address,
+    mockTokens.WBCH.address,
   ];
 
   await deployUniswapLiquiditySwapAdapter(adapterParams);
@@ -294,8 +258,8 @@ const buildTestEnv = async (deployer: Signer, secondaryWallet: Signer) => {
 
   await deployWalletBalancerProvider();
 
-  const gateWay = await deployWETHGateway([mockTokens.WETH.address]);
-  await authorizeWETHGateway(gateWay.address, lendingPoolAddress);
+  const gateWay = await deployWBCHGateway([mockTokens.WBCH.address]);
+  await authorizeWBCHGateway(gateWay.address, lendingPoolAddress);
 
   console.timeEnd('setup');
 };

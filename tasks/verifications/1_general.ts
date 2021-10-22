@@ -19,14 +19,14 @@ import {
   getLendingPoolImpl,
   getProxy,
   getWalletProvider,
-  getWETHGateway,
+  getWBCHGateway,
 } from '../../helpers/contracts-getters';
 import { verifyContract, getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { notFalsyOrZeroAddress } from '../../helpers/misc-utils';
 import { eContractid, eNetwork, ICommonConfiguration } from '../../helpers/types';
 
-task('verify:general', 'Verify contracts at Etherscan')
-  .addFlag('all', 'Verify all contracts at Etherscan')
+task('verify:general', 'Verify contracts at SmartScan')
+  .addFlag('all', 'Verify all contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ all, pool }, localDRE) => {
     await localDRE.run('set-DRE');
@@ -40,7 +40,7 @@ task('verify:general', 'Verify contracts at Etherscan')
       LendingPoolCollateralManager,
       LendingPoolConfigurator,
       LendingPool,
-      WethGateway,
+      WbchGateway,
     } = poolConfig as ICommonConfiguration;
     const treasuryAddress = await getTreasuryAddress(poolConfig);
 
@@ -85,10 +85,10 @@ task('verify:general', 'Verify contracts at Etherscan')
       const dataProvider = await getAaveProtocolDataProvider();
       const walletProvider = await getWalletProvider();
 
-      const wethGatewayAddress = getParamPerNetwork(WethGateway, network);
-      const wethGateway = notFalsyOrZeroAddress(wethGatewayAddress)
-        ? await getWETHGateway(wethGatewayAddress)
-        : await getWETHGateway();
+      const wbchGatewayAddress = getParamPerNetwork(WbchGateway, network);
+      const wbchGateway = notFalsyOrZeroAddress(wbchGatewayAddress)
+        ? await getWBCHGateway(wbchGatewayAddress)
+        : await getWBCHGateway();
 
       // Address Provider
       console.log('\n- Verifying address provider...\n');
@@ -119,7 +119,7 @@ task('verify:general', 'Verify contracts at Etherscan')
       );
 
       // Test helpers
-      console.log('\n- Verifying  Aave  Provider Helpers...\n');
+      console.log('\n- Verifying  Bandz  Provider Helpers...\n');
       await verifyContract(eContractid.AaveProtocolDataProvider, dataProvider, [
         addressesProvider.address,
       ]);
@@ -130,7 +130,7 @@ task('verify:general', 'Verify contracts at Etherscan')
 
       // WETHGateway
       console.log('\n- Verifying  WETHGateway...\n');
-      await verifyContract(eContractid.WETHGateway, wethGateway, [
+      await verifyContract(eContractid.WETHGateway, wbchGateway, [
         await getWrappedNativeTokenAddress(poolConfig),
       ]);
     }

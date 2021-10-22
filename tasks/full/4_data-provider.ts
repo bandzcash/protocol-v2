@@ -4,7 +4,7 @@ import { exit } from 'process';
 import { getLendingPoolAddressesProvider } from '../../helpers/contracts-getters';
 
 task('full:data-provider', 'Initialize lending pool configuration.')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .setAction(async ({ verify }, localBRE) => {
     try {
       await localBRE.run('set-DRE');

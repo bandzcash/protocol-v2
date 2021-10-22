@@ -7,7 +7,7 @@
 //   MintableERC20Instance,
 // } from '../utils/typechain-types/truffle-contracts';
 // import {testEnvProviderWithoutInstances} from '../utils/truffle/dlp-tests-env';
-// import {oneEther, ETHEREUM_ADDRESS} from '../utils/constants';
+// import {oneBch, ETHEREUM_ADDRESS} from '../utils/constants';
 // import {convertToCurrencyDecimals} from '../utils/misc-utils';
 
 // const expectRevert = require('@openzeppelin/test-helpers').expectRevert;
@@ -119,7 +119,7 @@
 //     );
 //   });
 
-//   it('Freezes the ETH reserve', async () => {
+//   it('Freezes the BCH reserve', async () => {
 //     await _lendingPoolConfiguratorInstance.freezeReserve(ETHEREUM_ADDRESS);
 //   });
 
@@ -151,75 +151,75 @@
 //     );
 //   });
 
-//   it('unfreezes the reserve, user deposits 1 ETH, freezes the reserve, check that the user can redeem', async () => {
-//     const {aWETH} = _aTokenInstances;
+//   it('unfreezes the reserve, user deposits 1 BCH, freezes the reserve, check that the user can redeem', async () => {
+//     const {aWBCH} = _aTokenInstances;
 
 //     //unfreezes the reserve
 //     await _lendingPoolConfiguratorInstance.unfreezeReserve(ETHEREUM_ADDRESS);
 
-//     //deposit 1 ETH
-//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneEther, '0', {
-//       value: oneEther.toString(),
+//     //deposit 1 BCH
+//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneBch, '0', {
+//       value: oneBch.toString(),
 //     });
 
 //     //freezes the reserve
 //     await _lendingPoolConfiguratorInstance.freezeReserve(ETHEREUM_ADDRESS);
 
-//     const balance = await aWETH.balanceOf(deployer);
+//     const balance = await aWBCH.balanceOf(deployer);
 
-//     await aWETH.redeem(balance);
+//     await aWBCH.redeem(balance);
 //   });
 
-//   it('unfreezes the reserve, user 0 deposits 100 DAI, user 1 deposits 1 ETH and borrows 50 DAI, freezes the reserve, checks that the user 1 can repay', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
-//     const {DAI} = _tokenInstances;
+//   it('unfreezes the reserve, user 0 deposits 100 FLEXUSD, user 1 deposits 1 BCH and borrows 50 FLEXUSD, freezes the reserve, checks that the user 1 can repay', async () => {
+//     const {aWBCH, aFLEXUSD} = _aTokenInstances;
+//     const {FLEXUSD} = _tokenInstances;
 
 //     //unfreezes the reserve
 //     await _lendingPoolConfiguratorInstance.unfreezeReserve(ETHEREUM_ADDRESS);
 
-//     const amountDAI = await convertToCurrencyDecimals(DAI.address, '100');
+//     const amountFlexUSD = await convertToCurrencyDecimals(FLEXUSD.address, '100');
 
-//     //user 0 deposits 100 DAI
-//     await DAI.mint(amountDAI, {from: users[0]});
+//     //user 0 deposits 100 FLEXUSD
+//     await FLEXUSD.mint(amountFlexUSD, {from: users[0]});
 
-//     await DAI.approve(_lendingPoolCoreInstance.address, amountDAI, {from: users[0]});
+//     await FLEXUSD.approve(_lendingPoolCoreInstance.address, amountFlexUSD, {from: users[0]});
 
-//     await _lendingPoolInstance.deposit(DAI.address, amountDAI, '0', {from: users[0]});
+//     await _lendingPoolInstance.deposit(FLEXUSD.address, amountFlexUSD, '0', {from: users[0]});
 
-//     //user 1 deposits 1 ETH
-//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneEther, '0', {
+//     //user 1 deposits 1 BCH
+//     await _lendingPoolInstance.deposit(ETHEREUM_ADDRESS, oneBch, '0', {
 //       from: users[1],
-//       value: oneEther.toString(),
+//       value: oneBch.toString(),
 //     });
 
-//     const amountDAIToBorrow = await convertToCurrencyDecimals(DAI.address, '10');
+//     const amountFlexUSDToBorrow = await convertToCurrencyDecimals(FLEXUSD.address, '10');
 
-//     //user 1 borrows 10 DAI
-//     await _lendingPoolInstance.borrow(DAI.address, amountDAIToBorrow, RateMode.Stable, '0', {
+//     //user 1 borrows 10 FLEXUSD
+//     await _lendingPoolInstance.borrow(FLEXUSD.address, amountFlexUSDToBorrow, RateMode.Stable, '0', {
 //       from: users[1],
 //     });
 
 //     //freezes the reserve
 //     await _lendingPoolConfiguratorInstance.freezeReserve(ETHEREUM_ADDRESS);
 
-//     //user 1 repays 1 DAI
-//     await DAI.approve(_lendingPoolCoreInstance.address, amountDAIToBorrow, {from: users[1]});
+//     //user 1 repays 1 FLEXUSD
+//     await FLEXUSD.approve(_lendingPoolCoreInstance.address, amountFlexUSDToBorrow, {from: users[1]});
 
-//     await _lendingPoolInstance.repay(DAI.address, oneEther, users[1], {from: users[1]});
+//     await _lendingPoolInstance.repay(FLEXUSD.address, oneBch, users[1], {from: users[1]});
 //   });
 
 //   it('Check that liquidationCall can be executed on a freezed reserve', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
-//     const {DAI} = _tokenInstances;
+//     const {aWBCH, aFLEXUSD} = _aTokenInstances;
+//     const {FLEXUSD} = _tokenInstances;
 
 //     //user 2 tries to liquidate
 
 //     await expectRevert(
 //       _lendingPoolInstance.liquidationCall(
 //         ETHEREUM_ADDRESS,
-//         DAI.address,
+//         FLEXUSD.address,
 //         users[1],
-//         oneEther,
+//         oneBch,
 //         true,
 //         {from: users[2]}
 //       ),
@@ -228,13 +228,13 @@
 //   });
 
 //   it('Check that rebalanceStableBorrowRate can be executed on a freezed reserve', async () => {
-//     const {aWETH, aDAI} = _aTokenInstances;
-//     const {DAI} = _tokenInstances;
+//     const {aWBCH, aFLEXUSD} = _aTokenInstances;
+//     const {FLEXUSD} = _tokenInstances;
 
 //     //user 2 tries to liquidate
 
 //     await expectRevert(
-//       _lendingPoolInstance.rebalanceStableBorrowRate(DAI.address, users[1]),
+//       _lendingPoolInstance.rebalanceStableBorrowRate(FLEXUSD.address, users[1]),
 //       'Interest rate rebalance conditions were not met'
 //     );
 //   });

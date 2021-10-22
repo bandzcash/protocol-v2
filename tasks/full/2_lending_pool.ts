@@ -23,7 +23,7 @@ import {
 } from '../../helpers/configuration';
 
 task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, DRE: HardhatRuntimeEnvironment) => {
     try {
@@ -90,12 +90,6 @@ task('full:deploy-lending-pool', 'Deploy lending pool for dev enviroment')
       );
       await deployATokenImplementations(pool, poolConfig.ReservesConfig, verify);
     } catch (error) {
-      if (DRE.network.name.includes('tenderly')) {
-        const transactionLink = `https://dashboard.tenderly.co/${DRE.config.tenderly.username}/${
-          DRE.config.tenderly.project
-        }/fork/${DRE.tenderly.network().getFork()}/simulation/${DRE.tenderly.network().getHead()}`;
-        console.error('Check tx error:', transactionLink);
-      }
       throw error;
     }
   });

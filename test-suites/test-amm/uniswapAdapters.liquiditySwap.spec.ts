@@ -40,21 +40,21 @@
 //   describe('UniswapLiquiditySwapAdapter', () => {
 //     describe('constructor', () => {
 //       it('should deploy with correct parameters', async () => {
-//         const { addressesProvider, weth } = testEnv;
+//         const { addressesProvider, wbch } = testEnv;
 //         await deployUniswapLiquiditySwapAdapter([
 //           addressesProvider.address,
 //           mockUniswapRouter.address,
-//           weth.address,
+//           wbch.address,
 //         ]);
 //       });
 
 //       it('should revert if not valid addresses provider', async () => {
-//         const { weth } = testEnv;
+//         const { wbch } = testEnv;
 //         expect(
 //           deployUniswapLiquiditySwapAdapter([
 //             mockUniswapRouter.address,
 //             mockUniswapRouter.address,
-//             weth.address,
+//             wbch.address,
 //           ])
 //         ).to.be.reverted;
 //       });
@@ -62,13 +62,13 @@
 
 //     describe('executeOperation', () => {
 //       beforeEach(async () => {
-//         const { users, weth, dai, usdc, pool, deployer } = testEnv;
+//         const { users, wbch, flexUsd, usdc, pool, deployer } = testEnv;
 //         const userAddress = users[0].address;
 
 //         // Provide liquidity
-//         await dai.mint(parseEther('20000'));
-//         await dai.approve(pool.address, parseEther('20000'));
-//         await pool.deposit(dai.address, parseEther('20000'), deployer.address, 0);
+//         await flexUsd.mint(parseEther('20000'));
+//         await flexUsd.approve(pool.address, parseEther('20000'));
+//         await pool.deposit(flexUsd.address, parseEther('20000'), deployer.address, 0);
 
 //         const usdcAmount = await convertToCurrencyDecimals(usdc.address, '10');
 //         await usdc.mint(usdcAmount);
@@ -76,46 +76,46 @@
 //         await pool.deposit(usdc.address, usdcAmount, deployer.address, 0);
 
 //         // Make a deposit for user
-//         await weth.mint(parseEther('100'));
-//         await weth.approve(pool.address, parseEther('100'));
-//         await pool.deposit(weth.address, parseEther('100'), userAddress, 0);
+//         await wbch.mint(parseEther('100'));
+//         await wbch.approve(pool.address, parseEther('100'));
+//         await pool.deposit(wbch.address, parseEther('100'), userAddress, 0);
 //       });
 
 //       it('should correctly swap tokens and deposit the out tokens in the pool', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           pool,
 //           uniswapLiquiditySwapAdapter,
 //         } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         // Subtract the FL fee from the amount to be swapped 0,09%
 //         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -130,7 +130,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -139,21 +139,21 @@
 //             )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, flashloanAmount.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, flashloanAmount.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
 //         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
 //       });
@@ -161,11 +161,11 @@
 //       it('should correctly swap and deposit multiple tokens', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           usdc,
 //           pool,
 //           uniswapLiquiditySwapAdapter,
@@ -173,28 +173,28 @@
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmountForEth = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
 
 //         const collateralDecimals = (await usdc.decimals()).toString();
-//         const principalDecimals = (await dai.decimals()).toString();
+//         const principalDecimals = (await flexUsd.decimals()).toString();
 
-//         const expectedDaiAmountForUsdc = await convertToCurrencyDecimals(
-//           dai.address,
+//         const expectedFlexUsdAmountForUsdc = await convertToCurrencyDecimals(
+//           flexUsd.address,
 //           new BigNumber(amountUSDCtoSwap.toString())
 //             .times(
 //               new BigNumber(usdcPrice.toString()).times(new BigNumber(10).pow(principalDecimals))
 //             )
 //             .div(
-//               new BigNumber(daiPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
+//               new BigNumber(flexUsdPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
 //             )
 //             .toFixed(0)
 //         );
@@ -207,16 +207,16 @@
 //         const aUsdcData = await pool.getReserveData(usdc.address);
 //         const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
-//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmountForEth);
+//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedFlexUsdAmountForUsdc);
 
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWETHtoSwap);
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 //         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountUSDCtoSwap);
 //         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
 //         // Subtract the FL fee from the amount to be swapped 0,09%
-//         const wethFlashloanAmount = new BigNumber(amountWETHtoSwap.toString())
+//         const wbchFlashloanAmount = new BigNumber(amountWBCHtoSwap.toString())
 //           .div(1.0009)
 //           .toFixed(0);
 //         const usdcFlashloanAmount = new BigNumber(amountUSDCtoSwap.toString())
@@ -224,8 +224,8 @@
 //           .toFixed(0);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address, dai.address],
-//           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
+//           [flexUsd.address, flexUsd.address],
+//           [expectedFlexUsdAmountForEth, expectedFlexUsdAmountForUsdc],
 //           [0, 0],
 //           [0, 0],
 //           [0, 0],
@@ -245,30 +245,30 @@
 //           .connect(user)
 //           .flashLoan(
 //             uniswapLiquiditySwapAdapter.address,
-//             [weth.address, usdc.address],
-//             [wethFlashloanAmount.toString(), usdcFlashloanAmount.toString()],
+//             [wbch.address, usdc.address],
+//             [wbchFlashloanAmount.toString(), usdcFlashloanAmount.toString()],
 //             [0, 0],
 //             userAddress,
 //             params,
 //             0
 //           );
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 //         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmountForEth.add(expectedFlexUsdAmountForUsdc));
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
 //         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
 //         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
 //       });
@@ -276,11 +276,11 @@
 //       it('should correctly swap and deposit multiple tokens using permit', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           usdc,
 //           pool,
 //           uniswapLiquiditySwapAdapter,
@@ -295,28 +295,28 @@
 //           throw new Error('INVALID_OWNER_PK');
 //         }
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmountForEth = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
 
 //         const collateralDecimals = (await usdc.decimals()).toString();
-//         const principalDecimals = (await dai.decimals()).toString();
+//         const principalDecimals = (await flexUsd.decimals()).toString();
 
-//         const expectedDaiAmountForUsdc = await convertToCurrencyDecimals(
-//           dai.address,
+//         const expectedFlexUsdAmountForUsdc = await convertToCurrencyDecimals(
+//           flexUsd.address,
 //           new BigNumber(amountUSDCtoSwap.toString())
 //             .times(
 //               new BigNumber(usdcPrice.toString()).times(new BigNumber(10).pow(principalDecimals))
 //             )
 //             .div(
-//               new BigNumber(daiPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
+//               new BigNumber(flexUsdPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
 //             )
 //             .toFixed(0)
 //         );
@@ -329,13 +329,13 @@
 //         const aUsdcData = await pool.getReserveData(usdc.address);
 //         const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
-//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmountForEth);
+//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedFlexUsdAmountForUsdc);
 
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 //         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
-//         const wethFlashloanAmount = new BigNumber(amountWETHtoSwap.toString())
+//         const wbchFlashloanAmount = new BigNumber(amountWBCHtoSwap.toString())
 //           .div(1.0009)
 //           .toFixed(0);
 
@@ -343,21 +343,21 @@
 //           .div(1.0009)
 //           .toFixed(0);
 
-//         const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
-//         const aWethMsgParams = buildPermitParams(
+//         const aWbchNonce = (await aWBCH._nonces(userAddress)).toNumber();
+//         const aWbchMsgParams = buildPermitParams(
 //           chainId,
-//           aWETH.address,
+//           aWBCH.address,
 //           '1',
-//           await aWETH.name(),
+//           await aWBCH.name(),
 //           userAddress,
 //           uniswapLiquiditySwapAdapter.address,
-//           aWethNonce,
+//           aWbchNonce,
 //           deadline,
-//           amountWETHtoSwap.toString()
+//           amountWBCHtoSwap.toString()
 //         );
 //         const { v: aWETHv, r: aWETHr, s: aWETHs } = getSignatureFromTypedData(
 //           ownerPrivateKey,
-//           aWethMsgParams
+//           aWbchMsgParams
 //         );
 
 //         const aUsdcNonce = (await aUsdc._nonces(userAddress)).toNumber();
@@ -377,10 +377,10 @@
 //           aUsdcMsgParams
 //         );
 //         const params = buildLiquiditySwapParams(
-//           [dai.address, dai.address],
-//           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
+//           [flexUsd.address, flexUsd.address],
+//           [expectedFlexUsdAmountForEth, expectedFlexUsdAmountForUsdc],
 //           [0, 0],
-//           [amountWETHtoSwap, amountUSDCtoSwap],
+//           [amountWBCHtoSwap, amountUSDCtoSwap],
 //           [deadline, deadline],
 //           [aWETHv, aUsdcv],
 //           [aWETHr, aUsdcr],
@@ -392,30 +392,30 @@
 //           .connect(user)
 //           .flashLoan(
 //             uniswapLiquiditySwapAdapter.address,
-//             [weth.address, usdc.address],
-//             [wethFlashloanAmount.toString(), usdcFlashloanAmount.toString()],
+//             [wbch.address, usdc.address],
+//             [wbchFlashloanAmount.toString(), usdcFlashloanAmount.toString()],
 //             [0, 0],
 //             userAddress,
 //             params,
 //             0
 //           );
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 //         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmountForEth.add(expectedFlexUsdAmountForUsdc));
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
 //         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
 //         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
 //       });
@@ -423,42 +423,42 @@
 //       it('should correctly swap tokens with permit', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           pool,
 //           uniswapLiquiditySwapAdapter,
 //         } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         // Subtract the FL fee from the amount to be swapped 0,09%
 //         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
 
 //         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
 //         const deadline = MAX_UINT_AMOUNT;
-//         const nonce = (await aWETH._nonces(userAddress)).toNumber();
+//         const nonce = (await aWBCH._nonces(userAddress)).toNumber();
 //         const msgParams = buildPermitParams(
 //           chainId,
-//           aWETH.address,
+//           aWBCH.address,
 //           '1',
-//           await aWETH.name(),
+//           await aWBCH.name(),
 //           userAddress,
 //           uniswapLiquiditySwapAdapter.address,
 //           nonce,
@@ -474,8 +474,8 @@
 //         const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [liquidityToSwap],
 //           [deadline],
@@ -490,7 +490,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -499,50 +499,50 @@
 //             )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, flashloanAmount.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, flashloanAmount.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
 //         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
 //       });
 
 //       it('should revert if inconsistent params', async () => {
-//         const { users, weth, oracle, dai, aWETH, pool, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aWBCH, pool, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
 //         // Subtract the FL fee from the amount to be swapped 0,09%
 //         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address, weth.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address, wbch.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -557,7 +557,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -567,8 +567,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params2 = buildLiquiditySwapParams(
-//           [dai.address, weth.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address, wbch.address],
+//           [expectedFlexUsdAmount],
 //           [0, 0],
 //           [0, 0],
 //           [0, 0],
@@ -583,7 +583,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -593,8 +593,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params3 = buildLiquiditySwapParams(
-//           [dai.address, weth.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address, wbch.address],
+//           [expectedFlexUsdAmount],
 //           [0, 0],
 //           [0],
 //           [0, 0],
@@ -609,7 +609,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -619,8 +619,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params4 = buildLiquiditySwapParams(
-//           [dai.address, weth.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address, wbch.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -638,7 +638,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -648,8 +648,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params5 = buildLiquiditySwapParams(
-//           [dai.address, weth.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address, wbch.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -667,7 +667,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -677,8 +677,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params6 = buildLiquiditySwapParams(
-//           [dai.address, weth.address],
-//           [expectedDaiAmount, expectedDaiAmount],
+//           [flexUsd.address, wbch.address],
+//           [expectedFlexUsdAmount, expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -693,7 +693,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -703,8 +703,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params7 = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0, 0],
 //           [0],
 //           [0],
@@ -719,7 +719,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -729,8 +729,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params8 = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0, 0],
 //           [0],
@@ -745,7 +745,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -755,8 +755,8 @@
 //         ).to.be.revertedWith('INCONSISTENT_PARAMS');
 
 //         const params9 = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -771,7 +771,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -782,30 +782,30 @@
 //       });
 
 //       it('should revert if caller not lending pool', async () => {
-//         const { users, weth, oracle, dai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
 //         // Subtract the FL fee from the amount to be swapped 0,09%
 //         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -819,7 +819,7 @@
 //           uniswapLiquiditySwapAdapter
 //             .connect(user)
 //             .executeOperation(
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -833,8 +833,8 @@
 //           users,
 //           usdc,
 //           oracle,
-//           dai,
-//           aDai,
+//           flexUsd,
+//           aFlexUsd,
 //           uniswapLiquiditySwapAdapter,
 //           pool,
 //           deployer,
@@ -856,25 +856,25 @@
 //         await pool.connect(user).deposit(usdc.address, amountUSDCtoSwap, userAddress, 0);
 
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
 
 //         // usdc 6
 //         const collateralDecimals = (await usdc.decimals()).toString();
-//         const principalDecimals = (await dai.decimals()).toString();
+//         const principalDecimals = (await flexUsd.decimals()).toString();
 
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
 //           new BigNumber(amountUSDCtoSwap.toString())
 //             .times(
 //               new BigNumber(usdcPrice.toString()).times(new BigNumber(10).pow(principalDecimals))
 //             )
 //             .div(
-//               new BigNumber(daiPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
+//               new BigNumber(flexUsdPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
 //             )
 //             .toFixed(0)
 //         );
 
-//         await mockUniswapRouter.connect(user).setAmountToReturn(usdc.address, expectedDaiAmount);
+//         await mockUniswapRouter.connect(user).setAmountToReturn(usdc.address, expectedFlexUsdAmount);
 
 //         const aUsdcData = await pool.getReserveData(usdc.address);
 //         const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
@@ -884,8 +884,8 @@
 //         const flashloanAmount = new BigNumber(amountUSDCtoSwap.toString()).div(1.0009).toFixed(0);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -909,48 +909,48 @@
 //             )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(usdc.address, dai.address, flashloanAmount.toString(), expectedDaiAmount);
+//           .withArgs(usdc.address, flexUsd.address, flashloanAmount.toString(), expectedFlexUsdAmount);
 
 //         const adapterUsdcBalance = await usdc.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const aDaiBalance = await aDai.balanceOf(userAddress);
+//         const aFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
 
 //         expect(adapterUsdcBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(aDaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(aFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //       });
 
 //       it('should revert when min amount to receive exceeds the max slippage amount', async () => {
-//         const { users, weth, oracle, dai, aWETH, pool, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aWBCH, pool, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
-//         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
+//         const smallexpectedFlexUsdAmount = expectedFlexUsdAmount.div(2);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
 //         // Subtract the FL fee from the amount to be swapped 0,09%
 //         const flashloanAmount = new BigNumber(liquidityToSwap.toString()).div(1.0009).toFixed(0);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [smallExpectedDaiAmount],
+//           [flexUsd.address],
+//           [smallexpectedFlexUsdAmount],
 //           [0],
 //           [0],
 //           [0],
@@ -965,7 +965,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [flashloanAmount.toString()],
 //               [0],
 //               userAddress,
@@ -978,39 +978,39 @@
 //       it('should correctly swap tokens all the balance', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           pool,
 //           uniswapLiquiditySwapAdapter,
 //         } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
 //         // Remove other balance
-//         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
 //         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [1],
 //           [0],
 //           [0],
@@ -1029,7 +1029,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [liquidityToSwap.toString()],
 //               [0],
 //               userAddress,
@@ -1038,22 +1038,22 @@
 //             )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, swappedAmount.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, swappedAmount.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
-//         const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
+//         const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.eq(Zero);
 //         expect(adapterAEthBalance).to.be.eq(Zero);
 //       });
@@ -1061,42 +1061,42 @@
 //       it('should correctly swap tokens all the balance using permit', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           pool,
 //           uniswapLiquiditySwapAdapter,
 //         } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
 //         // Remove other balance
-//         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         const liquidityToSwap = parseEther('10');
 //         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
 
 //         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
 //         const deadline = MAX_UINT_AMOUNT;
-//         const nonce = (await aWETH._nonces(userAddress)).toNumber();
+//         const nonce = (await aWBCH._nonces(userAddress)).toNumber();
 //         const msgParams = buildPermitParams(
 //           chainId,
-//           aWETH.address,
+//           aWBCH.address,
 //           '1',
-//           await aWETH.name(),
+//           await aWBCH.name(),
 //           userAddress,
 //           uniswapLiquiditySwapAdapter.address,
 //           nonce,
@@ -1112,8 +1112,8 @@
 //         const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, msgParams);
 
 //         const params = buildLiquiditySwapParams(
-//           [dai.address],
-//           [expectedDaiAmount],
+//           [flexUsd.address],
+//           [expectedFlexUsdAmount],
 //           [1],
 //           [liquidityToSwap],
 //           [deadline],
@@ -1132,7 +1132,7 @@
 //             .connect(user)
 //             .flashLoan(
 //               uniswapLiquiditySwapAdapter.address,
-//               [weth.address],
+//               [wbch.address],
 //               [liquidityToSwap.toString()],
 //               [0],
 //               userAddress,
@@ -1141,22 +1141,22 @@
 //             )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, swappedAmount.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, swappedAmount.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
-//         const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
+//         const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.eq(Zero);
 //         expect(adapterAEthBalance).to.be.eq(Zero);
 //       });
@@ -1164,46 +1164,46 @@
 
 //     describe('swapAndDeposit', () => {
 //       beforeEach(async () => {
-//         const { users, weth, dai, pool, deployer } = testEnv;
+//         const { users, wbch, flexUsd, pool, deployer } = testEnv;
 //         const userAddress = users[0].address;
 
 //         // Provide liquidity
-//         await dai.mint(parseEther('20000'));
-//         await dai.approve(pool.address, parseEther('20000'));
-//         await pool.deposit(dai.address, parseEther('20000'), deployer.address, 0);
+//         await flexUsd.mint(parseEther('20000'));
+//         await flexUsd.approve(pool.address, parseEther('20000'));
+//         await pool.deposit(flexUsd.address, parseEther('20000'), deployer.address, 0);
 
 //         // Make a deposit for user
-//         await weth.mint(parseEther('100'));
-//         await weth.approve(pool.address, parseEther('100'));
-//         await pool.deposit(weth.address, parseEther('100'), userAddress, 0);
+//         await wbch.mint(parseEther('100'));
+//         await wbch.approve(pool.address, parseEther('100'));
+//         await pool.deposit(wbch.address, parseEther('100'), userAddress, 0);
 //       });
 
 //       it('should correctly swap tokens and deposit the out tokens in the pool', async () => {
-//         const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aFlexUsd, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
-//             [amountWETHtoSwap],
-//             [expectedDaiAmount],
+//             [wbch.address],
+//             [flexUsd.address],
+//             [amountWBCHtoSwap],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1217,52 +1217,52 @@
 //           )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
 //         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
 //       });
 
 //       it('should correctly swap tokens using permit', async () => {
-//         const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aFlexUsd, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
 //         const chainId = DRE.network.config.chainId || BUIDLEREVM_CHAINID;
 //         const deadline = MAX_UINT_AMOUNT;
-//         const nonce = (await aWETH._nonces(userAddress)).toNumber();
+//         const nonce = (await aWBCH._nonces(userAddress)).toNumber();
 //         const msgParams = buildPermitParams(
 //           chainId,
-//           aWETH.address,
+//           aWBCH.address,
 //           '1',
-//           await aWETH.name(),
+//           await aWBCH.name(),
 //           userAddress,
 //           uniswapLiquiditySwapAdapter.address,
 //           nonce,
@@ -1279,10 +1279,10 @@
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
-//             [amountWETHtoSwap],
-//             [expectedDaiAmount],
+//             [wbch.address],
+//             [flexUsd.address],
+//             [amountWBCHtoSwap],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: liquidityToSwap,
@@ -1296,42 +1296,42 @@
 //           )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
 //         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(liquidityToSwap));
 //       });
 
 //       it('should revert if inconsistent params', async () => {
-//         const { users, weth, dai, uniswapLiquiditySwapAdapter, oracle } = testEnv;
+//         const { users, wbch, flexUsd, uniswapLiquiditySwapAdapter, oracle } = testEnv;
 //         const user = users[0].signer;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address, dai.address],
-//             [dai.address],
-//             [amountWETHtoSwap],
-//             [expectedDaiAmount],
+//             [wbch.address, flexUsd.address],
+//             [flexUsd.address],
+//             [amountWBCHtoSwap],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1347,10 +1347,10 @@
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address, weth.address],
-//             [amountWETHtoSwap],
-//             [expectedDaiAmount],
+//             [wbch.address],
+//             [flexUsd.address, wbch.address],
+//             [amountWBCHtoSwap],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1366,10 +1366,10 @@
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
-//             [amountWETHtoSwap, amountWETHtoSwap],
-//             [expectedDaiAmount],
+//             [wbch.address],
+//             [flexUsd.address],
+//             [amountWBCHtoSwap, amountWBCHtoSwap],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1387,10 +1387,10 @@
 //           uniswapLiquiditySwapAdapter
 //             .connect(user)
 //             .swapAndDeposit(
-//               [weth.address],
-//               [dai.address],
-//               [amountWETHtoSwap],
-//               [expectedDaiAmount],
+//               [wbch.address],
+//               [flexUsd.address],
+//               [amountWBCHtoSwap],
+//               [expectedFlexUsdAmount],
 //               [],
 //               [false]
 //             )
@@ -1398,10 +1398,10 @@
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
-//             [amountWETHtoSwap],
-//             [expectedDaiAmount, expectedDaiAmount],
+//             [wbch.address],
+//             [flexUsd.address],
+//             [amountWBCHtoSwap],
+//             [expectedFlexUsdAmount, expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1417,30 +1417,30 @@
 //       });
 
 //       it('should revert when min amount to receive exceeds the max slippage amount', async () => {
-//         const { users, weth, oracle, dai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
-//         const smallExpectedDaiAmount = expectedDaiAmount.div(2);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
+//         const smallexpectedFlexUsdAmount = expectedFlexUsdAmount.div(2);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
-//             [amountWETHtoSwap],
-//             [smallExpectedDaiAmount],
+//             [wbch.address],
+//             [flexUsd.address],
+//             [amountWBCHtoSwap],
+//             [smallexpectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1458,40 +1458,40 @@
 //       it('should correctly swap tokens and deposit multiple tokens', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           usdc,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           uniswapLiquiditySwapAdapter,
 //           pool,
 //         } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmountForEth = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
 
 //         const collateralDecimals = (await usdc.decimals()).toString();
-//         const principalDecimals = (await dai.decimals()).toString();
+//         const principalDecimals = (await flexUsd.decimals()).toString();
 
-//         const expectedDaiAmountForUsdc = await convertToCurrencyDecimals(
-//           dai.address,
+//         const expectedFlexUsdAmountForUsdc = await convertToCurrencyDecimals(
+//           flexUsd.address,
 //           new BigNumber(amountUSDCtoSwap.toString())
 //             .times(
 //               new BigNumber(usdcPrice.toString()).times(new BigNumber(10).pow(principalDecimals))
 //             )
 //             .div(
-//               new BigNumber(daiPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
+//               new BigNumber(flexUsdPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
 //             )
 //             .toFixed(0)
 //         );
@@ -1504,19 +1504,19 @@
 //         const aUsdcData = await pool.getReserveData(usdc.address);
 //         const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
-//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmountForEth);
+//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedFlexUsdAmountForUsdc);
 
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWETHtoSwap);
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountWBCHtoSwap);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 //         await aUsdc.connect(user).approve(uniswapLiquiditySwapAdapter.address, amountUSDCtoSwap);
 //         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
 //         await uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//           [weth.address, usdc.address],
-//           [dai.address, dai.address],
-//           [amountWETHtoSwap, amountUSDCtoSwap],
-//           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
+//           [wbch.address, usdc.address],
+//           [flexUsd.address, flexUsd.address],
+//           [amountWBCHtoSwap, amountUSDCtoSwap],
+//           [expectedFlexUsdAmountForEth, expectedFlexUsdAmountForUsdc],
 //           [
 //             {
 //               amount: 0,
@@ -1536,22 +1536,22 @@
 //           [false, false]
 //         );
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 //         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmountForEth.add(expectedFlexUsdAmountForUsdc));
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
 //         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
 //         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
 //       });
@@ -1559,12 +1559,12 @@
 //       it('should correctly swap tokens and deposit multiple tokens using permit', async () => {
 //         const {
 //           users,
-//           weth,
+//           wbch,
 //           usdc,
 //           oracle,
-//           dai,
-//           aDai,
-//           aWETH,
+//           flexUsd,
+//           aFlexUsd,
+//           aWBCH,
 //           uniswapLiquiditySwapAdapter,
 //           pool,
 //         } = testEnv;
@@ -1578,28 +1578,28 @@
 //           throw new Error('INVALID_OWNER_PK');
 //         }
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmountForEth = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmountForEth = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
 //         const amountUSDCtoSwap = await convertToCurrencyDecimals(usdc.address, '10');
 //         const usdcPrice = await oracle.getAssetPrice(usdc.address);
 
 //         const collateralDecimals = (await usdc.decimals()).toString();
-//         const principalDecimals = (await dai.decimals()).toString();
+//         const principalDecimals = (await flexUsd.decimals()).toString();
 
-//         const expectedDaiAmountForUsdc = await convertToCurrencyDecimals(
-//           dai.address,
+//         const expectedFlexUsdAmountForUsdc = await convertToCurrencyDecimals(
+//           flexUsd.address,
 //           new BigNumber(amountUSDCtoSwap.toString())
 //             .times(
 //               new BigNumber(usdcPrice.toString()).times(new BigNumber(10).pow(principalDecimals))
 //             )
 //             .div(
-//               new BigNumber(daiPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
+//               new BigNumber(flexUsdPrice.toString()).times(new BigNumber(10).pow(collateralDecimals))
 //             )
 //             .toFixed(0)
 //         );
@@ -1612,27 +1612,27 @@
 //         const aUsdcData = await pool.getReserveData(usdc.address);
 //         const aUsdc = await getContract<AToken>(eContractid.AToken, aUsdcData.aTokenAddress);
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmountForEth);
-//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedDaiAmountForUsdc);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmountForEth);
+//         await mockUniswapRouter.setAmountToReturn(usdc.address, expectedFlexUsdAmountForUsdc);
 
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 //         const userAUsdcBalanceBefore = await aUsdc.balanceOf(userAddress);
 
-//         const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
-//         const aWethMsgParams = buildPermitParams(
+//         const aWbchNonce = (await aWBCH._nonces(userAddress)).toNumber();
+//         const aWbchMsgParams = buildPermitParams(
 //           chainId,
-//           aWETH.address,
+//           aWBCH.address,
 //           '1',
-//           await aWETH.name(),
+//           await aWBCH.name(),
 //           userAddress,
 //           uniswapLiquiditySwapAdapter.address,
-//           aWethNonce,
+//           aWbchNonce,
 //           deadline,
-//           amountWETHtoSwap.toString()
+//           amountWBCHtoSwap.toString()
 //         );
 //         const { v: aWETHv, r: aWETHr, s: aWETHs } = getSignatureFromTypedData(
 //           ownerPrivateKey,
-//           aWethMsgParams
+//           aWbchMsgParams
 //         );
 
 //         const aUsdcNonce = (await aUsdc._nonces(userAddress)).toNumber();
@@ -1653,13 +1653,13 @@
 //         );
 
 //         await uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//           [weth.address, usdc.address],
-//           [dai.address, dai.address],
-//           [amountWETHtoSwap, amountUSDCtoSwap],
-//           [expectedDaiAmountForEth, expectedDaiAmountForUsdc],
+//           [wbch.address, usdc.address],
+//           [flexUsd.address, flexUsd.address],
+//           [amountWBCHtoSwap, amountUSDCtoSwap],
+//           [expectedFlexUsdAmountForEth, expectedFlexUsdAmountForUsdc],
 //           [
 //             {
-//               amount: amountWETHtoSwap,
+//               amount: amountWBCHtoSwap,
 //               deadline,
 //               v: aWETHv,
 //               r: aWETHr,
@@ -1676,61 +1676,61 @@
 //           [false, false]
 //         );
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
 //         const userAUsdcBalance = await aUsdc.balanceOf(userAddress);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmountForEth.add(expectedDaiAmountForUsdc));
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmountForEth.add(expectedFlexUsdAmountForUsdc));
 //         expect(userAEthBalance).to.be.lt(userAEthBalanceBefore);
-//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWETHtoSwap));
+//         expect(userAEthBalance).to.be.gte(userAEthBalanceBefore.sub(amountWBCHtoSwap));
 //         expect(userAUsdcBalance).to.be.lt(userAUsdcBalanceBefore);
 //         expect(userAUsdcBalance).to.be.gte(userAUsdcBalanceBefore.sub(amountUSDCtoSwap));
 //       });
 
 //       it('should correctly swap all the balance when using a bigger amount', async () => {
-//         const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aFlexUsd, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
 //         // Remove other balance
-//         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
 //         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
 
-//         // User will swap liquidity 10 aEth to aDai
-//         await aWETH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
+//         // User will swap liquidity 10 aEth to aFlexUsd
+//         await aWBCH.connect(user).approve(uniswapLiquiditySwapAdapter.address, liquidityToSwap);
 
 //         // Only has 10 atokens, so all the balance will be swapped
 //         const bigAmountToSwap = parseEther('100');
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
+//             [wbch.address],
+//             [flexUsd.address],
 //             [bigAmountToSwap],
-//             [expectedDaiAmount],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: 0,
@@ -1744,46 +1744,46 @@
 //           )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
-//         const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
+//         const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.eq(Zero);
 //         expect(adapterAEthBalance).to.be.eq(Zero);
 //       });
 
 //       it('should correctly swap all the balance when using permit', async () => {
-//         const { users, weth, oracle, dai, aDai, aWETH, uniswapLiquiditySwapAdapter } = testEnv;
+//         const { users, wbch, oracle, flexUsd, aFlexUsd, aWBCH, uniswapLiquiditySwapAdapter } = testEnv;
 //         const user = users[0].signer;
 //         const userAddress = users[0].address;
 
-//         const amountWETHtoSwap = await convertToCurrencyDecimals(weth.address, '10');
+//         const amountWBCHtoSwap = await convertToCurrencyDecimals(wbch.address, '10');
 
-//         const daiPrice = await oracle.getAssetPrice(dai.address);
-//         const expectedDaiAmount = await convertToCurrencyDecimals(
-//           dai.address,
-//           new BigNumber(amountWETHtoSwap.toString()).div(daiPrice.toString()).toFixed(0)
+//         const flexUsdPrice = await oracle.getAssetPrice(flexUsd.address);
+//         const expectedFlexUsdAmount = await convertToCurrencyDecimals(
+//           flexUsd.address,
+//           new BigNumber(amountWBCHtoSwap.toString()).div(flexUsdPrice.toString()).toFixed(0)
 //         );
 
-//         await mockUniswapRouter.setAmountToReturn(weth.address, expectedDaiAmount);
+//         await mockUniswapRouter.setAmountToReturn(wbch.address, expectedFlexUsdAmount);
 
 //         // Remove other balance
-//         await aWETH.connect(user).transfer(users[1].address, parseEther('90'));
-//         const userAEthBalanceBefore = await aWETH.balanceOf(userAddress);
+//         await aWBCH.connect(user).transfer(users[1].address, parseEther('90'));
+//         const userAEthBalanceBefore = await aWBCH.balanceOf(userAddress);
 
-//         // User will swap liquidity 10 aEth to aDai
+//         // User will swap liquidity 10 aEth to aFlexUsd
 //         const liquidityToSwap = parseEther('10');
 //         expect(userAEthBalanceBefore).to.be.eq(liquidityToSwap);
 
@@ -1797,26 +1797,26 @@
 //         if (!ownerPrivateKey) {
 //           throw new Error('INVALID_OWNER_PK');
 //         }
-//         const aWethNonce = (await aWETH._nonces(userAddress)).toNumber();
-//         const aWethMsgParams = buildPermitParams(
+//         const aWbchNonce = (await aWBCH._nonces(userAddress)).toNumber();
+//         const aWbchMsgParams = buildPermitParams(
 //           chainId,
-//           aWETH.address,
+//           aWBCH.address,
 //           '1',
-//           await aWETH.name(),
+//           await aWBCH.name(),
 //           userAddress,
 //           uniswapLiquiditySwapAdapter.address,
-//           aWethNonce,
+//           aWbchNonce,
 //           deadline,
 //           bigAmountToSwap.toString()
 //         );
-//         const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, aWethMsgParams);
+//         const { v, r, s } = getSignatureFromTypedData(ownerPrivateKey, aWbchMsgParams);
 
 //         await expect(
 //           uniswapLiquiditySwapAdapter.connect(user).swapAndDeposit(
-//             [weth.address],
-//             [dai.address],
+//             [wbch.address],
+//             [flexUsd.address],
 //             [bigAmountToSwap],
-//             [expectedDaiAmount],
+//             [expectedFlexUsdAmount],
 //             [
 //               {
 //                 amount: bigAmountToSwap,
@@ -1830,22 +1830,22 @@
 //           )
 //         )
 //           .to.emit(uniswapLiquiditySwapAdapter, 'Swapped')
-//           .withArgs(weth.address, dai.address, amountWETHtoSwap.toString(), expectedDaiAmount);
+//           .withArgs(wbch.address, flexUsd.address, amountWBCHtoSwap.toString(), expectedFlexUsdAmount);
 
-//         const adapterWethBalance = await weth.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiBalance = await dai.balanceOf(uniswapLiquiditySwapAdapter.address);
-//         const adapterDaiAllowance = await dai.allowance(
+//         const adapterWbchBalance = await wbch.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdBalance = await flexUsd.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const adapterFlexUsdAllowance = await flexUsd.allowance(
 //           uniswapLiquiditySwapAdapter.address,
 //           userAddress
 //         );
-//         const userADaiBalance = await aDai.balanceOf(userAddress);
-//         const userAEthBalance = await aWETH.balanceOf(userAddress);
-//         const adapterAEthBalance = await aWETH.balanceOf(uniswapLiquiditySwapAdapter.address);
+//         const userAFlexUsdBalance = await aFlexUsd.balanceOf(userAddress);
+//         const userAEthBalance = await aWBCH.balanceOf(userAddress);
+//         const adapterAEthBalance = await aWBCH.balanceOf(uniswapLiquiditySwapAdapter.address);
 
-//         expect(adapterWethBalance).to.be.eq(Zero);
-//         expect(adapterDaiBalance).to.be.eq(Zero);
-//         expect(adapterDaiAllowance).to.be.eq(Zero);
-//         expect(userADaiBalance).to.be.eq(expectedDaiAmount);
+//         expect(adapterWbchBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdBalance).to.be.eq(Zero);
+//         expect(adapterFlexUsdAllowance).to.be.eq(Zero);
+//         expect(userAFlexUsdBalance).to.be.eq(expectedFlexUsdAmount);
 //         expect(userAEthBalance).to.be.eq(Zero);
 //         expect(adapterAEthBalance).to.be.eq(Zero);
 //       });

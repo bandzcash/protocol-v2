@@ -4,7 +4,7 @@ import {
   deployMockFlashLoanReceiver,
   deployWalletBalancerProvider,
   deployAaveProtocolDataProvider,
-  authorizeWETHGateway,
+  authorizeWBCHGateway,
 } from '../../helpers/contracts-deployments';
 import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import { eNetwork } from '../../helpers/types';
@@ -15,7 +15,7 @@ import {
   loadPoolConfig,
 } from '../../helpers/configuration';
 
-import { tEthereumAddress, AavePools, eContractid } from '../../helpers/types';
+import { tSmartBCHAddress, BandzPools, eContractid } from '../../helpers/types';
 import { waitForTx, filterMapBy, notFalsyOrZeroAddress } from '../../helpers/misc-utils';
 import { configureReservesByHelper, initReservesByHelper } from '../../helpers/init-helpers';
 import { getAllTokenAddresses } from '../../helpers/mock-helpers';
@@ -23,12 +23,12 @@ import { ZERO_ADDRESS } from '../../helpers/constants';
 import {
   getAllMockedTokens,
   getLendingPoolAddressesProvider,
-  getWETHGateway,
+  getWBCHGateway,
 } from '../../helpers/contracts-getters';
 import { insertContractAddressInDb } from '../../helpers/contracts-helpers';
 
 task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
     await localBRE.run('set-DRE');
@@ -39,7 +39,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
       StableDebtTokenNamePrefix,
       VariableDebtTokenNamePrefix,
       SymbolPrefix,
-      WethGateway,
+      WbchGateway,
       ReservesConfig,
     } = poolConfig;
     const mockTokens = await getAllMockedTokens();
@@ -47,7 +47,7 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     const addressesProvider = await getLendingPoolAddressesProvider();
 
-    const protoPoolReservesAddresses = <{ [symbol: string]: tEthereumAddress }>(
+    const protoPoolReservesAddresses = <{ [symbol: string]: tSmartBCHAddress }>(
       filterMapBy(allTokenAddresses, (key: string) => !key.includes('UNI_'))
     );
 
@@ -92,9 +92,9 @@ task('dev:initialize-lending-pool', 'Initialize lending pool configuration.')
 
     const lendingPoolAddress = await addressesProvider.getLendingPool();
 
-    let gateway = getParamPerNetwork(WethGateway, network);
+    let gateway = getParamPerNetwork(WbchGateway, network);
     if (!notFalsyOrZeroAddress(gateway)) {
-      gateway = (await getWETHGateway()).address;
+      gateway = (await getWBCHGateway()).address;
     }
-    await authorizeWETHGateway(gateway, lendingPoolAddress);
+    await authorizeWBCHGateway(gateway, lendingPoolAddress);
   });

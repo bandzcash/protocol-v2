@@ -4,48 +4,24 @@ export interface SymbolMap<T> {
   [symbol: string]: T;
 }
 
-export type eNetwork = eEthereumNetwork | ePolygonNetwork | eXDaiNetwork | eAvalancheNetwork;
+export type eNetwork = eSmartBCHNetwork;
 
-export enum eEthereumNetwork {
+export enum eSmartBCHNetwork {
   buidlerevm = 'buidlerevm',
-  kovan = 'kovan',
-  ropsten = 'ropsten',
+  amber = 'amber',
   main = 'main',
   coverage = 'coverage',
   hardhat = 'hardhat',
-  tenderly = 'tenderly',
 }
 
-export enum ePolygonNetwork {
-  matic = 'matic',
-  mumbai = 'mumbai',
-}
-
-export enum eXDaiNetwork {
-  xdai = 'xdai',
-}
-
-export enum eAvalancheNetwork {
-  avalanche = 'avalanche',
-  fuji = 'fuji',
-}
-
-export enum EthereumNetworkNames {
-  kovan = 'kovan',
-  ropsten = 'ropsten',
+export enum SmartBCHNetworkNames {
+  amber = 'amber',
   main = 'main',
-  matic = 'matic',
-  mumbai = 'mumbai',
-  xdai = 'xdai',
-  avalanche = 'avalanche',
-  fuji = 'fuji',
 }
 
-export enum AavePools {
+export enum BandzPools {
   proto = 'proto',
-  matic = 'matic',
   amm = 'amm',
-  avalanche = 'avalanche',
 }
 
 export enum eContractid {
@@ -85,7 +61,7 @@ export enum eContractid {
   ATokensAndRatesHelper = 'ATokensAndRatesHelper',
   UiPoolDataProvider = 'UiPoolDataProvider',
   WETHGateway = 'WETHGateway',
-  WETH = 'WETH',
+  WBCH = 'WBCH',
   WETHMocked = 'WETHMocked',
   SelfdestructTransferMock = 'SelfdestructTransferMock',
   LendingPoolImpl = 'LendingPoolImpl',
@@ -200,176 +176,46 @@ export enum ProtocolErrors {
   SAFEERC20_LOWLEVEL_CALL = 'SafeERC20: low-level call failed',
 }
 
-export type tEthereumAddress = string;
-export type tStringTokenBigUnits = string; // 1 ETH, or 10e6 USDC or 10e18 DAI
+export type tSmartBCHAddress = string;
+export type tStringTokenBigUnits = string; // 1 BCH, or 10e18 FLEXUSD
 export type tBigNumberTokenBigUnits = BigNumber;
-export type tStringTokenSmallUnits = string; // 1 wei, or 1 basic unit of USDC, or 1 basic unit of DAI
+export type tStringTokenSmallUnits = string; // 1 wei, or 1 basic unit of FLEXUSD
 export type tBigNumberTokenSmallUnits = BigNumber;
 
 export interface iAssetCommon<T> {
   [key: string]: T;
 }
 export interface iAssetBase<T> {
-  WETH: T;
-  DAI: T;
-  TUSD: T;
-  USDC: T;
-  USDT: T;
-  SUSD: T;
-  AAVE: T;
-  BAT: T;
-  MKR: T;
-  LINK: T;
-  KNC: T;
-  WBTC: T;
-  MANA: T;
-  ZRX: T;
-  SNX: T;
-  BUSD: T;
-  YFI: T;
-  UNI: T;
+  WBCH: T;
+  FLEXUSD: T;
+  BANDZ: T;
   USD: T;
-  REN: T;
-  ENJ: T;
-  UniDAIWETH: T;
-  UniWBTCWETH: T;
-  UniAAVEWETH: T;
-  UniBATWETH: T;
-  UniDAIUSDC: T;
-  UniCRVWETH: T;
-  UniLINKWETH: T;
-  UniMKRWETH: T;
-  UniRENWETH: T;
-  UniSNXWETH: T;
-  UniUNIWETH: T;
-  UniUSDCWETH: T;
-  UniWBTCUSDC: T;
-  UniYFIWETH: T;
-  BptWBTCWETH: T;
-  BptBALWETH: T;
-  WMATIC: T;
-  STAKE: T;
-  xSUSHI: T;
-  WAVAX: T;
+  xMIST: T;
 }
 
-export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'ETH'>;
+export type iAssetsWithoutETH<T> = Omit<iAssetBase<T>, 'BCH'>;
 
 export type iAssetsWithoutUSD<T> = Omit<iAssetBase<T>, 'USD'>;
 
-export type iAavePoolAssets<T> = Pick<
+export type iBandzPoolAssets<T> = Pick<
   iAssetsWithoutUSD<T>,
-  | 'DAI'
-  | 'TUSD'
-  | 'USDC'
-  | 'USDT'
-  | 'SUSD'
-  | 'AAVE'
-  | 'BAT'
-  | 'MKR'
-  | 'LINK'
-  | 'KNC'
-  | 'WBTC'
-  | 'MANA'
-  | 'ZRX'
-  | 'SNX'
-  | 'BUSD'
-  | 'WETH'
-  | 'YFI'
-  | 'UNI'
-  | 'REN'
-  | 'ENJ'
-  | 'xSUSHI'
+  'FLEXUSD' | 'BANDZ' | 'WBCH' | 'xMIST'
 >;
 
-export type iLpPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  | 'DAI'
-  | 'USDC'
-  | 'USDT'
-  | 'WBTC'
-  | 'WETH'
-  | 'UniDAIWETH'
-  | 'UniWBTCWETH'
-  | 'UniAAVEWETH'
-  | 'UniBATWETH'
-  | 'UniDAIUSDC'
-  | 'UniCRVWETH'
-  | 'UniLINKWETH'
-  | 'UniMKRWETH'
-  | 'UniRENWETH'
-  | 'UniSNXWETH'
-  | 'UniUNIWETH'
-  | 'UniUSDCWETH'
-  | 'UniWBTCUSDC'
-  | 'UniYFIWETH'
-  | 'BptWBTCWETH'
-  | 'BptBALWETH'
->;
+export type iLpPoolAssets<T> = Pick<iAssetsWithoutUSD<T>, 'FLEXUSD' | 'WBCH'>;
 
-export type iMaticPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'WMATIC' | 'AAVE'
->;
+export type iMultiPoolsAssets<T> = iAssetCommon<T> | iBandzPoolAssets<T>;
 
-export type iXDAIPoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'DAI' | 'USDC' | 'USDT' | 'WBTC' | 'WETH' | 'STAKE'
->;
-
-export type iAvalanchePoolAssets<T> = Pick<
-  iAssetsWithoutUSD<T>,
-  'WETH' | 'DAI' | 'USDT' | 'AAVE' | 'WBTC' | 'WAVAX' | 'USDC'
->;
-
-export type iMultiPoolsAssets<T> = iAssetCommon<T> | iAavePoolAssets<T>;
-
-export type iAavePoolTokens<T> = Omit<iAavePoolAssets<T>, 'ETH'>;
+export type iAavePoolTokens<T> = Omit<iBandzPoolAssets<T>, 'BCH'>;
 
 export type iAssetAggregatorBase<T> = iAssetsWithoutETH<T>;
 
 export enum TokenContractId {
-  DAI = 'DAI',
-  AAVE = 'AAVE',
-  TUSD = 'TUSD',
-  BAT = 'BAT',
-  WETH = 'WETH',
-  USDC = 'USDC',
-  USDT = 'USDT',
-  SUSD = 'SUSD',
-  ZRX = 'ZRX',
-  MKR = 'MKR',
-  WBTC = 'WBTC',
-  LINK = 'LINK',
-  KNC = 'KNC',
-  MANA = 'MANA',
-  REN = 'REN',
-  SNX = 'SNX',
-  BUSD = 'BUSD',
+  FLEXUSD = 'FLEXUSD',
+  BANDZ = 'BANDZ',
+  WBCH = 'WBCH',
   USD = 'USD',
-  YFI = 'YFI',
-  UNI = 'UNI',
-  ENJ = 'ENJ',
-  UniDAIWETH = 'UniDAIWETH',
-  UniWBTCWETH = 'UniWBTCWETH',
-  UniAAVEWETH = 'UniAAVEWETH',
-  UniBATWETH = 'UniBATWETH',
-  UniDAIUSDC = 'UniDAIUSDC',
-  UniCRVWETH = 'UniCRVWETH',
-  UniLINKWETH = 'UniLINKWETH',
-  UniMKRWETH = 'UniMKRWETH',
-  UniRENWETH = 'UniRENWETH',
-  UniSNXWETH = 'UniSNXWETH',
-  UniUNIWETH = 'UniUNIWETH',
-  UniUSDCWETH = 'UniUSDCWETH',
-  UniWBTCUSDC = 'UniWBTCUSDC',
-  UniYFIWETH = 'UniYFIWETH',
-  BptWBTCWETH = 'BptWBTCWETH',
-  BptBALWETH = 'BptBALWETH',
-  WMATIC = 'WMATIC',
-  STAKE = 'STAKE',
-  xSUSHI = 'xSUSHI',
-  WAVAX = 'WAVAX',
+  xMIST = 'xMIST',
 }
 
 export interface IReserveParams extends IReserveBorrowParams, IReserveCollateralParams {
@@ -409,46 +255,22 @@ export interface IMarketRates {
   borrowRate: string;
 }
 
-export type iParamsPerNetwork<T> =
-  | iEthereumParamsPerNetwork<T>
-  | iPolygonParamsPerNetwork<T>
-  | iXDaiParamsPerNetwork<T>
-  | iAvalancheParamsPerNetwork<T>;
+export type iParamsPerNetwork<T> = iSmartBCHParamsPerNetwork<T>;
 
-export interface iParamsPerNetworkAll<T>
-  extends iEthereumParamsPerNetwork<T>,
-    iPolygonParamsPerNetwork<T>,
-    iXDaiParamsPerNetwork<T> {}
+export interface iParamsPerNetworkAll<T> extends iSmartBCHParamsPerNetwork<T> {}
 
-export interface iEthereumParamsPerNetwork<T> {
-  [eEthereumNetwork.coverage]: T;
-  [eEthereumNetwork.buidlerevm]: T;
-  [eEthereumNetwork.kovan]: T;
-  [eEthereumNetwork.ropsten]: T;
-  [eEthereumNetwork.main]: T;
-  [eEthereumNetwork.hardhat]: T;
-  [eEthereumNetwork.tenderly]: T;
-}
-
-export interface iPolygonParamsPerNetwork<T> {
-  [ePolygonNetwork.matic]: T;
-  [ePolygonNetwork.mumbai]: T;
-}
-
-export interface iXDaiParamsPerNetwork<T> {
-  [eXDaiNetwork.xdai]: T;
-}
-
-export interface iAvalancheParamsPerNetwork<T> {
-  [eAvalancheNetwork.avalanche]: T;
-  [eAvalancheNetwork.fuji]: T;
+export interface iSmartBCHParamsPerNetwork<T> {
+  [eSmartBCHNetwork.coverage]: T;
+  [eSmartBCHNetwork.buidlerevm]: T;
+  [eSmartBCHNetwork.amber]: T;
+  [eSmartBCHNetwork.main]: T;
+  [eSmartBCHNetwork.hardhat]: T;
 }
 
 export interface iParamsPerPool<T> {
-  [AavePools.proto]: T;
-  [AavePools.matic]: T;
-  [AavePools.amm]: T;
-  [AavePools.avalanche]: T;
+  [BandzPools.proto]: T;
+  // [BandzPools.matic]: T;
+  [BandzPools.amm]: T;
 }
 
 export interface iBasicDistributionParams {
@@ -469,10 +291,10 @@ export interface ObjectString {
 export interface IProtocolGlobalConfig {
   TokenDistributorPercentageBase: string;
   MockUsdPriceInWei: string;
-  UsdAddress: tEthereumAddress;
-  NilAddress: tEthereumAddress;
-  OneAddress: tEthereumAddress;
-  AaveReferral: string;
+  UsdAddress: tSmartBCHAddress;
+  NilAddress: tSmartBCHAddress;
+  OneAddress: tSmartBCHAddress;
+  BandzReferral: string;
 }
 
 export interface IMocksConfig {
@@ -495,30 +317,30 @@ export interface IBaseConfiguration {
   SymbolPrefix: string;
   ProviderId: number;
   ProtocolGlobalParams: IProtocolGlobalConfig;
-  ProviderRegistry: iParamsPerNetwork<tEthereumAddress | undefined>;
-  ProviderRegistryOwner: iParamsPerNetwork<tEthereumAddress | undefined>;
-  LendingPoolCollateralManager: iParamsPerNetwork<tEthereumAddress>;
-  LendingPoolConfigurator: iParamsPerNetwork<tEthereumAddress>;
-  LendingPool: iParamsPerNetwork<tEthereumAddress>;
+  ProviderRegistry: iParamsPerNetwork<tSmartBCHAddress | undefined>;
+  ProviderRegistryOwner: iParamsPerNetwork<tSmartBCHAddress | undefined>;
+  LendingPoolCollateralManager: iParamsPerNetwork<tSmartBCHAddress>;
+  LendingPoolConfigurator: iParamsPerNetwork<tSmartBCHAddress>;
+  LendingPool: iParamsPerNetwork<tSmartBCHAddress>;
   LendingRateOracleRatesCommon: iMultiPoolsAssets<IMarketRates>;
-  LendingRateOracle: iParamsPerNetwork<tEthereumAddress>;
-  TokenDistributor: iParamsPerNetwork<tEthereumAddress>;
-  AaveOracle: iParamsPerNetwork<tEthereumAddress>;
-  FallbackOracle: iParamsPerNetwork<tEthereumAddress>;
-  ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
-  PoolAdmin: iParamsPerNetwork<tEthereumAddress | undefined>;
+  LendingRateOracle: iParamsPerNetwork<tSmartBCHAddress>;
+  TokenDistributor: iParamsPerNetwork<tSmartBCHAddress>;
+  AaveOracle: iParamsPerNetwork<tSmartBCHAddress>;
+  FallbackOracle: iParamsPerNetwork<tSmartBCHAddress>;
+  // ChainlinkAggregator: iParamsPerNetwork<ITokenAddress>;
+  PoolAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;
   PoolAdminIndex: number;
-  EmergencyAdmin: iParamsPerNetwork<tEthereumAddress | undefined>;
+  EmergencyAdmin: iParamsPerNetwork<tSmartBCHAddress | undefined>;
   EmergencyAdminIndex: number;
   ATokenDomainSeparator: iParamsPerNetwork<string>;
-  WETH: iParamsPerNetwork<tEthereumAddress>;
-  WrappedNativeToken: iParamsPerNetwork<tEthereumAddress>;
-  WethGateway: iParamsPerNetwork<tEthereumAddress>;
-  ReserveFactorTreasuryAddress: iParamsPerNetwork<tEthereumAddress>;
-  IncentivesController: iParamsPerNetwork<tEthereumAddress>;
-  StableDebtTokenImplementation?: iParamsPerNetwork<tEthereumAddress>;
-  VariableDebtTokenImplementation?: iParamsPerNetwork<tEthereumAddress>;
-  ReserveAssets: iParamsPerNetwork<SymbolMap<tEthereumAddress>>;
+  WBCH: iParamsPerNetwork<tSmartBCHAddress>;
+  WrappedNativeToken: iParamsPerNetwork<tSmartBCHAddress>;
+  WbchGateway: iParamsPerNetwork<tSmartBCHAddress>;
+  ReserveFactorTreasuryAddress: iParamsPerNetwork<tSmartBCHAddress>;
+  IncentivesController: iParamsPerNetwork<tSmartBCHAddress>;
+  StableDebtTokenImplementation?: iParamsPerNetwork<tSmartBCHAddress>;
+  VariableDebtTokenImplementation?: iParamsPerNetwork<tSmartBCHAddress>;
+  ReserveAssets: iParamsPerNetwork<SymbolMap<tSmartBCHAddress>>;
   OracleQuoteCurrency: string;
   OracleQuoteUnit: string;
 }
@@ -528,28 +350,20 @@ export interface ICommonConfiguration extends IBaseConfiguration {
   Mocks: IMocksConfig;
 }
 
-export interface IAaveConfiguration extends ICommonConfiguration {
-  ReservesConfig: iAavePoolAssets<IReserveParams>;
+export interface IBandzConfiguration extends ICommonConfiguration {
+  ReservesConfig: iBandzPoolAssets<IReserveParams>;
 }
 
 export interface IAmmConfiguration extends ICommonConfiguration {
   ReservesConfig: iLpPoolAssets<IReserveParams>;
 }
 
-export interface IMaticConfiguration extends ICommonConfiguration {
-  ReservesConfig: iMaticPoolAssets<IReserveParams>;
-}
-
-export interface IXDAIConfiguration extends ICommonConfiguration {
-  ReservesConfig: iXDAIPoolAssets<IReserveParams>;
-}
-
-export interface IAvalancheConfiguration extends ICommonConfiguration {
-  ReservesConfig: iAvalanchePoolAssets<IReserveParams>;
-}
+// export interface IMaticConfiguration extends ICommonConfiguration {
+//   ReservesConfig: iMaticPoolAssets<IReserveParams>;
+// }
 
 export interface ITokenAddress {
-  [token: string]: tEthereumAddress;
+  [token: string]: tSmartBCHAddress;
 }
 
-export type PoolConfiguration = ICommonConfiguration | IAaveConfiguration;
+export type PoolConfiguration = ICommonConfiguration | IBandzConfiguration;

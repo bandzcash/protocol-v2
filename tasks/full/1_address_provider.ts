@@ -14,7 +14,7 @@ task(
   'full:deploy-address-provider',
   'Deploy address provider, registry and fee provider for dev enviroment'
 )
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .addFlag('skipRegistry')
   .setAction(async ({ verify, pool, skipRegistry }, DRE) => {

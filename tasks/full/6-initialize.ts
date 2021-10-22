@@ -3,11 +3,11 @@ import { getParamPerNetwork } from '../../helpers/contracts-helpers';
 import {
   deployLendingPoolCollateralManager,
   deployWalletBalancerProvider,
-  authorizeWETHGateway,
+  authorizeWBCHGateway,
   deployUiPoolDataProvider,
 } from '../../helpers/contracts-deployments';
 import { loadPoolConfig, ConfigNames, getTreasuryAddress } from '../../helpers/configuration';
-import { getWETHGateway } from '../../helpers/contracts-getters';
+import { getWBCHGateway } from '../../helpers/contracts-getters';
 import { eNetwork, ICommonConfiguration } from '../../helpers/types';
 import { notFalsyOrZeroAddress, waitForTx } from '../../helpers/misc-utils';
 import { initReservesByHelper, configureReservesByHelper } from '../../helpers/init-helpers';
@@ -19,7 +19,7 @@ import {
 import { ZERO_ADDRESS } from '../../helpers/constants';
 
 task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
     try {
@@ -34,7 +34,7 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         ReserveAssets,
         ReservesConfig,
         LendingPoolCollateralManager,
-        WethGateway,
+        WbchGateway,
         IncentivesController,
       } = poolConfig as ICommonConfiguration;
 
@@ -90,11 +90,11 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
         '\tSetting AaveProtocolDataProvider at AddressesProvider at id: 0x01',
         collateralManagerAddress
       );
-      const aaveProtocolDataProvider = await getAaveProtocolDataProvider();
+      const bandzProtocolDataProvider = await getAaveProtocolDataProvider();
       await waitForTx(
         await addressesProvider.setAddress(
           '0x0100000000000000000000000000000000000000000000000000000000000000',
-          aaveProtocolDataProvider.address
+          bandzProtocolDataProvider.address
         )
       );
 
@@ -108,12 +108,12 @@ task('full:initialize-lending-pool', 'Initialize lending pool configuration.')
 
       const lendingPoolAddress = await addressesProvider.getLendingPool();
 
-      let gateWay = getParamPerNetwork(WethGateway, network);
+      let gateWay = getParamPerNetwork(WbchGateway, network);
       if (!notFalsyOrZeroAddress(gateWay)) {
-        gateWay = (await getWETHGateway()).address;
+        gateWay = (await getWBCHGateway()).address;
       }
       console.log('GATEWAY', gateWay);
-      await authorizeWETHGateway(gateWay, lendingPoolAddress);
+      await authorizeWBCHGateway(gateWay, lendingPoolAddress);
     } catch (err) {
       console.error(err);
       exit(1);

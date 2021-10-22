@@ -16,7 +16,7 @@ import { exit } from 'process';
 task('add-market-to-registry', 'Adds address provider to registry')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .addOptionalParam('addressesProvider', `Address of LendingPoolAddressProvider`)
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addFlag('deployRegistry', 'Deploy a new address provider registry')
   .setAction(async ({ verify, addressesProvider, pool, deployRegistry }, DRE) => {
     await DRE.run('set-DRE');

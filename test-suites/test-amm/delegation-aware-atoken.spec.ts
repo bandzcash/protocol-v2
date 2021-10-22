@@ -3,7 +3,7 @@ import { BUIDLEREVM_CHAINID } from '../../helpers/buidler-constants';
 import { buildPermitParams, getSignatureFromTypedData } from '../../helpers/contracts-helpers';
 import { expect } from 'chai';
 import { ethers } from 'ethers';
-import { eEthereumNetwork, ProtocolErrors } from '../../helpers/types';
+import { eSmartBCHNetwork, ProtocolErrors } from '../../helpers/types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { DRE } from '../../helpers/misc-utils';
 import {
@@ -38,13 +38,13 @@ makeSuite('AToken: underlying delegation', (testEnv: TestEnv) => {
       [pool.address, delegationERC20.address, await getTreasuryAddress(AmmConfig), ZERO_ADDRESS, 'aDEL', 'aDEL'],
       false
     );
-    
+
     //await delegationAToken.initialize(pool.address, ZERO_ADDRESS, delegationERC20.address, ZERO_ADDRESS, '18', 'aDEL', 'aDEL');
 
     console.log((await delegationAToken.decimals()).toString());
   });
 
-  it('Tries to delegate with the caller not being the Aave admin', async () => {
+  it('Tries to delegate with the caller not being the Bandz admin', async () => {
     const { users } = testEnv;
 
     await expect(

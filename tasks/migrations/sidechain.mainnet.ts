@@ -1,18 +1,17 @@
 import { task } from 'hardhat/config';
-import { checkVerification } from '../../helpers/etherscan-verification';
+import { checkVerification } from '../../helpers/smartscan-verification';
 import { ConfigNames } from '../../helpers/configuration';
 import { printContracts } from '../../helpers/misc-utils';
-import { usingTenderly } from '../../helpers/tenderly-utils';
 
 task('sidechain:mainnet', 'Deploy market at sidechain')
   .addParam('pool', `Market pool configuration, one of ${Object.keys(ConfigNames)}`)
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addFlag('skipRegistry', 'Skip addresses provider registration at Addresses Provider Registry')
   .setAction(async ({ verify, pool, skipRegistry }, DRE) => {
     const POOL_NAME = pool;
     await DRE.run('set-DRE');
 
-    // Prevent loss of gas verifying all the needed ENVs for Etherscan verification
+    // Prevent loss of gas verifying all the needed ENVs for SmartScan verification
     if (verify) {
       checkVerification();
     }
@@ -33,8 +32,8 @@ task('sidechain:mainnet', 'Deploy market at sidechain')
 
     console.log('4. Deploy Data Provider');
     await DRE.run('full:data-provider', { pool: POOL_NAME });
-    console.log('5. Deploy WETH Gateway');
-    await DRE.run('full-deploy-weth-gateway', { pool: POOL_NAME });
+    console.log('5. Deploy WBCH Gateway');
+    await DRE.run('full-deploy-wbch-gateway', { pool: POOL_NAME });
 
     console.log('6. Initialize lending pool');
     await DRE.run('full:initialize-lending-pool', { pool: POOL_NAME });
@@ -48,13 +47,6 @@ task('sidechain:mainnet', 'Deploy market at sidechain')
       await DRE.run('verify:tokens', { pool: POOL_NAME });
     }
 
-    if (usingTenderly()) {
-      const postDeployHead = DRE.tenderlyNetwork.getHead();
-      const postDeployFork = DRE.tenderlyNetwork.getFork();
-      console.log('Tenderly Info');
-      console.log('- Head', postDeployHead);
-      console.log('- Fork', postDeployFork);
-    }
     console.log('\nFinished migrations');
     printContracts();
   });

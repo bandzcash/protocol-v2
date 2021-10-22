@@ -1,8 +1,8 @@
 import { task } from 'hardhat/config';
-import { eEthereumNetwork } from '../../helpers/types';
+import { eSmartBCHNetwork } from '../../helpers/types';
 import { getTreasuryAddress } from '../../helpers/configuration';
-import * as marketConfigs from '../../markets/aave';
-import * as reserveConfigs from '../../markets/aave/reservesConfigs';
+import * as marketConfigs from '../../markets/bandz';
+import * as reserveConfigs from '../../markets/bandz/reservesConfigs';
 import { getLendingPoolAddressesProvider } from './../../helpers/contracts-getters';
 import {
   chooseATokenDeployment,
@@ -15,33 +15,33 @@ import { ZERO_ADDRESS } from './../../helpers/constants';
 
 const LENDING_POOL_ADDRESS_PROVIDER = {
   main: '0xb53c1a33016b2dc2ff3653530bff1848a515c8c5',
-  kovan: '0x652B2937Efd0B5beA1c8d54293FC1289672AFC6b',
+  // kovan: '0x652B2937Efd0B5beA1c8d54293FC1289672AFC6b',
 };
 
-const isSymbolValid = (symbol: string, network: eEthereumNetwork) =>
+const isSymbolValid = (symbol: string, network: eSmartBCHNetwork) =>
   Object.keys(reserveConfigs).includes('strategy' + symbol) &&
-  marketConfigs.AaveConfig.ReserveAssets[network][symbol] &&
-  marketConfigs.AaveConfig.ReservesConfig[symbol] === reserveConfigs['strategy' + symbol];
+  marketConfigs.BandzConfig.ReserveAssets[network][symbol] &&
+  marketConfigs.BandzConfig.ReservesConfig[symbol] === reserveConfigs['strategy' + symbol];
 
 task('external:deploy-new-asset', 'Deploy A token, Debt Tokens, Risk Parameters')
   .addParam('symbol', `Asset symbol, needs to have configuration ready`)
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .setAction(async ({ verify, symbol }, localBRE) => {
     const network = localBRE.network.name;
-    if (!isSymbolValid(symbol, network as eEthereumNetwork)) {
+    if (!isSymbolValid(symbol, network as eSmartBCHNetwork)) {
       throw new Error(
         `
 WRONG RESERVE ASSET SETUP:
         The symbol ${symbol} has no reserve Config and/or reserve Asset setup.
-        update /markets/aave/index.ts and add the asset address for ${network} network
-        update /markets/aave/reservesConfigs.ts and add parameters for ${symbol}
+        update /markets/bandz/index.ts and add the asset address for ${network} network
+        update /markets/bandz/reservesConfigs.ts and add parameters for ${symbol}
         `
       );
     }
     setDRE(localBRE);
     const strategyParams = reserveConfigs['strategy' + symbol];
     const reserveAssetAddress =
-      marketConfigs.AaveConfig.ReserveAssets[localBRE.network.name][symbol];
+      marketConfigs.BandzConfig.ReserveAssets[localBRE.network.name][symbol];
     const deployCustomAToken = chooseATokenDeployment(strategyParams.aTokenImpl);
     const addressProvider = await getLendingPoolAddressesProvider(
       LENDING_POOL_ADDRESS_PROVIDER[network]
@@ -53,7 +53,7 @@ WRONG RESERVE ASSET SETUP:
         poolAddress,
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
-        `Aave stable debt bearing ${symbol}`,
+        `Bandz stable debt bearing ${symbol}`,
         `stableDebt${symbol}`,
       ],
       verify
@@ -63,7 +63,7 @@ WRONG RESERVE ASSET SETUP:
         poolAddress,
         reserveAssetAddress,
         ZERO_ADDRESS, // Incentives Controller
-        `Aave variable debt bearing ${symbol}`,
+        `Bandz variable debt bearing ${symbol}`,
         `variableDebt${symbol}`,
       ],
       verify

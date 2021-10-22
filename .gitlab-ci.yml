@@ -39,7 +39,7 @@ deploy-mainnet-fork:
   before_script:
     - docker-compose -p ${CI_JOB_ID} -f docker-compose.test.yml build
   script:
-    - docker-compose -p ${CI_JOB_ID} -f docker-compose.test.yml run contracts-env npm run aave:fork:main
+    - docker-compose -p ${CI_JOB_ID} -f docker-compose.test.yml run contracts-env npm run bandz:fork:main
   after_script:
     - docker-compose -p ${CI_JOB_ID} -f docker-compose.test.yml run contracts-env npm run ci:clean
     - docker-compose -p ${CI_JOB_ID} -f docker-compose.test.yml down

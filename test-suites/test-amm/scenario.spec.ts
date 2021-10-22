@@ -5,7 +5,7 @@ import fs from 'fs';
 import BigNumber from 'bignumber.js';
 import { makeSuite } from './helpers/make-suite';
 import { getReservesConfigByPool } from '../../helpers/configuration';
-import { AavePools, iLpPoolAssets, IReserveParams } from '../../helpers/types';
+import { BandzPools, iLpPoolAssets, IReserveParams } from '../../helpers/types';
 import { executeStory } from './helpers/scenario-engine';
 
 const scenarioFolder = './test-suites/test-amm/helpers/scenarios/';
@@ -13,6 +13,7 @@ const scenarioFolder = './test-suites/test-amm/helpers/scenarios/';
 const selectedScenarios: string[] = [];
 
 fs.readdirSync(scenarioFolder).forEach((file) => {
+  if ( ! file.endsWith('.json')) return;
   if (selectedScenarios.length > 0 && !selectedScenarios.includes(file)) return;
 
   const scenario = require(`./helpers/scenarios/${file}`);
@@ -25,7 +26,7 @@ fs.readdirSync(scenarioFolder).forEach((file) => {
       actionsConfiguration.skipIntegrityCheck = false; //set this to true to execute solidity-coverage
 
       calculationsConfiguration.reservesParams = <iLpPoolAssets<IReserveParams>>(
-        getReservesConfigByPool(AavePools.amm)
+        getReservesConfigByPool(BandzPools.amm)
       );
     });
     after('Reset', () => {
@@ -35,7 +36,7 @@ fs.readdirSync(scenarioFolder).forEach((file) => {
 
     for (const story of scenario.stories) {
       it(story.description, async function () {
-        // Retry the test scenarios up to 4 times if an error happens, due erratic HEVM network errors 
+        // Retry the test scenarios up to 4 times if an error happens, due erratic HEVM network errors
         this.retries(4);
         await executeStory(story, testEnv);
       });

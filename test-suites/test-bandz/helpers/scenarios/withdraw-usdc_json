@@ -1,0 +1,91 @@
+{
+  "title": "LendingPool: withdraw",
+  "description": "withdraw function.",
+  "stories": [
+    {
+      "description": "Users 0 deposits 1000 FLEXUSD, user 1 Deposit 1000 FLEXUSD (USDC before) and 1 WBCH, borrows 100 FLEXUSD. User 1 tries to withdraw all the FLEXUSD",
+      "actions": [
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "FLEXUSD",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "WBCH",
+            "amount": "1",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "WBCH",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "WBCH",
+            "amount": "1",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "borrow",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "100",
+            "user": "1",
+            "borrowRateMode": "stable"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "-1",
+            "user": "1"
+          },
+          "expected": "success"
+        }
+      ]
+    }
+  ]
+}

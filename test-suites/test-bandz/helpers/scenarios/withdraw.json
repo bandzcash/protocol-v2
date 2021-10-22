@@ -1,0 +1,241 @@
+{
+  "title": "LendingPool: withdraw",
+  "description": "withdraw function.",
+  "stories": [
+    {
+      "description": "User 0 Deposits 1000 FLEXUSD in an empty reserve",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "FLEXUSD",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 withdraws half of the deposited FLEXUSD",
+      "actions": [
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "500",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 withdraws remaining half of the deposited FLEXUSD",
+      "actions": [
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 Deposits 1000 FLEXUSD (USDC before) in an empty reserve",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "FLEXUSD",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 withdraws half of the deposited FLEXUSD (USDC before)",
+      "actions": [
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "500",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 withdraws remaining half of the deposited FLEXUSD (USDC before)",
+      "actions": [
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 Deposits 1 WBCH in an empty reserve",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "WBCH",
+            "amount": "1",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "WBCH",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "WBCH",
+            "amount": "1",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 withdraws half of the deposited WBCH",
+      "actions": [
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "WBCH",
+            "amount": "0.5",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "User 0 withdraws remaining half of the deposited WBCH",
+      "actions": [
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "WBCH",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        }
+      ]
+    },
+    {
+      "description": "Users 0 and 1 Deposit 1000 FLEXUSD, both withdraw",
+      "actions": [
+        {
+          "name": "mint",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "approve",
+          "args": {
+            "reserve": "FLEXUSD",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "deposit",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "1000",
+            "user": "1"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "-1",
+            "user": "0"
+          },
+          "expected": "success"
+        },
+        {
+          "name": "withdraw",
+          "args": {
+            "reserve": "FLEXUSD",
+            "amount": "-1",
+            "user": "1"
+          },
+          "expected": "success"
+        }
+      ]
+    }
+  ]
+}

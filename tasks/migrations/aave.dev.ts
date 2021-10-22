@@ -1,16 +1,16 @@
 import { task } from 'hardhat/config';
-import { checkVerification } from '../../helpers/etherscan-verification';
+import { checkVerification } from '../../helpers/smartscan-verification';
 import { ConfigNames } from '../../helpers/configuration';
 import { printContracts } from '../../helpers/misc-utils';
 
-task('aave:dev', 'Deploy development enviroment')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+task('bandz:dev', 'Deploy development enviroment')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .setAction(async ({ verify }, localBRE) => {
-    const POOL_NAME = ConfigNames.Aave;
+    const POOL_NAME = ConfigNames.Bandz;
 
     await localBRE.run('set-DRE');
 
-    // Prevent loss of gas verifying all the needed ENVs for Etherscan verification
+    // Prevent loss of gas verifying all the needed ENVs for SmartScan verification
     if (verify) {
       checkVerification();
     }
@@ -29,8 +29,8 @@ task('aave:dev', 'Deploy development enviroment')
     console.log('4. Deploy oracles');
     await localBRE.run('dev:deploy-oracles', { verify, pool: POOL_NAME });
 
-    console.log('5. Deploy WETH Gateway');
-    await localBRE.run('full-deploy-weth-gateway', { verify, pool: POOL_NAME });
+    console.log('5. Deploy WBCH Gateway');
+    await localBRE.run('full-deploy-wbch-gateway', { verify, pool: POOL_NAME });
 
     console.log('6. Initialize lending pool');
     await localBRE.run('dev:initialize-lending-pool', { verify, pool: POOL_NAME });

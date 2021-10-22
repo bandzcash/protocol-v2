@@ -1,7 +1,7 @@
 import { task } from 'hardhat/config';
 import {
   deployPriceOracle,
-  deployAaveOracle,
+  deployBandzOracle,
   deployLendingRateOracle,
 } from '../../helpers/contracts-deployments';
 import {
@@ -20,7 +20,7 @@ import {
 } from '../../helpers/contracts-getters';
 
 task('dev:deploy-oracles', 'Deploy oracles for dev environment')
-  .addFlag('verify', 'Verify contracts at Etherscan')
+  .addFlag('verify', 'Verify contracts at SmartScan')
   .addParam('pool', `Pool name to retrieve configuration, supported: ${Object.values(ConfigNames)}`)
   .setAction(async ({ verify, pool }, localBRE) => {
     await localBRE.run('set-DRE');
@@ -60,7 +60,7 @@ task('dev:deploy-oracles', 'Deploy oracles for dev environment')
       OracleQuoteCurrency
     );
 
-    await deployAaveOracle(
+    await deployBandzOracle(
       [
         tokens,
         aggregators,

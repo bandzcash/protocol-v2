@@ -9,13 +9,13 @@ import {
   getLendingPoolConfiguratorProxy,
   getPriceOracle,
   getLendingPoolAddressesProviderRegistry,
-  getWETHMocked,
-  getWETHGateway,
+  getWBCHMocked,
+  getWBCHGateway,
   getUniswapLiquiditySwapAdapter,
   getUniswapRepayAdapter,
   getFlashLiquidationAdapter,
 } from '../../../helpers/contracts-getters';
-import { eEthereumNetwork, eNetwork, tEthereumAddress } from '../../../helpers/types';
+import { eSmartBCHNetwork, eNetwork, tSmartBCHAddress } from '../../../helpers/types';
 import { LendingPool } from '../../../types/LendingPool';
 import { AaveProtocolDataProvider } from '../../../types/AaveProtocolDataProvider';
 import { MintableERC20 } from '../../../types/MintableERC20';
@@ -39,7 +39,6 @@ import { solidity } from 'ethereum-waffle';
 import { AmmConfig } from '../../../markets/amm';
 import { FlashLiquidationAdapter } from '../../../types';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
-import { usingTenderly } from '../../../helpers/tenderly-utils';
 
 chai.use(bignumberChai());
 chai.use(almostEqual());
@@ -47,7 +46,7 @@ chai.use(solidity);
 
 export interface SignerWithAddress {
   signer: Signer;
-  address: tEthereumAddress;
+  address: tSmartBCHAddress;
 }
 export interface TestEnv {
   deployer: SignerWithAddress;
@@ -56,17 +55,16 @@ export interface TestEnv {
   configurator: LendingPoolConfigurator;
   oracle: PriceOracle;
   helpersContract: AaveProtocolDataProvider;
-  weth: WETH9Mocked;
-  aWETH: AToken;
-  dai: MintableERC20;
-  aDai: AToken;
-  usdc: MintableERC20;
-  aave: MintableERC20;
+  wbch: WETH9Mocked;
+  aWBCH: AToken;
+  flexUsd: MintableERC20;
+  aFlexUsd: AToken;
+  bandz: MintableERC20;
   addressesProvider: LendingPoolAddressesProvider;
   uniswapLiquiditySwapAdapter: UniswapLiquiditySwapAdapter;
   uniswapRepayAdapter: UniswapRepayAdapter;
   registry: LendingPoolAddressesProviderRegistry;
-  wethGateway: WETHGateway;
+  wbchGateway: WETHGateway;
   flashLiquidationAdapter: FlashLiquidationAdapter;
 }
 
@@ -82,18 +80,17 @@ const testEnv: TestEnv = {
   configurator: {} as LendingPoolConfigurator,
   helpersContract: {} as AaveProtocolDataProvider,
   oracle: {} as PriceOracle,
-  weth: {} as WETH9Mocked,
-  aWETH: {} as AToken,
-  dai: {} as MintableERC20,
-  aDai: {} as AToken,
-  usdc: {} as MintableERC20,
-  aave: {} as MintableERC20,
+  wbch: {} as WETH9Mocked,
+  aWBCH: {} as AToken,
+  flexUsd: {} as MintableERC20,
+  aFlexUsd: {} as AToken,
+  bandz: {} as MintableERC20,
   addressesProvider: {} as LendingPoolAddressesProvider,
   uniswapLiquiditySwapAdapter: {} as UniswapLiquiditySwapAdapter,
   uniswapRepayAdapter: {} as UniswapRepayAdapter,
   flashLiquidationAdapter: {} as FlashLiquidationAdapter,
   registry: {} as LendingPoolAddressesProviderRegistry,
-  wethGateway: {} as WETHGateway,
+  wbchGateway: {} as WETHGateway,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -128,32 +125,30 @@ export async function initializeMakeSuite() {
   testEnv.helpersContract = await getAaveProtocolDataProvider();
 
   const allTokens = await testEnv.helpersContract.getAllATokens();
-  const aDaiAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmDAI')?.tokenAddress;
+  const aflexUsdAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmFLEXUSD')?.tokenAddress;
 
-  const aWEthAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWETH')?.tokenAddress;
+  const aWBchAddress = allTokens.find((aToken) => aToken.symbol === 'aAmmWBCH')?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
 
-  const daiAddress = reservesTokens.find((token) => token.symbol === 'DAI')?.tokenAddress;
-  const usdcAddress = reservesTokens.find((token) => token.symbol === 'USDC')?.tokenAddress;
-  const aaveAddress = reservesTokens.find((token) => token.symbol === 'UniAAVEWETH')?.tokenAddress;
-  const wethAddress = reservesTokens.find((token) => token.symbol === 'WETH')?.tokenAddress;
+  const flexUsdAddress = reservesTokens.find((token) => token.symbol === 'FLEXUSD')?.tokenAddress;
+  const bandzAddress = reservesTokens.find((token) => token.symbol === 'UniBANDZWBCH')?.tokenAddress;
+  const wbchAddress = reservesTokens.find((token) => token.symbol === 'WBCH')?.tokenAddress;
 
-  if (!aDaiAddress || !aWEthAddress) {
+  if (!aflexUsdAddress || !aWBchAddress) {
     process.exit(1);
   }
-  if (!daiAddress || !usdcAddress || !aaveAddress || !wethAddress) {
+  if (!flexUsdAddress || !bandzAddress || !wbchAddress) {
     process.exit(1);
   }
 
-  testEnv.aDai = await getAToken(aDaiAddress);
-  testEnv.aWETH = await getAToken(aWEthAddress);
+  testEnv.aFlexUsd = await getAToken(aflexUsdAddress);
+  testEnv.aWBCH = await getAToken(aWBchAddress);
 
-  testEnv.dai = await getMintableERC20(daiAddress);
-  testEnv.usdc = await getMintableERC20(usdcAddress);
-  testEnv.aave = await getMintableERC20(aaveAddress);
-  testEnv.weth = await getWETHMocked(wethAddress);
-  testEnv.wethGateway = await getWETHGateway();
+  testEnv.flexUsd = await getMintableERC20(flexUsdAddress);
+  testEnv.bandz = await getMintableERC20(bandzAddress);
+  testEnv.wbch = await getWBCHMocked(wbchAddress);
+  testEnv.wbchGateway = await getWBCHGateway();
 
   testEnv.uniswapLiquiditySwapAdapter = await getUniswapLiquiditySwapAdapter();
   testEnv.uniswapRepayAdapter = await getUniswapRepayAdapter();
@@ -162,19 +157,11 @@ export async function initializeMakeSuite() {
 
 const setSnapshot = async () => {
   const hre = DRE as HardhatRuntimeEnvironment;
-  if (usingTenderly()) {
-    setBuidlerevmSnapshotId((await hre.tenderlyNetwork.getHead()) || '0x1');
-    return;
-  }
   setBuidlerevmSnapshotId(await evmSnapshot());
 };
 
 const revertHead = async () => {
   const hre = DRE as HardhatRuntimeEnvironment;
-  if (usingTenderly()) {
-    await hre.tenderlyNetwork.setHead(buidlerevmSnapshotId);
-    return;
-  }
   await evmRevert(buidlerevmSnapshotId);
 };
 

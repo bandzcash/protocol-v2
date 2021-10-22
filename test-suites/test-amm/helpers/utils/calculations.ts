@@ -4,7 +4,7 @@ import {
   IReserveParams,
   iLpPoolAssets,
   RateMode,
-  tEthereumAddress,
+  tSmartBCHAddress,
 } from '../../../../helpers/types';
 import './math';
 import { ReserveData, UserReserveData } from './interfaces';
@@ -1237,9 +1237,9 @@ export const calcExpectedInterestRates = (
 ): BigNumber[] => {
   const { reservesParams } = configuration;
 
-  // Fixes WETH - LpWETH mock token symbol mismatch 
-  // if(reserveSymbol === 'WETH') {
-  //   reserveSymbol = 'LpWETH';
+  // Fixes WBCH - LpWBCH mock token symbol mismatch
+  // if(reserveSymbol === 'WBCH') {
+  //   reserveSymbol = 'LpWBCH';
   // }
   const reserveIndex = Object.keys(reservesParams).findIndex((value) => value === reserveSymbol);
   const [, reserveConfiguration] = (Object.entries(reservesParams) as [string, IReserveParams][])[
